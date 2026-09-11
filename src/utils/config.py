@@ -6,10 +6,10 @@ before experiments execute.
 """
 
 from pathlib import Path
-from typing import Any, List, Optional
+from typing import Any
+
 import yaml
 from pydantic import BaseModel, Field
-
 
 # =============================================================================
 # Base & Infrastructure Configs
@@ -38,7 +38,7 @@ class LoggingSettings(BaseModel):
 
     level: str = "INFO"
     format: str = "%(asctime)s | %(name)s | %(levelname)s | %(message)s"
-    file: Optional[Path] = None
+    file: Path | None = None
 
 
 class ReproducibilitySettings(BaseModel):
@@ -66,15 +66,15 @@ class BaseConfig(BaseModel):
 class DateRangeConfig(BaseModel):
     """Date range filter for raw data."""
 
-    start: Optional[str] = None
-    end: Optional[str] = None
+    start: str | None = None
+    end: str | None = None
 
 
 class PecanStreetConfig(BaseModel):
     """Pecan street source configuration."""
 
     resolution_minutes: int = 15
-    homes: Optional[List[str]] = None
+    homes: list[str] | None = None
     date_range: DateRangeConfig = Field(default_factory=DateRangeConfig)
 
 
@@ -116,7 +116,7 @@ class AnomalyInjectionConfig(BaseModel):
     enabled: bool = True
     anomaly_rate: float = 0.05
     seed: int = 42
-    fault_types: List[str] = Field(
+    fault_types: list[str] = Field(
         default_factory=lambda: ["voltage_sag", "load_spike", "phase_imbalance"]
     )
     duration_timesteps: int = 4
@@ -144,7 +144,7 @@ class DTSolverConfig(BaseModel):
     backend: str = "opendssdirect"
     max_iterations: int = 100
     convergence_tolerance: float = 0.0001
-    voltage_bases: List[float] = Field(default_factory=lambda: [12.66])
+    voltage_bases: list[float] = Field(default_factory=lambda: [12.66])
 
 
 class DTStateConfig(BaseModel):
@@ -168,7 +168,7 @@ class DigitalTwinConfig(BaseModel):
     """Root Digital Twin configuration in configs/digital_twin.yaml."""
 
     feeder: str = "ieee_33_bus"
-    topology_file: Optional[Path] = None
+    topology_file: Path | None = None
     solver: DTSolverConfig = Field(default_factory=DTSolverConfig)
     state: DTStateConfig = Field(default_factory=DTStateConfig)
     validation: DTValidationConfig = Field(default_factory=DTValidationConfig)
@@ -183,14 +183,14 @@ class SyncLoggingConfig(BaseModel):
     """Logging settings for synchronization engine."""
 
     enabled: bool = True
-    fields: List[str] = Field(default_factory=list)
+    fields: list[str] = Field(default_factory=list)
 
 
 class AoIConfig(BaseModel):
     """Age of Information tracking settings."""
 
     definition: str = "time_since_last_update"
-    max_aoi_seconds: Optional[int] = None
+    max_aoi_seconds: int | None = None
 
 
 class SynchronizationConfig(BaseModel):
@@ -200,7 +200,7 @@ class SynchronizationConfig(BaseModel):
     missed_update_policy: str = "hold_last_state"
     logging: SyncLoggingConfig = Field(default_factory=SyncLoggingConfig)
     aoi: AoIConfig = Field(default_factory=AoIConfig)
-    sweep_intervals_seconds: List[int] = Field(
+    sweep_intervals_seconds: list[int] = Field(
         default_factory=lambda: [0, 15, 30, 60, 120, 300, 600, 900, 1800]
     )
 
@@ -226,7 +226,7 @@ class XGBoostConfig(BaseModel):
 class LSTMConfig(BaseModel):
     """LSTM model parameters."""
 
-    units: List[int] = Field(default_factory=lambda: [64, 32])
+    units: list[int] = Field(default_factory=lambda: [64, 32])
     dropout: float = 0.2
     batch_size: int = 32
     epochs: int = 100
@@ -239,22 +239,22 @@ class LSTMConfig(BaseModel):
 class ForecastMetricsConfig(BaseModel):
     """Forecasting evaluation metrics."""
 
-    primary: List[str] = Field(default_factory=lambda: ["mae", "rmse", "mape"])
-    secondary: List[str] = Field(default_factory=lambda: ["r2"])
+    primary: list[str] = Field(default_factory=lambda: ["mae", "rmse", "mape"])
+    secondary: list[str] = Field(default_factory=lambda: ["r2"])
 
 
 class ForecastFeaturesConfig(BaseModel):
     """Forecasting feature definitions."""
 
-    temporal: List[str] = Field(default_factory=list)
-    lag_features: List[str] = Field(default_factory=list)
-    dt_features: List[str] = Field(default_factory=list)
+    temporal: list[str] = Field(default_factory=list)
+    lag_features: list[str] = Field(default_factory=list)
+    dt_features: list[str] = Field(default_factory=list)
 
 
 class ForecastingConfig(BaseModel):
     """Root forecasting configuration in configs/forecasting.yaml."""
 
-    models: List[str] = Field(default_factory=lambda: ["persistence", "xgboost", "lstm"])
+    models: list[str] = Field(default_factory=lambda: ["persistence", "xgboost", "lstm"])
     horizon_steps: int = 1
     lookback_steps: int = 24
     xgboost: XGBoostConfig = Field(default_factory=XGBoostConfig)
@@ -281,9 +281,9 @@ class IsolationForestConfig(BaseModel):
 class LSTMAutoencoderConfig(BaseModel):
     """LSTM Autoencoder parameters."""
 
-    encoder_units: List[int] = Field(default_factory=lambda: [64, 32])
+    encoder_units: list[int] = Field(default_factory=lambda: [64, 32])
     latent_dim: int = 16
-    decoder_units: List[int] = Field(default_factory=lambda: [32, 64])
+    decoder_units: list[int] = Field(default_factory=lambda: [32, 64])
     lookback_steps: int = 24
     batch_size: int = 32
     epochs: int = 100
@@ -302,15 +302,17 @@ class ThresholdConfig(BaseModel):
 class AnomalyMetricsConfig(BaseModel):
     """Anomaly detection metrics."""
 
-    primary: List[str] = Field(default_factory=lambda: ["precision", "recall", "f1", "pr_auc"])
-    secondary: List[str] = Field(default_factory=lambda: ["roc_auc", "false_positive_rate", "detection_latency"])
+    primary: list[str] = Field(default_factory=lambda: ["precision", "recall", "f1", "pr_auc"])
+    secondary: list[str] = Field(
+        default_factory=lambda: ["roc_auc", "false_positive_rate", "detection_latency"]
+    )
 
 
 class AnomalyDetectionConfig(BaseModel):
     """Root anomaly detection configuration in configs/anomaly_detection.yaml."""
 
-    detectors: List[str] = Field(default_factory=lambda: ["isolation_forest", "lstm_autoencoder"])
-    input_representations: List[str] = Field(default_factory=lambda: ["raw", "residual"])
+    detectors: list[str] = Field(default_factory=lambda: ["isolation_forest", "lstm_autoencoder"])
+    input_representations: list[str] = Field(default_factory=lambda: ["raw", "residual"])
     unsupervised: bool = True
     isolation_forest: IsolationForestConfig = Field(default_factory=IsolationForestConfig)
     lstm_autoencoder: LSTMAutoencoderConfig = Field(default_factory=LSTMAutoencoderConfig)
@@ -337,12 +339,12 @@ class ExperimentConfig(BaseModel):
     """Complete experiment execution configuration."""
 
     experiment: ExperimentMetadata
-    base: Optional[BaseConfig] = None
-    data: Optional[DataConfig] = None
-    digital_twin: Optional[DigitalTwinConfig] = None
-    synchronization: Optional[SynchronizationConfig] = None
-    forecasting: Optional[ForecastingConfig] = None
-    anomaly_detection: Optional[AnomalyDetectionConfig] = None
+    base: BaseConfig | None = None
+    data: DataConfig | None = None
+    digital_twin: DigitalTwinConfig | None = None
+    synchronization: SynchronizationConfig | None = None
+    forecasting: ForecastingConfig | None = None
+    anomaly_detection: AnomalyDetectionConfig | None = None
 
 
 # =============================================================================
@@ -387,7 +389,9 @@ def load_data_config(file_path: Path | str = "configs/data.yaml") -> DataConfig:
     return DataConfig(**data_dict)
 
 
-def load_digital_twin_config(file_path: Path | str = "configs/digital_twin.yaml") -> DigitalTwinConfig:
+def load_digital_twin_config(
+    file_path: Path | str = "configs/digital_twin.yaml",
+) -> DigitalTwinConfig:
     """Load and validate digital_twin.yaml."""
     raw = load_yaml(file_path)
     dt_dict = raw.get("digital_twin", raw)
@@ -403,7 +407,9 @@ def load_synchronization_config(
     return SynchronizationConfig(**sync_dict)
 
 
-def load_forecasting_config(file_path: Path | str = "configs/forecasting.yaml") -> ForecastingConfig:
+def load_forecasting_config(
+    file_path: Path | str = "configs/forecasting.yaml",
+) -> ForecastingConfig:
     """Load and validate forecasting.yaml."""
     raw = load_yaml(file_path)
     forecast_dict = raw.get("forecasting", raw)

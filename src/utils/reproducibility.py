@@ -4,14 +4,15 @@ Enforces deterministic seed configuration, environment state capture, git commit
 tracking, and manifest generation per docs/methodology/REPRODUCIBILITY.md.
 """
 
-from datetime import datetime
 import importlib.metadata
 import os
 import platform
 import random
 import subprocess
 import sys
-from typing import Any, Optional
+from datetime import datetime
+from typing import Any
+
 import numpy as np
 
 
@@ -104,7 +105,7 @@ def is_git_clean(repo_path: str = ".") -> bool:
         return False
 
 
-def get_installed_packages(package_names: Optional[list[str]] = None) -> dict[str, str]:
+def get_installed_packages(package_names: list[str] | None = None) -> dict[str, str]:
     """Capture version strings for key installed packages.
 
     Parameters
@@ -171,7 +172,7 @@ def create_manifest(
     input_representation: str,
     model_type: str,
     dataset_version: str = "v1.0",
-    extra_metadata: Optional[dict[str, Any]] = None,
+    extra_metadata: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Generate an authoritative experiment manifest dictionary.
 

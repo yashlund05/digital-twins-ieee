@@ -1,7 +1,9 @@
 """Unit tests for configuration loaders and Pydantic schemas in src/utils/config.py."""
 
 from pathlib import Path
+
 import pytest
+
 from src.utils.config import (
     BaseConfig,
     DataConfig,

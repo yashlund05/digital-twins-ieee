@@ -1,4 +1,4 @@
-﻿# PHASES.md — Master Project Execution Roadmap
+# PHASES.md — Master Project Execution Roadmap
 
 > **Project:** Digital Twin of Power Grid for Load Estimation and Anomaly Prediction
 > **Subtitle:** Quantifying the Effect of Digital Twin Synchronization Staleness on Joint Short-Term Load Estimation and Unsupervised Anomaly Detection in a Distribution-Feeder Digital Twin
@@ -15,9 +15,9 @@
 
 | Phase | Name | Status | Depends On |
 |-------|------|--------|------------|
-| 0 | Repository & Research Governance | In Progress | — |
-| 1 | Environment & Infrastructure | Not Started | 0 |
-| 2 | Data Pipeline | Not Started | 1 |
+| 0 | Repository & Research Governance | Completed | — |
+| 1 | Environment & Infrastructure | Completed | 0 |
+| 2 | Data Pipeline | Ready | 1 |
 | 3 | IEEE 33-Bus Digital Twin | Not Started | 2 |
 | 4 | Synchronization Engine | Not Started | 3 |
 | 5 | Baseline Load Estimation | Not Started | 4 |
@@ -60,12 +60,12 @@ None directly — this phase establishes the infrastructure to answer RQ1.
 - None
 
 ### Acceptance Criteria
-- [ ] All 29 checklist items in specification Section 29 satisfied
-- [ ] Literature review preserved intact
-- [ ] No fabricated results exist anywhere
-- [ ] No secrets committed
-- [ ] No unnecessary dependencies
-- [ ] Repository cloneable and `pip install -e .` succeeds
+- [x] All 29 checklist items in specification Section 29 satisfied
+- [x] Literature review preserved intact
+- [x] No fabricated results exist anywhere
+- [x] No secrets committed
+- [x] No unnecessary dependencies
+- [x] Repository cloneable and `pip install -e .` succeeds
 
 ### Tests
 - `pyproject.toml` parses correctly
@@ -119,12 +119,12 @@ None directly — enables reproducible execution of all subsequent phases.
 - Phase 0 complete
 
 ### Acceptance Criteria
-- [ ] `pip install -e "[dev]"` succeeds on all team machines
-- [ ] `python -c "import opendssdirect; print('OK')"` succeeds
-- [ ] `make test` runs and passes (with placeholder tests)
-- [ ] Configuration loading and validation works
-- [ ] Logging produces structured output
-- [ ] CI pipeline runs on push to `develop`
+- [x] `pip install -e ".[dev]"` succeeds on all team machines
+- [x] `python -c "import opendssdirect; print('OK')"` succeeds
+- [x] `make test` runs and passes (with placeholder tests)
+- [x] Configuration loading and validation works
+- [x] Logging produces structured output
+- [x] CI pipeline runs on push to `develop`
 
 ### Tests
 - `tests/unit/test_config.py` — configuration loading and validation

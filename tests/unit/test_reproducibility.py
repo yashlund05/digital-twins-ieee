@@ -1,8 +1,10 @@
 """Unit tests for reproducibility utilities in src/utils/reproducibility.py."""
 
 import random
+
 import numpy as np
 import pytest
+
 from src.utils.reproducibility import (
     create_manifest,
     get_environment_metadata,

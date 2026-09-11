@@ -4,12 +4,12 @@ Provides consistent, structured log output across CLI runs, background
 workers, and experiment orchestration. Supports contextual metadata injection.
 """
 
-from datetime import datetime
 import json
 import logging
-from pathlib import Path
 import sys
-from typing import Any, Optional
+from datetime import datetime
+from pathlib import Path
+from typing import Any
 
 
 class StructuredFormatter(logging.Formatter):
@@ -22,7 +22,7 @@ class StructuredFormatter(logging.Formatter):
     def format(self, record: logging.LogRecord) -> str:
         """Format the log record with structured attributes."""
         timestamp = datetime.fromtimestamp(record.created).isoformat()
-        
+
         # Extract custom extra attributes
         extras = {
             k: v
@@ -56,7 +56,7 @@ class StructuredFormatter(logging.Formatter):
 
 def setup_logging(
     level: str = "INFO",
-    log_file: Optional[Path | str] = None,
+    log_file: Path | str | None = None,
     use_json: bool = False,
 ) -> None:
     """Initialize root logger with console and optional file handler.
