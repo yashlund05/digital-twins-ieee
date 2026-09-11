@@ -1,0 +1,57 @@
+# forecasting.yaml — Load Estimation / Forecasting configuration
+
+forecasting:
+  # Models to include in experiments
+  models:
+    - persistence
+    - xgboost
+    - lstm
+
+  horizon_steps: 1       # Forecast horizon (1 = next timestep)
+  lookback_steps: 24     # Input window length (timesteps)
+
+  persistence:
+    # Predicts next value = current value (zero-parameter baseline)
+    # No configuration needed
+
+  xgboost:
+    n_estimators: 200
+    max_depth: 6
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+    random_state: 42      # Must match experiment seed
+    early_stopping_rounds: 20
+    eval_metric: rmse
+
+  lstm:
+    units: [64, 32]       # LSTM layer sizes
+    dropout: 0.2
+    batch_size: 32
+    epochs: 100
+    patience: 10          # Early stopping patience
+    learning_rate: 0.001
+    optimizer: adam
+    seed: 42              # Must match experiment seed
+
+  metrics:
+    primary:
+      - mae
+      - rmse
+      - mape
+    secondary:
+      - r2  # Optional, include if scientifically justified
+
+  # Feature engineering
+  features:
+    temporal:
+      - hour_of_day
+      - day_of_week
+      - month
+      - is_weekend
+    lag_features:
+      - lag_1
+      - lag_24  # 24-step lag (daily pattern)
+      - lag_168  # Weekly pattern (if resolution supports)
+    dt_features:
+      - last_sync_age  # Synchronization age as feature (E5 investigation)

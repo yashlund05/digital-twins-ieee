@@ -1,0 +1,51 @@
+# anomaly_detection.yaml — Anomaly Detection configuration
+
+anomaly_detection:
+  # Detectors included in experiments
+  detectors:
+    - isolation_forest
+    - lstm_autoencoder
+
+  # Input representations (2x2 design with detectors)
+  input_representations:
+    - raw         # Raw DT state features
+    - residual    # Physical - DT_prediction residuals
+
+  # Training is UNSUPERVISED — anomaly labels are NOT used in training
+  # Labels are used ONLY for evaluation
+  unsupervised: true
+
+  isolation_forest:
+    n_estimators: 100
+    max_samples: auto
+    contamination: 0.05  # Expected anomaly rate (must match data.yaml)
+    random_state: 42     # Must match experiment seed
+    n_jobs: -1
+
+  lstm_autoencoder:
+    encoder_units: [64, 32]
+    latent_dim: 16
+    decoder_units: [32, 64]
+    lookback_steps: 24
+    batch_size: 32
+    epochs: 100
+    patience: 10
+    learning_rate: 0.001
+    seed: 42             # Must match experiment seed
+
+  # Threshold selection
+  threshold:
+    method: percentile   # Options: percentile, fixed, otsu
+    percentile: 95       # 95th percentile of training scores = threshold
+    # IMPORTANT: threshold is set on validation set, not test set
+
+  metrics:
+    primary:
+      - precision
+      - recall
+      - f1
+      - pr_auc
+    secondary:
+      - roc_auc
+      - false_positive_rate
+      - detection_latency  # timesteps from anomaly onset to detection

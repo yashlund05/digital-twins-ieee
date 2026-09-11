@@ -1,0 +1,48 @@
+# data.yaml — Data pipeline configuration
+
+data:
+  source:
+    pecan_street:
+      resolution_minutes: 15  # 15-min resolution (default); 1-min for subset
+      homes: null             # null = use all available homes
+      date_range:
+        start: null           # Set to specific date, e.g., "2018-01-01"
+        end: null             # Set to specific date, e.g., "2020-12-31"
+
+  network:
+    topology: ieee_33_bus
+    num_buses: 33
+    num_load_buses: 32       # Bus 1 is the slack/source bus
+
+  preprocessing:
+    normalize: true
+    normalization_method: min_max  # Options: min_max, z_score, robust
+    fill_missing: forward_fill
+    max_gap_minutes: 60      # Gaps larger than this are flagged
+
+  splits:
+    # Temporal split — no shuffling to prevent leakage
+    train_ratio: 0.70
+    validation_ratio: 0.15
+    test_ratio: 0.15
+    # IMPORTANT: splits are temporal (ordered), not random
+    temporal: true
+
+  anomaly_injection:
+    enabled: true
+    anomaly_rate: 0.05       # 5% of time steps have anomalies
+    seed: 42                 # Must match experiment seed
+    fault_types:
+      - voltage_sag          # Sudden voltage drop
+      - load_spike           # Sudden load increase
+      - phase_imbalance      # Asymmetric loading
+    duration_timesteps: 4    # Duration of each fault event (timesteps)
+
+  # IMPORTANT: Document this clearly
+  dataset_description: >
+    HYBRID SIMULATION DATASET.
+    Network topology: IEEE 33-bus benchmark feeder.
+    Load profiles: Pecan Street Dataport (real residential consumption patterns).
+    Mapping: Pecan Street loads mapped to IEEE 33-bus nodes per documented protocol.
+    Anomalies: Synthetically injected per the anomaly_injection configuration above.
+    This dataset does NOT represent real field measurements of the IEEE 33-bus feeder.

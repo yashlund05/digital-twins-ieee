@@ -1,0 +1,24 @@
+# digital_twin.yaml — Digital Twin configuration
+
+digital_twin:
+  feeder: ieee_33_bus
+  topology_file: null  # Path to .dss file; null = use bundled definition
+
+  solver:
+    backend: opendssdirect  # Options: opendssdirect, pandapower
+    max_iterations: 100
+    convergence_tolerance: 0.0001
+    voltage_bases: [12.66]  # kV — IEEE 33-bus base voltage
+
+  state:
+    # Quantities tracked in DT state
+    track_voltages: true      # Bus voltage magnitudes and angles
+    track_currents: true      # Branch current magnitudes
+    track_power_flows: true   # Active and reactive power flows
+    track_losses: true        # System losses
+
+  validation:
+    # Expected ranges for IEEE 33-bus sanity checks
+    voltage_pu_min: 0.90
+    voltage_pu_max: 1.10
+    max_power_imbalance_pct: 0.5  # Max acceptable power balance error %

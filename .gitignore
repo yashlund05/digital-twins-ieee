@@ -1,0 +1,141 @@
+# =============================================================================
+# Digital Twin Power Grid Research Repository — .gitignore
+# =============================================================================
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.Python
+env/
+venv/
+.venv/
+ENV/
+.env.bak
+lib/
+lib64/
+
+# Distribution / Packaging
+.installed.cfg
+pip-wheel-metadata/
+share/python-wheels/
+*.whl
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+test-results/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb_checkpoint
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Secrets and credentials (NEVER COMMIT THESE)
+.env
+*.env
+.env.local
+.env.*.local
+secrets.yaml
+secrets.json
+api_keys.txt
+credentials.json
+pecan_street_credentials.json
+
+# Data files — raw data is NOT versioned (too large, potentially proprietary)
+data/raw/*
+data/interim/*
+data/processed/*
+!data/raw/.gitkeep
+!data/interim/.gitkeep
+!data/processed/.gitkeep
+data/**/*.parquet
+data/**/*.csv
+data/**/*.h5
+data/**/*.hdf5
+data/**/*.pkl
+data/**/*.pickle
+
+# Experiment run outputs (can be very large)
+experiments/runs/*
+!experiments/runs/.gitkeep
+experiments/logs/*
+!experiments/logs/.gitkeep
+
+# Trained model binaries (large, generated)
+*.pt
+*.pth
+*.ckpt
+*.h5
+*.keras
+*.pkl
+*.joblib
+*.model
+*.bin
+*.onnx
+
+# Logs
+*.log
+logs/
+
+# OpenDSS temporary files
+*.dss.json
+OpenDSS_circuit.dss.json
+*_EXP_*.csv
+Bus_Voltages.csv
+
+# MLflow
+mlruns/
+mlflow.db
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+*.swp
+
+# Paper outputs (generated, committed separately or in artifacts/)
+# Comment out the below if you want to track paper artifacts in Git
+# artifacts/figures/
+# artifacts/tables/
+
+# Large figure files (commit as needed with explicit intent)
+*.pdf
+*.png
+*.svg
+# Un-ignore specific paper figures by name when ready

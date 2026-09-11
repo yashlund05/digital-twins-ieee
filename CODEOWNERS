@@ -1,0 +1,85 @@
+﻿# CODEOWNERS — Module Ownership
+# Replace placeholders with actual GitHub usernames before team onboarding.
+# Format: <path-pattern> <@github-username>
+#
+# Owners are automatically requested for review when a PR touches their paths.
+# See docs/onboarding/TEAM_ROLES.md for role descriptions.
+
+# Global fallback — Research Lead owns everything by default
+*                           @RESEARCH_LEAD
+
+# Digital Twin Engine
+/src/digital_twin/          @DT_OWNER
+
+# Synchronization Engine (critical — requires careful review)
+/src/synchronization/       @SYNC_OWNER
+
+# Forecasting / Load Estimation
+/src/forecasting/           @ML_OWNER
+
+# Anomaly Detection
+/src/anomaly_detection/     @ANOMALY_OWNER
+
+# Residual Engine
+/src/residuals/             @ANOMALY_OWNER
+
+# Evaluation and Metrics
+/src/evaluation/            @EVAL_OWNER
+
+# Statistical Analysis
+/src/statistics/            @EVAL_OWNER
+
+# Data Pipeline
+/src/data/                  @DATA_OWNER
+
+# Experiment Orchestration
+/src/experiments/           @EXPERIMENT_OWNER
+
+# Visualization
+/src/visualization/         @EVAL_OWNER
+
+# CLI
+/src/cli/                   @INTEGRATION_LEAD
+
+# Utilities
+/src/utils/                 @INTEGRATION_LEAD
+
+# Experiment configurations
+/configs/experiments/       @EXPERIMENT_OWNER
+
+# Base configs
+/configs/base.yaml          @RESEARCH_LEAD
+/configs/synchronization.yaml @SYNC_OWNER
+
+# All experiment runs (read-only after creation)
+/experiments/runs/          @EXPERIMENT_OWNER
+/experiments/manifests/     @EXPERIMENT_OWNER
+
+# Research documentation
+/docs/research/             @RESEARCH_LEAD
+/docs/methodology/          @RESEARCH_LEAD
+/docs/decisions/            @RESEARCH_LEAD
+/docs/paper/                @RESEARCH_LEAD
+
+# Architecture documentation
+/docs/architecture/         @INTEGRATION_LEAD
+
+# Onboarding
+/docs/onboarding/           @RESEARCH_LEAD
+
+# Tests
+/tests/validation/          @EVAL_OWNER
+/tests/integration/         @INTEGRATION_LEAD
+/tests/unit/                @RESEARCH_LEAD
+
+# Paper artifacts
+/artifacts/                 @RESEARCH_LEAD
+
+# GitHub templates
+/.github/                   @RESEARCH_LEAD
+
+# Governance files
+/AGENTS.md                  @RESEARCH_LEAD
+/AI_RULES.md                @RESEARCH_LEAD
+/VIBECODING.md              @RESEARCH_LEAD
+/PHASES.md                  @RESEARCH_LEAD

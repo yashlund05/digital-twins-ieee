@@ -1,0 +1,42 @@
+# synchronization.yaml — Synchronization Engine configuration
+# This is the most research-critical configuration file.
+# Changes here directly affect the experimental independent variable.
+
+synchronization:
+  # Default synchronization interval (seconds)
+  # Override in experiment configurations
+  interval_seconds: 60
+
+  # Policy when an update is missed
+  # Options:
+  #   hold_last_state  — DT retains the last successfully synchronized state
+  #   zero_input       — DT input is zeroed (not recommended for most scenarios)
+  missed_update_policy: hold_last_state
+
+  # Logging configuration
+  logging:
+    enabled: true
+    fields:
+      - physical_timestamp       # Timestamp of physical measurement
+      - dt_timestamp             # Timestamp of last DT state update
+      - last_sync_timestamp      # Timestamp of last successful sync
+      - sync_age_seconds         # Age of current DT state (physical_time - last_sync)
+      - aoi_seconds              # Age of Information
+      - update_interval_seconds  # Configured interval
+      - missed_updates_count     # Cumulative missed updates
+      - solver_time_ms           # OpenDSS solver execution time
+      - inference_time_ms        # ML model inference time
+      - residual_magnitude       # L2 norm of physical-DT residual vector
+
+  # Age of Information (AoI) configuration
+  aoi:
+    # AoI definition: time since last successful update arrived
+    definition: time_since_last_update
+    max_aoi_seconds: null  # null = no cap; set to limit divergence
+
+  # Intervals used in the staleness sweep experiment (E5)
+  # These define the experimental levels of the independent variable
+  # IMPORTANT: Do not change these without creating an ADR
+  sweep_intervals_seconds: [0, 15, 30, 60, 120, 300, 600, 900, 1800]
+  # interval 0 = perfect synchronization (baseline)
+  # intervals > 0 = controlled staleness

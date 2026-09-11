@@ -1,0 +1,26 @@
+# base.yaml — Base configuration for all experiments
+# All experiment configs inherit and override from this file.
+
+project:
+  name: dt-power-grid-staleness
+  version: "1.0.0"
+  description: >-
+    Quantifying the Effect of Digital Twin Synchronization Staleness on
+    Joint Short-Term Load Estimation and Unsupervised Anomaly Detection
+    in a Distribution-Feeder Digital Twin
+
+paths:
+  data_root: data/
+  experiment_root: experiments/
+  artifact_root: artifacts/
+  config_root: configs/
+
+logging:
+  level: INFO
+  format: "%(asctime)s | %(name)s | %(levelname)s | %(message)s"
+  file: null  # Override with path for file logging
+
+reproducibility:
+  default_seed: 42
+  deterministic: true
+  log_environment: true
