@@ -1,0 +1,108 @@
+assignment_version: '1.0'
+description: 'Tracked Pecan Street household-to-bus assignment for the IEEE 33-bus
+  feeder. Balanced assignment per ADR-0005: 25 households, 2 homes per load bus (64
+  slots), 14 homes used 3x, 11 homes used 2x, no home twice at the same bus, no duplicated
+  pair across buses. Derived from the seed-42 balanced deal approved in ADR-0005 B0;
+  this file is the authoritative source of the assignment (RNG reproducibility is
+  not relied upon).'
+source_adr: docs/decisions/ADR-0005-load-mapping.md
+seed: 42
+homes_per_bus: 2
+num_load_buses: 32
+bus_assignments:
+  '2':
+  - 2335
+  - 3456
+  '3':
+  - 2361
+  - 7800
+  '4':
+  - 1642
+  - 7536
+  '5':
+  - 3456
+  - 7719
+  '6':
+  - 7536
+  - 9278
+  '7':
+  - 7536
+  - 7719
+  '8':
+  - 1642
+  - 4767
+  '9':
+  - 4031
+  - 9160
+  '10':
+  - 1642
+  - 6139
+  '11':
+  - 2818
+  - 4767
+  '12':
+  - 3538
+  - 9922
+  '13':
+  - 8386
+  - 9019
+  '14':
+  - 661
+  - 7901
+  '15':
+  - 2818
+  - 8565
+  '16':
+  - 5746
+  - 7951
+  '17':
+  - 6139
+  - 9160
+  '18':
+  - 8156
+  - 9160
+  '19':
+  - 8386
+  - 8565
+  '20':
+  - 3039
+  - 9278
+  '21':
+  - 5746
+  - 7719
+  '22':
+  - 2335
+  - 4373
+  '23':
+  - 2818
+  - 9922
+  '24':
+  - 661
+  - 3039
+  '25':
+  - 4373
+  - 9019
+  '26':
+  - 7951
+  - 9278
+  '27':
+  - 8156
+  - 8386
+  '28':
+  - 4031
+  - 7901
+  '29':
+  - 7800
+  - 7951
+  '30':
+  - 2361
+  - 4767
+  '31':
+  - 3538
+  - 8565
+  '32':
+  - 3456
+  - 4373
+  '33':
+  - 5746
+  - 7800
