@@ -79,9 +79,9 @@ Forecasting          Anomaly Detection
 
 | ID | Name | Status |
 |----|------|--------|
-| E1 | Digital Twin Baseline Validation | Not started |
-| E2 | Load Estimation Baselines | Not started |
-| E3 | Anomaly Detection Baselines | Not started |
+| E1 | Digital Twin Baseline Validation | Completed (Re-validated on pipeline physical loads) |
+| E2 | Load Estimation Baselines | Completed (Pending retrain on gross physical series) |
+| E3 | Anomaly Detection Baselines | Pending Re-run (Post ADR-0004 injection & tensor fix) |
 | E4 | Raw vs Residual Inputs | Not started |
 | E5 | Synchronization Staleness Sweep | Not started |
 | E6 | Degradation Profile Analysis | Not started |

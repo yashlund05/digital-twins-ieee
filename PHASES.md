@@ -17,11 +17,11 @@
 |-------|------|--------|------------|
 | 0 | Repository & Research Governance | Completed | — |
 | 1 | Environment & Infrastructure | Completed | 0 |
-| 2 | Data Pipeline | Completed | 1 |
-| 3 | IEEE 33-Bus Digital Twin | Completed | 2 |
+| 2 | Data Pipeline | Reopened (Reopened: gross consumption ingestion, unnormalized physical columns *_phys, and injection redesign per ADR-0004) | 1 |
+| 3 | IEEE 33-Bus Digital Twin | Reopened (Reopened: solver updated to ingest *_phys loads; E1 re-validated on pipeline data) | 2 |
 | 4 | Synchronization Engine | Completed | 3 |
-| 5 | Baseline Load Estimation | Completed | 4 |
-| 6 | Anomaly Detection | Completed | 4 |
+| 5 | Baseline Load Estimation | Reopened (Reopened: target load retraining on gross physical power loads) | 4 |
+| 6 | Anomaly Detection | Reopened (Reopened: baseline E3 rerun required after ADR-0004 injection & LSTM-AE tensor redesign) | 4 |
 | 7 | Residual Engine | Ready | 4 |
 | 8 | Controlled Staleness Experiments | Not Started | 5, 6, 7 |
 | 9 | Joint Analysis | Not Started | 8 |

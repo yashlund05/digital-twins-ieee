@@ -46,13 +46,15 @@ def initialize_digital_twin(
 def run_experiment_e1_validation(
     solver: DigitalTwinSolver | None = None,
     config_path: Path | str = "configs/digital_twin.yaml",
+    data_path: Path | str = "data/processed/load_profiles.parquet",
     output_root: Path | str = "experiments/runs",
     seed: int = 42,
 ) -> dict[str, Any]:
     """Execute Experiment E1: Digital Twin Baseline Validation per EXPERIMENTS.md.
 
     Evaluates power flow convergence, voltage profile limits, and power balance
-    across light (0.5x), nominal (1.0x), and heavy (1.5x) loading conditions.
+    across light (0.5x), nominal (1.0x), and heavy (1.5x) loading conditions using
+    the mapped physical loads from the data pipeline (*_phys columns).
 
     Saves complete experiment run artifacts to:
     experiments/runs/E1_DT_VALIDATION_SEED42_<YYYYMMDD>/
@@ -60,6 +62,7 @@ def run_experiment_e1_validation(
     Args:
         solver: Optional initialized DigitalTwinSolver.
         config_path: Path to configuration YAML.
+        data_path: Path to processed load profiles parquet file.
         output_root: Base runs directory.
         seed: Random seed for reproducibility.
 
@@ -70,6 +73,25 @@ def run_experiment_e1_validation(
 
     if solver is None:
         solver = initialize_digital_twin(config_path)
+
+    # Determine base physical loads from pipeline data
+    p_data = Path(data_path)
+    base_loads: dict[int, tuple[float, float]] = {}
+    if p_data.exists():
+        df_p = pd.read_parquet(p_data)
+        # Select representative nominal timestep (median total load)
+        phys_p_cols = [c for c in df_p.columns if c.endswith("_p_kw_phys")]
+        if phys_p_cols:
+            tot_p = df_p[phys_p_cols].sum(axis=1)
+            med_idx = (tot_p - tot_p.median()).abs().idxmin()
+            nom_row = df_p.loc[med_idx]
+            for b in range(2, 34):
+                base_loads[b] = (float(nom_row[f"bus_{b}_p_kw_phys"]), float(nom_row[f"bus_{b}_q_kvar_phys"]))
+            logger.info(f"Loaded physical baseline loads from pipeline timestep {med_idx} (Total P: {tot_p.loc[med_idx]:.2f} kW)")
+    
+    if not base_loads:
+        logger.warning("Pipeline physical loads not available; using benchmark nominal loads as fallback.")
+        base_loads = IEEE_33_BENCHMARK_LOADS
 
     # Test loading conditions
     conditions = {
@@ -84,7 +106,8 @@ def run_experiment_e1_validation(
 
     for name, mult in conditions.items():
         solver.reset()
-        solver.set_load_multiplier(mult)
+        scaled_loads = {b: (p * mult, q * mult) for b, (p, q) in base_loads.items()}
+        solver.set_all_loads(scaled_loads)
         state = solver.solve(timestamp=f"2018-01-01T12:00:00Z_{name}")
         states[name] = state
 

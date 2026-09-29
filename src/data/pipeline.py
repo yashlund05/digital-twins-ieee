@@ -84,7 +84,7 @@ def run_pipeline(
         date_tuple = (start_date, end_date) if (start_date or end_date) else None
         home_matrix = load_pecan_street_csv(
             filepath=raw_candidate,
-            load_column="grid",
+            load_column="gross",
             date_range=date_tuple,
             home_ids=cfg.source.pecan_street.homes,
         )
@@ -184,8 +184,13 @@ def run_pipeline(
         normalized_df = combined_features.copy()
 
     # 8. Persist Processed Artifacts
+    # Include physical unnormalized loads (bus_{id}_p_kw_phys, bus_{id}_q_kvar_phys)
+    phys_features = power_features.copy()
+    phys_features.columns = [f"{c}_phys" for c in phys_features.columns]
+    full_output_df = pd.concat([normalized_df, phys_features], axis=1)
+
     # Save processed features matrix and separate anomaly labels
-    save_parquet(normalized_df, out_path / "load_profiles.parquet")
+    save_parquet(full_output_df, out_path / "load_profiles.parquet")
     save_parquet(labels_df, out_path / "anomaly_labels.parquet")
 
     # 9. Pipeline Manifest

@@ -50,12 +50,30 @@ def load_pecan_street_csv(
     )
 
     # Read required columns
-    cols_to_read = ["dataid", "local_15min", load_column]
+    cols_to_read = ["dataid", "local_15min"]
+    if load_column in ["gross", "use"]:
+        # If 'use' is not directly present, compute gross = grid + solar (clamped to >= 0)
+        sample = pd.read_csv(path, nrows=5)
+        if "use" in sample.columns:
+            actual_load_col = "use"
+            cols_to_read.append("use")
+        else:
+            actual_load_col = "grid"
+            cols_to_read.extend(["grid", "solar"])
+    else:
+        actual_load_col = load_column
+        cols_to_read.append(load_column)
+
     df = pd.read_csv(
         path,
         usecols=cols_to_read,
-        dtype={"dataid": np.int64, load_column: np.float64},
     )
+    if "solar" in df.columns:
+        df["solar"] = df["solar"].fillna(0.0).clip(lower=0.0)
+        df["gross"] = (df["grid"] + df["solar"]).clip(lower=0.05)
+        actual_load_col = "gross"
+    elif actual_load_col in df.columns:
+        df[actual_load_col] = df[actual_load_col].clip(lower=0.05)
 
     logger.info(
         "Loaded raw CSV records",
@@ -82,12 +100,12 @@ def load_pecan_street_csv(
             df = df[df["timestamp"] <= end_ts]
         logger.info("Filtered by date range", extra={"start": start_date, "end": end_date})
 
-    # Pivot: Index = timestamp, Columns = dataid, Values = load_column
+    # Pivot: Index = timestamp, Columns = dataid, Values = actual_load_col
     # Handle any duplicate timestamps per home by taking the mean
     pivoted = df.pivot_table(
         index="timestamp",
         columns="dataid",
-        values=load_column,
+        values=actual_load_col,
         aggfunc="mean",
     )
 

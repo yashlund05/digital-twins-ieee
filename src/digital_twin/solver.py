@@ -195,17 +195,30 @@ class DigitalTwinSolver:
     ) -> DigitalTwinState:
         """Solve power flow for a single row from the Phase 2 load_profiles DataFrame.
 
+        Reads exclusively the physical columns ('bus_{id}_p_kw_phys' and 'bus_{id}_q_kvar_phys').
+        Does NOT fall back to benchmark defaults; raises KeyError if physical columns are missing.
+
         Args:
-            row: Pandas Series containing 'bus_{id}_p_kw' and 'bus_{id}_q_kvar' columns.
+            row: Pandas Series containing 'bus_{id}_p_kw_phys' and 'bus_{id}_q_kvar_phys' columns.
             timestamp: Timestamp identifier for state.
 
         Returns:
             DigitalTwinState telemetry snapshot.
+
+        Raises:
+            KeyError: If any required physical column is missing from row.
         """
         loads: dict[int, tuple[float, float]] = {}
         for bus_id in range(2, 34):
-            p_val = float(row.get(f"bus_{bus_id}_p_kw", IEEE_33_LOADS[bus_id][0]))
-            q_val = float(row.get(f"bus_{bus_id}_q_kvar", IEEE_33_LOADS[bus_id][1]))
+            p_col = f"bus_{bus_id}_p_kw_phys"
+            q_col = f"bus_{bus_id}_q_kvar_phys"
+            if p_col not in row or q_col not in row:
+                raise KeyError(
+                    f"Required physical load column '{p_col}' or '{q_col}' not found in telemetry row. "
+                    "DigitalTwinSolver requires explicit unnormalized physical loads (*_phys)."
+                )
+            p_val = float(row[p_col])
+            q_val = float(row[q_col])
             loads[bus_id] = (p_val, q_val)
 
         self.set_all_loads(loads)
