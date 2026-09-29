@@ -120,9 +120,10 @@ The mapping protocol is fully implemented and deterministic in `src/data/mapper.
    - Uniform 15-minute resolution across 35,040 timesteps for the full year 2018 (2018-01-01 to 2018-12-31).
    - Gaps up to 60 minutes (4 intervals) are imputed via forward-fill followed by time-based linear interpolation.
 
-4. **Reproducibility:**
+4. **Reproducibility & Scaling Characteristics:**
    - Fully deterministic given fixed random seed.
    - Bus assignments and scaling factors are archived in `data/interim/mapping_config.json`.
+   - **Research Limitation ("Two households per bus, scaled"):** Because each bus aggregates only $k=2$ residential households, the scaling factors $s_i = P_{0, i} / \mu_{\text{raw}, i}$ range from $18.4\times$ to $226.1\times$ (mean $\sim 56\times$). This synthetic scaling preserves the Baran & Wu nominal active power ($3{,}715.0\,\text{kW}$ mean) and allows OpenDSS to achieve 100% convergence, but exhibits a heavy right tail during coincident household peaks (system peak reaches $17{,}946\,\text{kW}$ with 19/32 buses exceeding $3\times$ nominal rating, resulting in localized $V_{\min}$ dropping to $0.6416\,\text{pu}$). All downstream results are qualified to this hybrid simulation setup.
 
 ---
 

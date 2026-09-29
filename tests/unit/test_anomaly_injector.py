@@ -42,24 +42,36 @@ def test_inject_synthetic_anomalies_rate_and_labels(mapped_load_data):
     )
 
     assert len(labels_df) == len(active_df)
-    assert set(labels_df.columns) == {"is_anomaly", "anomaly_type", "affected_buses", "event_id"}
+    expected_cols = {
+        "is_anomaly",
+        "anomaly_type",
+        "severity",
+        "target_buses",
+        "affected_buses",
+        "realized_ratio_kw",
+        "effect_size_sigma",
+        "event_id",
+    }
+    assert expected_cols.issubset(set(labels_df.columns))
 
     actual_rate = float(labels_df["is_anomaly"].mean())
     # Should be close to 5%
     assert abs(actual_rate - rate) < 0.02
     assert len(events) > 0
 
-    # Ensure anomalous steps have non-none labels
+    # Ensure anomalous steps have non-none labels and valid severity
     anom_rows = labels_df[labels_df["is_anomaly"] == 1]
     assert not (anom_rows["anomaly_type"] == "none").any()
     assert not (anom_rows["affected_buses"] == "none").any()
+    assert set(anom_rows["severity"].unique()).issubset({"low", "medium", "high"})
 
 
 def test_inject_synthetic_anomalies_fault_dynamics(mapped_load_data):
-    """Test that load spikes increase power and voltage sags drop power."""
+    """Test that load spikes increase power and load drops reduce power."""
     active_df, reactive_df = mapped_load_data
 
-    inj_p, _, labels_df, events = inject_synthetic_anomalies(
+    # Test load spike
+    inj_p_spike, _, _, events_spike = inject_synthetic_anomalies(
         active_power_df=active_df,
         reactive_power_df=reactive_df,
         anomaly_rate=0.08,
@@ -67,16 +79,35 @@ def test_inject_synthetic_anomalies_fault_dynamics(mapped_load_data):
         seed=123,
     )
 
-    # All injected events should be load_spike
-    for event in events:
+    for event in events_spike:
         assert event.fault_type == "load_spike"
-        # During spike, active power on target buses should exceed baseline
+        assert event.severity in ("low", "medium", "high")
         start, end = event.start_index, event.end_index
         for bus_id in event.target_buses:
             col = f"bus_{bus_id}_p_kw"
             baseline = active_df[col].iloc[start:end].to_numpy()
-            spiked = inj_p[col].iloc[start:end].to_numpy()
+            spiked = inj_p_spike[col].iloc[start:end].to_numpy()
             assert np.all(spiked > baseline)
+
+    # Test load drop
+    inj_p_drop, _, _, events_drop = inject_synthetic_anomalies(
+        active_power_df=active_df,
+        reactive_power_df=reactive_df,
+        anomaly_rate=0.08,
+        fault_types=["load_drop"],
+        seed=123,
+    )
+
+    for event in events_drop:
+        assert event.fault_type == "load_drop"
+        assert event.severity in ("low", "medium", "high")
+        start, end = event.start_index, event.end_index
+        for bus_id in event.target_buses:
+            col = f"bus_{bus_id}_p_kw"
+            baseline = active_df[col].iloc[start:end].to_numpy()
+            dropped = inj_p_drop[col].iloc[start:end].to_numpy()
+            assert np.all(dropped <= baseline)
+            assert np.all(dropped >= 0.05)
 
 
 def test_inject_synthetic_anomalies_reproducibility(mapped_load_data):

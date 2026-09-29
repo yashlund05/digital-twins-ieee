@@ -118,6 +118,7 @@ def run_pipeline(
     save_json(mapping_summary.model_dump(), int_path / "mapping_config.json")
 
     # 4. Synthetic Anomaly Injection
+    train_end_idx = int(cfg.splits.train_ratio * len(active_df))
     if cfg.anomaly_injection.enabled:
         inj_active_df, inj_reactive_df, labels_df, events = inject_synthetic_anomalies(
             active_power_df=active_df,
@@ -125,13 +126,23 @@ def run_pipeline(
             anomaly_rate=cfg.anomaly_injection.anomaly_rate,
             fault_types=cfg.anomaly_injection.fault_types,
             duration_timesteps=cfg.anomaly_injection.duration_timesteps,
+            train_end_idx=train_end_idx,
             seed=cfg.anomaly_injection.seed,
         )
     else:
         inj_active_df = active_df.copy()
         inj_reactive_df = reactive_df.copy()
         labels_df = pd.DataFrame(
-            {"is_anomaly": 0, "anomaly_type": "none", "affected_buses": "none", "event_id": "none"},
+            {
+                "is_anomaly": 0,
+                "anomaly_type": "none",
+                "severity": "none",
+                "target_buses": "none",
+                "affected_buses": "none",
+                "realized_ratio_kw": 1.0,
+                "effect_size_sigma": 0.0,
+                "event_id": "none",
+            },
             index=active_df.index,
         )
         events = []
@@ -170,14 +181,20 @@ def run_pipeline(
     }
     save_json(splits_data, out_path / "splits.json")
 
-    # 7. Normalization (Strictly fit on training split)
+    # 7. Normalization (Strictly fit on unperturbed pre-injection training split)
     if cfg.preprocessing.normalize:
+        # Construct pre-injection combined feature dataframe to fit scaler without synthetic contamination
+        pre_inj_power = pd.concat([active_df, reactive_df], axis=1)
+        pre_inj_lags = extract_lag_features(active_df, lags=[1, 24, 96])
+        pre_inj_combined = pd.concat([pre_inj_power, temporal_features, pre_inj_lags], axis=1)
+
         norm_cols = list(power_features.columns) + list(lag_features.columns)
         normalized_df, norm_params = fit_and_apply_normalization(
             combined_features,
             feature_columns=norm_cols,
             train_indices=splits.train_indices,
             method=cfg.preprocessing.normalization_method,
+            fit_df=pre_inj_combined,
         )
         save_json(norm_params.model_dump(), int_path / "normalization_params.json")
     else:

@@ -226,9 +226,10 @@ Committed secrets:       None
 1. IEEE 33-bus is a benchmark topology, not a real operational feeder
 2. Pecan Street data mapped to IEEE topology creates a hybrid simulation dataset — not field validation
 3. Synthetic anomalies cannot replicate all physical fault characteristics
-4. Results are qualified to the evaluated topology, dataset, and detector combination
-5. Simulation-based DT lacks field-level calibration and validation
-6. Synchronization intervals in simulation may not perfectly represent real-world SCADA/AMI communication constraints
+4. Feeder mapping aggregates two residential homes per bus and applies capacity scaling factors (up to $226\times$), which preserves mean nominal power ($3{,}715\,\text{kW}$) and 100% power flow convergence, but produces heavy right-tail coincidence peaks ($17{,}946\,\text{kW}$, $V_{\min} \approx 0.64\,\text{pu}$)
+5. Results are qualified to the evaluated topology, dataset, and detector combination
+6. Simulation-based DT lacks field-level calibration and validation
+7. Synchronization intervals in simulation may not perfectly represent real-world SCADA/AMI communication constraints
 
 ---
 

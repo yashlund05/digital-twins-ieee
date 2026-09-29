@@ -143,18 +143,21 @@ def fit_and_apply_normalization(
     train_indices: list[int],
     method: str = "min_max",
     epsilon: float = 1e-6,
+    fit_df: pd.DataFrame | None = None,
 ) -> tuple[pd.DataFrame, NormalizationParameters]:
     """Fit scaler strictly on the training partition and normalize the entire dataset.
 
     Guarantees zero data leakage: validation and test splits have zero influence
-    on the calculated normalization parameters.
+    on the calculated normalization parameters. If fit_df is provided (e.g. pre-injection data),
+    parameters are computed strictly from fit_df.iloc[train_indices].
 
     Args:
-        df: Input DataFrame containing feature_columns.
+        df: Input DataFrame containing feature_columns to transform.
         feature_columns: Column names to normalize.
         train_indices: Integer row indices corresponding strictly to the training split.
         method: Normalization method ('min_max' or 'z_score').
         epsilon: Small numerical stabilizer to prevent division by zero.
+        fit_df: Optional DataFrame to fit parameters on. Defaults to df.
 
     Returns:
         Tuple of (normalized_df, NormalizationParameters schema object).
@@ -164,7 +167,8 @@ def fit_and_apply_normalization(
         extra={"method": method, "train_size": len(train_indices)},
     )
 
-    train_data = df.iloc[train_indices][feature_columns]
+    source_fit = fit_df if fit_df is not None else df
+    train_data = source_fit.iloc[train_indices][feature_columns]
     normalized_df = df.copy()
     bus_params: dict[str, dict[str, float]] = {}
 

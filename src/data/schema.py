@@ -50,13 +50,22 @@ class AnomalyEvent(BaseModel):
 
     event_id: str = Field(..., description="Unique anomaly event identifier")
     fault_type: str = Field(
-        ..., description="Type of fault: voltage_sag, load_spike, phase_imbalance"
+        ..., description="Type of fault: load_drop, load_spike, phase_imbalance"
     )
     target_buses: list[int] = Field(..., min_length=1, description="Buses subjected to the anomaly")
     start_index: int = Field(..., ge=0, description="Integer timestep index start (inclusive)")
     end_index: int = Field(..., ge=0, description="Integer timestep index end (exclusive)")
     duration_timesteps: int = Field(..., gt=0, description="Duration in discrete timesteps")
     magnitude: float = Field(..., description="Relative multiplier or absolute perturbation value")
+    severity: str = Field(
+        default="medium", description="Severity tier: low, medium, or high"
+    )
+    realized_ratio_kw: float = Field(
+        default=1.0, description="Realized ratio of perturbed load to pre-injection baseline"
+    )
+    effect_size_sigma: float = Field(
+        default=0.0, description="Effect size in units of bus training standard deviation (sigma)"
+    )
     start_timestamp: str = Field(..., description="ISO 8601 start timestamp in UTC")
     end_timestamp: str = Field(..., description="ISO 8601 end timestamp in UTC")
 

@@ -33,7 +33,7 @@ data:
     anomaly_rate: 0.05       # 5% of time steps have anomalies
     seed: 42                 # Must match experiment seed
     fault_types:
-      - voltage_sag          # Sudden voltage drop
+      - load_drop            # Sudden customer load drop / curtailment
       - load_spike           # Sudden load increase
       - phase_imbalance      # Asymmetric loading
     duration_timesteps: 4    # Duration of each fault event (timesteps)

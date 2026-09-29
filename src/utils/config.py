@@ -117,7 +117,7 @@ class AnomalyInjectionConfig(BaseModel):
     anomaly_rate: float = 0.05
     seed: int = 42
     fault_types: list[str] = Field(
-        default_factory=lambda: ["voltage_sag", "load_spike", "phase_imbalance"]
+        default_factory=lambda: ["load_drop", "load_spike", "phase_imbalance"]
     )
     duration_timesteps: int = 4
 
