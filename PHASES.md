@@ -19,8 +19,8 @@
 | 1 | Environment & Infrastructure | Completed | 0 |
 | 2 | Data Pipeline | Completed | 1 |
 | 3 | IEEE 33-Bus Digital Twin | Completed | 2 |
-| 4 | Synchronization Engine | Ready | 3 |
-| 5 | Baseline Load Estimation | Not Started | 4 |
+| 4 | Synchronization Engine | Completed | 3 |
+| 5 | Baseline Load Estimation | Ready | 4 |
 | 6 | Anomaly Detection | Not Started | 4 |
 | 7 | Residual Engine | Not Started | 4 |
 | 8 | Controlled Staleness Experiments | Not Started | 5, 6, 7 |
@@ -305,12 +305,12 @@ RQ1 (core): The synchronization engine is the mechanism through which staleness 
 - Phase 3 complete
 
 ### Acceptance Criteria
-- [ ] Synchronization interval is configurable from `configs/synchronization.yaml`
-- [ ] AoI is correctly calculated and logged
-- [ ] Missed updates are detected and handled per policy
-- [ ] Synchronization log captures: physical_timestamp, dt_timestamp, last_sync, sync_age, aoi, missed_updates
-- [ ] Engine is independent from forecasting and anomaly detection modules
-- [ ] Stale state is clearly distinguished from current state
+- [x] Synchronization interval is configurable from `configs/synchronization.yaml`
+- [x] AoI is correctly calculated and logged
+- [x] Missed updates are detected and handled per policy
+- [x] Synchronization log captures: physical_timestamp, dt_timestamp, last_sync, sync_age, aoi, missed_updates
+- [x] Engine is independent from forecasting and anomaly detection modules
+- [x] Stale state is clearly distinguished from current state
 
 ### Tests
 - `tests/unit/test_sync_engine.py` — interval scheduling, event generation

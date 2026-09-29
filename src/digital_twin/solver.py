@@ -212,6 +212,36 @@ class DigitalTwinSolver:
         ts_str = timestamp or (str(row.name) if hasattr(row, "name") else None)
         return self.solve(timestamp=ts_str)
 
+    def solve_timestep_from_dict(
+        self,
+        loads: dict[int, tuple[float, float]] | dict[str, float],
+        timestamp: str | None = None,
+    ) -> DigitalTwinState:
+        """Solve power flow from a dictionary of bus loads.
+
+        Args:
+            loads: Mapping of either bus_id -> (P_kW, Q_kVAR) or 'P_bus_{id}' / 'bus_{id}_p_kw' -> float.
+            timestamp: Timestamp identifier for state.
+
+        Returns:
+            DigitalTwinState telemetry snapshot.
+        """
+        parsed_loads: dict[int, tuple[float, float]] = {}
+        for bus_id in range(2, 34):
+            if bus_id in loads and isinstance(loads[bus_id], (tuple, list)):
+                parsed_loads[bus_id] = (float(loads[bus_id][0]), float(loads[bus_id][1]))
+            else:
+                p_val = loads.get(
+                    f"P_bus_{bus_id}", loads.get(f"bus_{bus_id}_p_kw", IEEE_33_LOADS[bus_id][0])
+                )
+                q_val = loads.get(
+                    f"Q_bus_{bus_id}", loads.get(f"bus_{bus_id}_q_kvar", IEEE_33_LOADS[bus_id][1])
+                )
+                parsed_loads[bus_id] = (float(p_val), float(q_val))
+
+        self.set_all_loads(parsed_loads)
+        return self.solve(timestamp=timestamp)
+
     def reset(self) -> None:
         """Reset the solver circuit to default nominal baseline."""
         self._initialize_circuit()
