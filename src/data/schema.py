@@ -25,7 +25,18 @@ class BusMappingInfo(BaseModel):
         ..., min_length=1, description="List of Pecan Street dataids assigned to this bus"
     )
     scaling_factor: float = Field(
-        ..., gt=0.0, description="Scaling multiplier applied to aggregated home profile"
+        ..., gt=0.0,
+        description=(
+            "Effective multiplier from raw household sum to anchored physical series "
+            "(nom_p * anchor_scale / mean_raw); the background cap may clip individual steps"
+        ),
+    )
+    mean_raw_kw: float = Field(
+        default=0.0, ge=0.0, description="Mean of the raw (unscaled) household-pair sum (kW)"
+    )
+    capped_steps: int = Field(
+        default=0, ge=0,
+        description="Number of timesteps where the 2.0x-nominal background cap clipped this bus",
     )
 
 
@@ -43,6 +54,32 @@ class MappingConfigSummary(BaseModel):
     )
     bus_mappings: dict[int, BusMappingInfo] = Field(..., description="Mapping for each load bus")
     random_seed: int = Field(..., description="Random seed used to generate deterministic mapping")
+    anchor: str = Field(
+        default="mean",
+        description="Anchor convention: mean (legacy) or feeder_p99/feeder_p999/feeder_max (ADR-0005)",
+    )
+    alpha: float = Field(
+        default=1.0, ge=0.0, le=1.0,
+        description="Household-shape amplitude: 1.0 = pure household shapes (ADR-0005 primary)",
+    )
+    cap_multiple: float | None = Field(
+        default=2.0, ge=1.0,
+        description="Background cap in multiples of nominal rating (None disables)",
+    )
+    anchor_scale: float = Field(
+        default=1.0, gt=0.0,
+        description="Anchor scale s: percentile(S, p) is set to the 3,715 kW design peak",
+    )
+    assignment_file: str | None = Field(
+        default=None, description="Tracked assignment YAML used (configs/mapping_assignment.yaml)"
+    )
+    assignment_sha256: str | None = Field(
+        default=None, description="SHA-256 of the assignment file used for this dataset version"
+    )
+    home_use_counts: dict[str, int] = Field(
+        default_factory=dict,
+        description="Number of buses each household is assigned to (balanced: 2-3)",
+    )
 
 
 class AnomalyEvent(BaseModel):

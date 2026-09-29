@@ -53,6 +53,30 @@ def test_no_duplicated_pair_across_buses(assignment):
     assert len(set(pairs)) == len(pairs), "no two buses may share the identical home pair"
 
 
+def test_mapper_output_matches_assignment_file(sample_home_profiles, assignment):
+    """The mapper must reproduce the tracked assignment exactly (B1.1 contract)."""
+    from src.data.mapper import map_homes_to_ieee33
+
+    assign = {int(k): v for k, v in assignment["bus_assignments"].items()}
+    # Rename synthetic home columns to the real household ids so the tracked
+    # assignment can be exercised end-to-end.
+    rename = dict(zip(sample_home_profiles.columns, sorted(assign_h for v in assign.values() for assign_h in v)))
+    profiles = sample_home_profiles.rename(columns=rename)
+    _, _, summary = map_homes_to_ieee33(profiles, assignment=assign)
+    for bus, homes in assign.items():
+        assert sorted(summary.bus_mappings[bus].assigned_homes) == sorted(homes)
+
+
+@pytest.fixture(scope="module")
+def sample_home_profiles():
+    """Small synthetic home matrix for mapper-contract tests."""
+    from src.data.loader import generate_benchmark_residential_traces
+
+    return generate_benchmark_residential_traces(
+        num_homes=25, num_days=7, resolution_minutes=15, seed=100
+    )
+
+
 def test_assignment_file_is_valid_yaml_mapping_contract():
     with open(ASSIGNMENT_PATH, encoding="utf-8") as f:
         raw = yaml.safe_load(f)

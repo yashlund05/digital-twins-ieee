@@ -110,6 +110,15 @@ class SplitsConfig(BaseModel):
     temporal: bool = True
 
 
+class MappingConfig(BaseModel):
+    """Household-to-bus mapping settings (ADR-0005)."""
+
+    assignment_file: str = "configs/mapping_assignment.yaml"
+    anchor: str = "feeder_p999"
+    alpha: float = 1.0
+    cap_multiple: float = 2.0
+
+
 class AnomalyInjectionConfig(BaseModel):
     """Synthetic anomaly injection settings."""
 
@@ -129,6 +138,7 @@ class DataConfig(BaseModel):
     network: NetworkConfig = Field(default_factory=NetworkConfig)
     preprocessing: PreprocessingConfig = Field(default_factory=PreprocessingConfig)
     splits: SplitsConfig = Field(default_factory=SplitsConfig)
+    mapping: MappingConfig = Field(default_factory=MappingConfig)
     anomaly_injection: AnomalyInjectionConfig = Field(default_factory=AnomalyInjectionConfig)
     dataset_description: str = ""
 

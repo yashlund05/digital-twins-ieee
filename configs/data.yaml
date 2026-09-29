@@ -28,6 +28,13 @@ data:
     # IMPORTANT: splits are temporal (ordered), not random
     temporal: true
 
+  mapping:
+    # ADR-0005 (Accepted 2026-09-30): re-anchored, balanced household mapping
+    assignment_file: configs/mapping_assignment.yaml  # tracked, authoritative assignment
+    anchor: feeder_p999     # p99.9 of unnormalized feeder total set to 3,715 kW design peak
+    alpha: 1.0              # 1.0 = pure household shapes (0.3 is the pre-approved fallback)
+    cap_multiple: 2.0       # background cap: no bus above 2.0x nominal before injection
+
   anomaly_injection:
     enabled: true
     anomaly_rate: 0.05       # 5% of time steps have anomalies

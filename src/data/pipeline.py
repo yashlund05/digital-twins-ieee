@@ -109,11 +109,15 @@ def run_pipeline(
         max_gap_minutes=cfg.preprocessing.max_gap_minutes,
     )
 
-    # 3. Feeder Mapping to IEEE 33-bus
+    # 3. Feeder Mapping to IEEE 33-bus (ADR-0005: tracked assignment, re-anchored)
     active_df, reactive_df, mapping_summary = map_homes_to_ieee33(
         cleaned_homes,
         seed=seed,
         homes_per_bus=2,
+        assignment_path=cfg.mapping.assignment_file,
+        anchor=cfg.mapping.anchor,
+        alpha=cfg.mapping.alpha,
+        cap_multiple=cfg.mapping.cap_multiple,
     )
     save_json(mapping_summary.model_dump(), int_path / "mapping_config.json")
 
