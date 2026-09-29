@@ -36,17 +36,35 @@ def validate_dt() -> None:
 
 
 @cli.command()
-@click.option("--stage", default="all", help="Pipeline stage: all, interim, processed")
-def prepare_data(stage: str) -> None:
+@click.option("--config", default="configs/data.yaml", help="Path to data configuration YAML")
+@click.option("--raw-data", default=None, help="Path to raw Pecan Street CSV (optional override)")
+@click.option("--seed", default=None, type=int, help="Random seed (overrides config)")
+def prepare_data(config: str, raw_data: str | None, seed: int | None) -> None:
     """Run the data preparation pipeline.
 
     Processes raw Pecan Street data and maps it to the IEEE 33-bus topology.
     Injects synthetic anomalies per the configured protocol.
     Produces train/validation/test splits with temporal leakage prevention.
     """
-    click.echo(f"[PLACEHOLDER] prepare-data (stage={stage}) — implement in Phase 2")
-    click.echo("See: docs/methodology/DATA_PROTOCOL.md")
-    raise click.ClickException("Not yet implemented (Phase 2)")
+    from src.data.pipeline import run_pipeline
+
+    click.echo(f"Starting data preparation pipeline (config={config})...")
+    result = run_pipeline(config_path=config, raw_data_path=raw_data, seed_override=seed)
+    click.echo("[SUCCESS] Data pipeline execution complete.")
+    click.echo(f"  Total timesteps : {result['manifest']['total_timesteps']}")
+    click.echo(
+        f"  Anomalies       : {result['manifest']['num_anomalies_injected']} ({result['manifest']['anomaly_rate'] * 100:.2f}%)"
+    )
+    click.echo(
+        f"  Train split     : {result['manifest']['split_counts']['train']} steps ({result['splits']['train']['start']} to {result['splits']['train']['end']})"
+    )
+    click.echo(
+        f"  Val split       : {result['manifest']['split_counts']['validation']} steps ({result['splits']['validation']['start']} to {result['splits']['validation']['end']})"
+    )
+    click.echo(
+        f"  Test split      : {result['manifest']['split_counts']['test']} steps ({result['splits']['test']['start']} to {result['splits']['test']['end']})"
+    )
+    click.echo("  Processed files saved to data/processed/ and data/interim/")
 
 
 @cli.command()

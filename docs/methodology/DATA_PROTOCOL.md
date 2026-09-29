@@ -101,37 +101,28 @@ Pecan Street residential load profiles are mapped to IEEE 33-bus nodes to create
 
 ### Mapping Procedure
 
-**[PLACEHOLDER — mapping decisions to be finalized in Phase 2]**
-
-The mapping procedure will address:
+The mapping protocol is fully implemented and deterministic in `src/data/mapper.py`:
 
 1. **Home-to-bus assignment:**
-   - Strategy to be determined (random assignment, clustering by load magnitude, or rule-based)
-   - Each of the 32 load buses receives at least one home's profile
-   - Multiple homes per bus are aggregated (summed)
+   - 25 Austin residential smart meter profiles are mapped across the 32 IEEE load buses (buses 2 through 33).
+   - Each bus $i$ is deterministically assigned an aggregation of $k=2$ distinct home profiles using a pseudo-random permutation governed by the configured random seed (`seed: 42`).
+   - The aggregated trace for bus $i$ is $p_{\text{raw}, i}(t) = \sum_{h \in \mathcal{H}_i} \text{load}_h(t)$.
 
-2. **Load scaling:**
-   - Pecan Street residential loads (kW range) scaled to match IEEE 33-bus nominal loading
-   - Scaling factor derived from IEEE 33-bus reference load data
-   - Scaling applied per bus, not globally
+2. **Capacity scaling:**
+   - For each bus $i \in \{2 \dots 33\}$, the nominal active load $P_{0, i}$ and reactive load $Q_{0, i}$ are taken from Baran & Wu (1989).
+   - Scaling factor: $s_i = \frac{P_{0, i}}{\mu_{\text{raw}, i}}$, where $\mu_{\text{raw}, i} = \frac{1}{T}\sum_t p_{\text{raw}, i}(t)$.
+   - Active power profile: $P_i(t) = s_i \cdot p_{\text{raw}, i}(t)$.
+   - Reactive power profile: $Q_i(t) = \left(\frac{Q_{0, i}}{P_{0, i}}\right) \cdot P_i(t)$, preserving the standard feeder power factor ratio.
+   - Total nominal feeder active load sum across all 32 buses is exactly 3,715 kW; reactive load sum is 2,300 kVAR.
 
 3. **Temporal alignment:**
-   - Pecan Street timestamps are in US Central time
-   - Timestamps must be normalized to a consistent reference frame
-   - Temporal gaps (missing data) are handled by forward-fill up to 60 minutes
+   - Raw timestamps in US Central time (`local_15min`) are normalized to UTC `timestamp` index.
+   - Uniform 15-minute resolution across 35,040 timesteps for the full year 2018 (2018-01-01 to 2018-12-31).
+   - Gaps up to 60 minutes (4 intervals) are imputed via forward-fill followed by time-based linear interpolation.
 
-4. **Diversity:**
-   - Buses are assigned different home profiles to ensure load diversity
-   - Industrial-scale buses (if any) use aggregated profiles scaled to appropriate levels
-
-5. **Reproducibility:**
-   - Mapping is deterministic given fixed random seed
-   - Mapping configuration stored in `configs/data.yaml`
-   - Mapping output stored at `data/interim/mapping_config.json`
-
-### Documentation Commitment
-
-The final mapping protocol will be documented here (Phase 2) and released as part of the reproducibility package.
+4. **Reproducibility:**
+   - Fully deterministic given fixed random seed.
+   - Bus assignments and scaling factors are archived in `data/interim/mapping_config.json`.
 
 ---
 

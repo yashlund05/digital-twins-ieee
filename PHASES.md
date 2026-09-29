@@ -17,8 +17,8 @@
 |-------|------|--------|------------|
 | 0 | Repository & Research Governance | Completed | — |
 | 1 | Environment & Infrastructure | Completed | 0 |
-| 2 | Data Pipeline | Ready | 1 |
-| 3 | IEEE 33-Bus Digital Twin | Not Started | 2 |
+| 2 | Data Pipeline | Completed | 1 |
+| 3 | IEEE 33-Bus Digital Twin | Ready | 2 |
 | 4 | Synchronization Engine | Not Started | 3 |
 | 5 | Baseline Load Estimation | Not Started | 4 |
 | 6 | Anomaly Detection | Not Started | 4 |
@@ -181,12 +181,12 @@ RQ1 (prerequisite): Data quality and preparation directly affect the validity of
 - Pecan Street data access obtained
 
 ### Acceptance Criteria
-- [ ] Data pipeline produces deterministic output given fixed seed
-- [ ] No temporal leakage between train/val/test splits (validated by test)
-- [ ] All 33 IEEE bus nodes have mapped load profiles
-- [ ] Anomaly injection is configurable and reproducible
-- [ ] Data is documented as hybrid simulation dataset (not field measurements)
-- [ ] Mapping protocol is documented in `docs/methodology/DATA_PROTOCOL.md`
+- [x] Data pipeline produces deterministic output given fixed seed
+- [x] No temporal leakage between train/val/test splits (validated by test)
+- [x] All 33 IEEE bus nodes have mapped load profiles
+- [x] Anomaly injection is configurable and reproducible
+- [x] Data is documented as hybrid simulation dataset (not field measurements)
+- [x] Mapping protocol is documented in `docs/methodology/DATA_PROTOCOL.md`
 
 ### Tests
 - `tests/unit/test_preprocessor.py` — normalization, scaling
