@@ -125,13 +125,25 @@ def train_forecast(config: str, seed: int) -> None:
 @cli.command()
 @click.option("--config", default="configs/anomaly_detection.yaml", help="Anomaly config")
 @click.option("--seed", default=42, type=int, help="Random seed")
-def train_anomaly(config: str, seed: int) -> None:
+@click.option(
+    "--input",
+    "input_rep",
+    default="raw",
+    type=click.Choice(["raw", "residual"]),
+    help="Input representation",
+)
+def train_anomaly(config: str, seed: int, input_rep: str) -> None:
     """Train anomaly detection models (Isolation Forest, LSTM Autoencoder).
 
     Runs Experiment E3: Anomaly Detection Baselines.
     """
-    click.echo("[PLACEHOLDER] train-anomaly — implement in Phase 6")
-    raise click.ClickException("Not yet implemented (Phase 6)")
+    from src.anomaly_detection.experiment_e3 import run_experiment_e3
+
+    click.echo(
+        f"Starting Experiment E3: Anomaly Detection Baselines (seed={seed}, input={input_rep})..."
+    )
+    run_dir = run_experiment_e3(seed=seed, input_representation=input_rep)
+    click.echo(f"[SUCCESS] Experiment E3 complete. Results and models saved to {run_dir}")
 
 
 @cli.command()

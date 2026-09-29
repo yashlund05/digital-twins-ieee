@@ -21,8 +21,8 @@
 | 3 | IEEE 33-Bus Digital Twin | Completed | 2 |
 | 4 | Synchronization Engine | Completed | 3 |
 | 5 | Baseline Load Estimation | Completed | 4 |
-| 6 | Anomaly Detection | Ready | 4 |
-| 7 | Residual Engine | Not Started | 4 |
+| 6 | Anomaly Detection | Completed | 4 |
+| 7 | Residual Engine | Ready | 4 |
 | 8 | Controlled Staleness Experiments | Not Started | 5, 6, 7 |
 | 9 | Joint Analysis | Not Started | 8 |
 | 10 | Statistical Validation | Not Started | 9 |
@@ -429,11 +429,11 @@ RQ1 (baseline): Establishes anomaly detection performance under ideal conditions
 - Phase 4 complete
 
 ### Acceptance Criteria
-- [ ] Both detectors are trained in unsupervised mode (no anomaly labels in training)
-- [ ] Both detectors produce anomaly scores
-- [ ] Threshold selection is configurable and documented
-- [ ] All metrics computed correctly
-- [ ] Models are deterministic for fixed seeds
+- [x] Both detectors are trained in unsupervised mode (no anomaly labels in training)
+- [x] Both detectors produce anomaly scores
+- [x] Threshold selection is configurable and documented
+- [x] All metrics computed correctly
+- [x] Models are deterministic for fixed seeds
 
 ### Tests
 - `tests/unit/test_isolation_forest.py`
