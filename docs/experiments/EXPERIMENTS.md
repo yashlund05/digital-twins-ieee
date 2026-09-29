@@ -1,4 +1,4 @@
-﻿# Experiments
+# Experiments
 
 > **Project:** Digital Twin Power Grid — Synchronization Staleness Study
 > **Version:** 1.0.0 — September 2026
@@ -15,7 +15,7 @@
 
 | ID | Name | Phase | Status | Addresses |
 |----|------|-------|--------|-----------|
-| E1 | Digital Twin Baseline Validation | 3 | Not started | DT correctness |
+| E1 | Digital Twin Baseline Validation | 3 | Completed | DT correctness |
 | E2 | Load Estimation Baselines | 5 | Not started | Baseline load estimation |
 | E3 | Anomaly Detection Baselines | 6 | Not started | Baseline anomaly detection |
 | E4 | Raw vs. Residual Inputs | 7 | Not started | Input representation comparison |
@@ -74,9 +74,11 @@ experiments/runs/E1_DT_VALIDATION_SEED42_<YYYYMMDD>/
 ### Status
 
 ```
-Status: Not started
+Status: Completed
 Phase: 3
-Blocked by: Phase 2 (data pipeline)
+Run ID: E1_DT_VALIDATION_SEED42_20260929
+Artifacts: experiments/runs/E1_DT_VALIDATION_SEED42_20260929/
+Outcome: PASSED (Voltage range [0.9114, 0.9983] pu, power balance error 0.0011%)
 ```
 
 ---

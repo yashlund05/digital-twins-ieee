@@ -24,15 +24,41 @@ def cli() -> None:
 
 
 @cli.command()
-def validate_dt() -> None:
+@click.option(
+    "--config", default="configs/digital_twin.yaml", help="Path to digital twin config YAML"
+)
+@click.option("--seed", default=42, type=int, help="Random seed for experiment")
+def validate_dt(config: str, seed: int) -> None:
     """Validate the IEEE 33-bus Digital Twin via OpenDSS power flow.
 
     Runs Experiment E1: Digital Twin Baseline Validation.
     Checks physical constraint satisfaction and power flow correctness.
     """
-    click.echo("[PLACEHOLDER] validate-dt command — implement in Phase 3")
-    click.echo("See: docs/experiments/EXPERIMENTS.md (E1)")
-    raise click.ClickException("Not yet implemented (Phase 3)")
+    from src.digital_twin.initializer import run_experiment_e1_validation
+
+    click.echo(
+        f"Running Experiment E1: Digital Twin Baseline Validation (config={config}, seed={seed})..."
+    )
+    result = run_experiment_e1_validation(config_path=config, seed=seed)
+
+    if result["all_passed"]:
+        click.echo("[SUCCESS] Experiment E1 Validation PASSED.")
+    else:
+        click.echo("[WARNING] Experiment E1 Validation finished with warnings/failures.")
+
+    metrics = result["stats"]["nominal_metrics"]
+    click.echo(f"  Run ID           : {result['run_id']}")
+    click.echo(
+        f"  Min Voltage      : {metrics['min_voltage_pu']:.4f} pu (Bus {metrics['min_voltage_bus']})"
+    )
+    click.echo(f"  Max Voltage      : {metrics['max_voltage_pu']:.4f} pu")
+    click.echo(f"  Total P Gen      : {metrics['total_gen_p_kw']:.2f} kW")
+    click.echo(f"  Total P Load     : {metrics['total_load_p_kw']:.2f} kW")
+    click.echo(
+        f"  Total P Losses   : {metrics['total_loss_p_kw']:.2f} kW ({metrics['loss_percentage']:.2f}%)"
+    )
+    click.echo(f"  Power Balance Err: {metrics['power_balance_error_pct']:.6f}%")
+    click.echo(f"  Outputs saved to : {result['run_dir']}")
 
 
 @cli.command()

@@ -18,8 +18,8 @@
 | 0 | Repository & Research Governance | Completed | — |
 | 1 | Environment & Infrastructure | Completed | 0 |
 | 2 | Data Pipeline | Completed | 1 |
-| 3 | IEEE 33-Bus Digital Twin | Ready | 2 |
-| 4 | Synchronization Engine | Not Started | 3 |
+| 3 | IEEE 33-Bus Digital Twin | Completed | 2 |
+| 4 | Synchronization Engine | Ready | 3 |
 | 5 | Baseline Load Estimation | Not Started | 4 |
 | 6 | Anomaly Detection | Not Started | 4 |
 | 7 | Residual Engine | Not Started | 4 |
@@ -244,11 +244,11 @@ RQ1 (prerequisite): The DT must correctly simulate the physical system before sy
 - Phase 2 complete
 
 ### Acceptance Criteria
-- [ ] OpenDSS solves IEEE 33-bus power flow successfully
-- [ ] Bus voltages within expected range (per IEEE 33-bus reference)
-- [ ] Power balance satisfied (generation ≈ load + losses)
-- [ ] DT state object serializable to JSON
-- [ ] Solver is deterministic for fixed inputs
+- [x] OpenDSS solves IEEE 33-bus power flow successfully
+- [x] Bus voltages within expected range (per IEEE 33-bus reference)
+- [x] Power balance satisfied (generation ≈ load + losses)
+- [x] DT state object serializable to JSON
+- [x] Solver is deterministic for fixed inputs
 
 ### Tests
 - `tests/unit/test_dt_topology.py` — IEEE 33-bus topology loading
