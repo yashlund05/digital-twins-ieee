@@ -115,8 +115,11 @@ def train_forecast(config: str, seed: int) -> None:
 
     Runs Experiment E2: Load Estimation Baselines.
     """
-    click.echo("[PLACEHOLDER] train-forecast — implement in Phase 5")
-    raise click.ClickException("Not yet implemented (Phase 5)")
+    from src.forecasting.experiment_e2 import run_experiment_e2
+
+    click.echo(f"Starting Experiment E2: Load Estimation Baselines (seed={seed})...")
+    run_dir = run_experiment_e2(seed=seed)
+    click.echo(f"[SUCCESS] Experiment E2 complete. Results and models saved to {run_dir}")
 
 
 @cli.command()

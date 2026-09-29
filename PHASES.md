@@ -20,8 +20,8 @@
 | 2 | Data Pipeline | Completed | 1 |
 | 3 | IEEE 33-Bus Digital Twin | Completed | 2 |
 | 4 | Synchronization Engine | Completed | 3 |
-| 5 | Baseline Load Estimation | Ready | 4 |
-| 6 | Anomaly Detection | Not Started | 4 |
+| 5 | Baseline Load Estimation | Completed | 4 |
+| 6 | Anomaly Detection | Ready | 4 |
 | 7 | Residual Engine | Not Started | 4 |
 | 8 | Controlled Staleness Experiments | Not Started | 5, 6, 7 |
 | 9 | Joint Analysis | Not Started | 8 |
@@ -368,11 +368,11 @@ RQ1 (baseline): Establishes the load estimation performance under ideal conditio
 - Phase 4 complete
 
 ### Acceptance Criteria
-- [ ] All three models train from configuration
-- [ ] All three models produce deterministic outputs for fixed seeds
-- [ ] Metrics computed correctly (validated against reference implementations)
-- [ ] No temporal leakage in training
-- [ ] Results match expected literature ranges (see literature review benchmarks)
+- [x] All three models train from configuration
+- [x] All three models produce deterministic outputs for fixed seeds
+- [x] Metrics computed correctly (validated against reference implementations)
+- [x] No temporal leakage in training
+- [x] Results match expected literature ranges (see literature review benchmarks)
 
 ### Tests
 - `tests/unit/test_persistence.py`
