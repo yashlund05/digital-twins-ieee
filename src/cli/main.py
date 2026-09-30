@@ -147,6 +147,30 @@ def train_anomaly(config: str, seed: int, input_rep: str) -> None:
 
 
 @cli.command()
+@click.option("--config", default="configs/anomaly_detection.yaml", help="Anomaly config YAML")
+@click.option("--seed", default=42, type=int, help="Random seed for experiment")
+@click.option(
+    "--norm",
+    default="z_score",
+    type=click.Choice(["z_score", "min_max", "robust"]),
+    help="Residual normalization method",
+)
+def run_e4(config: str, seed: int, norm: str) -> None:
+    """Run Experiment E4: Raw vs. Residual Inputs (2x2 Factorial Baseline).
+
+    Compares Isolation Forest and LSTM Autoencoder on Raw vs. Residual representations
+    under ideal baseline synchronization (Delta t_sync = 0).
+    """
+    from src.residuals.experiment_e4 import run_experiment_e4
+
+    click.echo(
+        f"Starting Experiment E4: Raw vs. Residual Inputs (seed={seed}, norm={norm}, config={config})..."
+    )
+    run_dir = run_experiment_e4(seed=seed, normalization_method=norm)
+    click.echo(f"[SUCCESS] Experiment E4 complete. All artifacts saved to: {run_dir}")
+
+
+@cli.command()
 @click.option("--run-id", required=True, help="Experiment run ID to evaluate")
 def evaluate(run_id: str) -> None:
     """Evaluate the results of a completed experiment run."""

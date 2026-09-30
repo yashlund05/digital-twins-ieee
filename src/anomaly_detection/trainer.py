@@ -90,7 +90,9 @@ class AnomalyDetectionTrainer:
 
         # Select continuous electrical telemetry features (32 P + 32 Q bus quantities)
         elec_cols = [
-            c for c in df_feats.columns if c.startswith("bus_") and ("_p_kw" in c or "_q_kvar" in c)
+            c
+            for c in df_feats.columns
+            if c.startswith("bus_") and (c.endswith("_p_kw") or c.endswith("_q_kvar"))
         ]
         if not elec_cols:
             elec_cols = [c for c in df_feats.columns if c not in ["timestamp"]]
