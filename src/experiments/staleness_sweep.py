@@ -275,77 +275,112 @@ class E5ExperimentCoordinator:
         )
         base_raw_res = base_res_result.values
 
-        # Feature extractor
-        feat_cfg = ResidualFeatureConfig(
-            include_direct=True,
-            include_absolute=True,
-            include_squared=True,
-            include_l2_norm=True,
-            include_mean_abs=True,
-            include_max_abs=True,
-            lag_steps=[1, 2],
-        )
+        # Feature extractor matching E4 (direct 64 residual electrical features)
+        feat_cfg = ResidualFeatureConfig(include_raw=True)
         self.feature_extractor = ResidualFeatureExtractor(config=feat_cfg)
         base_res_feats = self.feature_extractor.extract(base_raw_res)
 
-        # Residual normalizer fitted strictly on train split
-        res_normalizer = ResidualNormalizer(method="z_score")
-        res_normalizer.fit(base_res_feats[self.train_idx])
-        self.frozen_normalizers["residual"] = res_normalizer
+        # Search for pre-trained Phase 7 E4 baseline artifacts
+        e4_dir = None
+        runs_dir = Path("experiments/runs")
+        candidate_e4_dirs = [
+            runs_dir / f"E4_RAW_VS_RESIDUAL_SEED{self.seed}_20260930",
+            runs_dir / "E4_RAW_VS_RESIDUAL_SEED42_20260930",
+        ]
+        if runs_dir.exists():
+            for p in sorted(runs_dir.glob("E4_RAW_VS_RESIDUAL_*"), reverse=True):
+                if p.is_dir() and (p / "models" / "E4-3_lstm_autoencoder_raw.pt").exists():
+                    if p not in candidate_e4_dirs:
+                        candidate_e4_dirs.insert(0, p)
 
-        norm_res_feats = res_normalizer.transform(base_res_feats)
-        raw_telemetry = self.observed_pwr.values
+        for cand in candidate_e4_dirs:
+            if cand.exists() and (cand / "models" / "E4-3_lstm_autoencoder_raw.pt").exists():
+                e4_dir = cand
+                break
 
-        # 2. Fit Anomaly Detectors
-        # IF Raw
-        if_raw = IsolationForestDetector(contamination=0.05, random_state=self.seed)
-        if_raw.fit(raw_telemetry[self.train_idx])
-        val_scores_if_raw = if_raw.score_samples(raw_telemetry[self.val_idx])
-        th_if_raw = float(np.percentile(val_scores_if_raw, 95.0))
-        self.frozen_models["if_raw"] = if_raw
-        self.frozen_thresholds["if_raw"] = th_if_raw
+        if e4_dir is not None:
+            logger.info(f"Loading validated Phase 7 baseline models and normalizers from: {e4_dir}")
+            models_dir = e4_dir / "models"
+            if_raw = IsolationForestDetector.load(models_dir / "E4-1_isolation_forest_raw")
+            if_res = IsolationForestDetector.load(models_dir / "E4-2_isolation_forest_residual")
+            lstm_raw = LSTMAutoencoderDetector.load(models_dir / "E4-3_lstm_autoencoder_raw")
+            lstm_res = LSTMAutoencoderDetector.load(models_dir / "E4-4_lstm_autoencoder_residual")
+            res_normalizer = ResidualNormalizer.load(e4_dir / "residual_normalizer.json")
 
-        # IF Residual
-        if_res = IsolationForestDetector(contamination=0.05, random_state=self.seed)
-        if_res.fit(norm_res_feats[self.train_idx])
-        val_scores_if_res = if_res.score_samples(norm_res_feats[self.val_idx])
-        th_if_res = float(np.percentile(val_scores_if_res, 95.0))
-        self.frozen_models["if_res"] = if_res
-        self.frozen_thresholds["if_res"] = th_if_res
+            self.frozen_models["if_raw"] = if_raw
+            self.frozen_models["if_res"] = if_res
+            self.frozen_models["lstm_raw"] = lstm_raw
+            self.frozen_models["lstm_res"] = lstm_res
 
-        # LSTM-AE Raw
-        lstm_raw = LSTMAutoencoderDetector(
-            lookback_steps=24,
-            encoder_units=[64, 32],
-            latent_dim=16,
-            decoder_units=[32, 64],
-            epochs=10,
-            batch_size=64,
-            learning_rate=0.001,
-            seed=self.seed,
-        )
-        lstm_raw.fit(raw_telemetry[self.train_idx], X_val=raw_telemetry[self.val_idx])
-        val_scores_lstm_raw = lstm_raw.score_samples(raw_telemetry[self.val_idx])
-        th_lstm_raw = float(np.percentile(val_scores_lstm_raw, 95.0))
-        self.frozen_models["lstm_raw"] = lstm_raw
-        self.frozen_thresholds["lstm_raw"] = th_lstm_raw
+            self.frozen_thresholds["if_raw"] = float(if_raw.threshold)
+            self.frozen_thresholds["if_res"] = float(if_res.threshold)
+            self.frozen_thresholds["lstm_raw"] = float(lstm_raw.threshold)
+            self.frozen_thresholds["lstm_res"] = float(lstm_res.threshold)
+            self.frozen_normalizers["residual"] = res_normalizer
+        else:
+            logger.info("Fitting baseline anomaly detectors from scratch...")
+            res_normalizer = ResidualNormalizer(method="z_score")
+            res_normalizer.fit(base_res_feats[self.train_idx])
+            self.frozen_normalizers["residual"] = res_normalizer
 
-        # LSTM-AE Residual
-        lstm_res = LSTMAutoencoderDetector(
-            lookback_steps=24,
-            encoder_units=[64, 32],
-            latent_dim=16,
-            decoder_units=[32, 64],
-            epochs=10,
-            batch_size=64,
-            learning_rate=0.001,
-            seed=self.seed,
-        )
-        lstm_res.fit(norm_res_feats[self.train_idx], X_val=norm_res_feats[self.val_idx])
-        val_scores_lstm_res = lstm_res.score_samples(norm_res_feats[self.val_idx])
-        th_lstm_res = float(np.percentile(val_scores_lstm_res, 95.0))
-        self.frozen_models["lstm_res"] = lstm_res
-        self.frozen_thresholds["lstm_res"] = th_lstm_res
+            norm_res_feats = res_normalizer.transform(base_res_feats)
+            raw_telemetry = self.observed_pwr.values
+
+            # IF Raw
+            if_raw = IsolationForestDetector(contamination=0.05, random_state=self.seed)
+            if_raw.fit(raw_telemetry[self.train_idx])
+            val_scores_if_raw = if_raw.score_samples(raw_telemetry[self.val_idx])
+            th_if_raw = float(np.percentile(val_scores_if_raw, 95.0))
+            if_raw.set_threshold(th_if_raw)
+            self.frozen_models["if_raw"] = if_raw
+            self.frozen_thresholds["if_raw"] = th_if_raw
+
+            # IF Residual
+            if_res = IsolationForestDetector(contamination=0.05, random_state=self.seed)
+            if_res.fit(norm_res_feats[self.train_idx])
+            val_scores_if_res = if_res.score_samples(norm_res_feats[self.val_idx])
+            th_if_res = float(np.percentile(val_scores_if_res, 95.0))
+            if_res.set_threshold(th_if_res)
+            self.frozen_models["if_res"] = if_res
+            self.frozen_thresholds["if_res"] = th_if_res
+
+            # LSTM-AE Raw
+            lstm_raw = LSTMAutoencoderDetector(
+                lookback_steps=24,
+                encoder_units=[64, 32],
+                latent_dim=16,
+                decoder_units=[32, 64],
+                epochs=50,
+                patience=8,
+                batch_size=64,
+                learning_rate=0.001,
+                seed=self.seed,
+            )
+            lstm_raw.fit(raw_telemetry[self.train_idx], X_val=raw_telemetry[self.val_idx])
+            val_scores_lstm_raw = lstm_raw.score_samples(raw_telemetry[self.val_idx])
+            th_lstm_raw = float(np.percentile(val_scores_lstm_raw, 95.0))
+            lstm_raw.set_threshold(th_lstm_raw)
+            self.frozen_models["lstm_raw"] = lstm_raw
+            self.frozen_thresholds["lstm_raw"] = th_lstm_raw
+
+            # LSTM-AE Residual
+            lstm_res = LSTMAutoencoderDetector(
+                lookback_steps=24,
+                encoder_units=[64, 32],
+                latent_dim=16,
+                decoder_units=[32, 64],
+                epochs=50,
+                patience=8,
+                batch_size=64,
+                learning_rate=0.001,
+                seed=self.seed,
+            )
+            lstm_res.fit(norm_res_feats[self.train_idx], X_val=norm_res_feats[self.val_idx])
+            val_scores_lstm_res = lstm_res.score_samples(norm_res_feats[self.val_idx])
+            th_lstm_res = float(np.percentile(val_scores_lstm_res, 95.0))
+            lstm_res.set_threshold(th_lstm_res)
+            self.frozen_models["lstm_res"] = lstm_res
+            self.frozen_thresholds["lstm_res"] = th_lstm_res
 
         # 3. Fit Forecasting Models on Tabular and Sequence Splits
         target_name = self.config.forecasting.target_name
@@ -593,6 +628,8 @@ def run_staleness_sweep(
     output_base_dir: Path | str = "experiments/runs",
     coordinator: E5ExperimentCoordinator | None = None,
     conditions_to_run: list[StalenessCondition] | None = None,
+    run_id: str | None = None,
+    baseline_only: bool = False,
 ) -> Path:
     """Execute Experiment E5: Controlled Synchronization Staleness Sweep.
 
@@ -605,16 +642,18 @@ def run_staleness_sweep(
         output_base_dir: Output base runs directory.
         coordinator: Optional pre-initialized E5ExperimentCoordinator.
         conditions_to_run: Optional subset of conditions to execute.
+        run_id: Optional explicit run directory name.
+        baseline_only: If True, execute only the baseline condition (Delta t = 0, P_drop = 0.0).
 
     Returns:
         Path to completed experiment run directory.
     """
     date_str = datetime.now().strftime("%Y%m%d")
-    run_id = f"E5_STALENESS_SWEEP_SEED{seed}_{date_str}"
-    run_dir = Path(output_base_dir) / run_id
+    actual_run_id = run_id or f"E5_STALENESS_SWEEP_SEED{seed}_{date_str}"
+    run_dir = Path(output_base_dir) / actual_run_id
     ensure_dir(run_dir)
 
-    logger.info(f"Initializing Experiment E5: Staleness Sweep (Run ID: {run_id})...")
+    logger.info(f"Initializing Experiment E5: Staleness Sweep (Run ID: {actual_run_id})...")
     config = load_e5_config(config_path)
 
     if coordinator is None:
@@ -622,16 +661,19 @@ def run_staleness_sweep(
 
     # Build 24-condition matrix if not explicitly passed
     if conditions_to_run is None:
-        conditions: list[StalenessCondition] = []
-        for interval in config.synchronization.intervals_seconds:
-            for p_drop in config.synchronization.packet_drop_rates:
-                conditions.append(
-                    StalenessCondition(
-                        staleness_seconds=interval,
-                        packet_drop_rate=p_drop,
-                        seed=seed,
+        if baseline_only:
+            conditions = [StalenessCondition(staleness_seconds=0, packet_drop_rate=0.0, seed=seed)]
+        else:
+            conditions = []
+            for interval in config.synchronization.intervals_seconds:
+                for p_drop in config.synchronization.packet_drop_rates:
+                    conditions.append(
+                        StalenessCondition(
+                            staleness_seconds=interval,
+                            packet_drop_rate=p_drop,
+                            seed=seed,
+                        )
                     )
-                )
     else:
         conditions = conditions_to_run
 

@@ -177,7 +177,9 @@ def run_e4(config: str, seed: int, norm: str) -> None:
     help="Path to E5 experiment YAML configuration",
 )
 @click.option("--seed", default=42, type=int, help="Random seed for reproducibility")
-def run_e5(config: str, seed: int) -> None:
+@click.option("--baseline-only", is_flag=True, help="Execute only baseline condition (Delta t = 0, Pdrop = 0)")
+@click.option("--run-id", default=None, help="Custom run directory identifier")
+def run_e5(config: str, seed: int, baseline_only: bool, run_id: str | None) -> None:
     """Run Experiment E5: Controlled Synchronization Staleness Sweep.
 
     Sweeps synchronization staleness intervals Delta t in {0, 1, 5, 15, 60, 300} s
@@ -187,9 +189,14 @@ def run_e5(config: str, seed: int) -> None:
     from src.experiments.staleness_sweep import run_staleness_sweep
 
     click.echo(
-        f"Starting Experiment E5: Controlled Synchronization Staleness Sweep (seed={seed}, config={config})..."
+        f"Starting Experiment E5: Controlled Synchronization Staleness Sweep (seed={seed}, config={config}, baseline_only={baseline_only})..."
     )
-    run_dir = run_staleness_sweep(config_path=config, seed=seed)
+    run_dir = run_staleness_sweep(
+        config_path=config,
+        seed=seed,
+        baseline_only=baseline_only,
+        run_id=run_id,
+    )
     click.echo(f"[SUCCESS] Experiment E5 complete. All artifacts saved to: {run_dir}")
 
 
