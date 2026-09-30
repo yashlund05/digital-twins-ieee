@@ -171,6 +171,29 @@ def run_e4(config: str, seed: int, norm: str) -> None:
 
 
 @cli.command()
+@click.option(
+    "--config",
+    default="configs/experiments/e5_staleness_sweep.yaml",
+    help="Path to E5 experiment YAML configuration",
+)
+@click.option("--seed", default=42, type=int, help="Random seed for reproducibility")
+def run_e5(config: str, seed: int) -> None:
+    """Run Experiment E5: Controlled Synchronization Staleness Sweep.
+
+    Sweeps synchronization staleness intervals Delta t in {0, 1, 5, 15, 60, 300} s
+    and packet drop rates in {0.0, 0.05, 0.10, 0.20} across load estimation
+    and unsupervised anomaly detection.
+    """
+    from src.experiments.staleness_sweep import run_staleness_sweep
+
+    click.echo(
+        f"Starting Experiment E5: Controlled Synchronization Staleness Sweep (seed={seed}, config={config})..."
+    )
+    run_dir = run_staleness_sweep(config_path=config, seed=seed)
+    click.echo(f"[SUCCESS] Experiment E5 complete. All artifacts saved to: {run_dir}")
+
+
+@cli.command()
 @click.option("--run-id", required=True, help="Experiment run ID to evaluate")
 def evaluate(run_id: str) -> None:
     """Evaluate the results of a completed experiment run."""

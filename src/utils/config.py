@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any
 
 import yaml
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 # =============================================================================
 # Base & Infrastructure Configs
@@ -423,3 +423,101 @@ def load_anomaly_detection_config(
     raw = load_yaml(file_path)
     anomaly_dict = raw.get("anomaly_detection", raw)
     return AnomalyDetectionConfig(**anomaly_dict)
+
+
+# =============================================================================
+# Experiment E5 Configuration Schema
+# =============================================================================
+
+
+class E5ExperimentMetadata(BaseModel):
+    """Metadata block for Experiment E5."""
+
+    id: str = "E5"
+    name: str = "staleness_sweep"
+    description: str = "Controlled synchronization staleness sweep"
+    seed: int = 42
+    version: str = "1.0.0"
+
+
+class E5SynchronizationConfig(BaseModel):
+    """Synchronization parameters for Experiment E5."""
+
+    intervals_seconds: list[int] = Field(
+        default_factory=lambda: [0, 1, 5, 15, 60, 300],
+        description="Frozen synchronization intervals in seconds",
+    )
+    packet_drop_rates: list[float] = Field(
+        default_factory=lambda: [0.0, 0.05, 0.10, 0.20],
+        description="Frozen packet drop rates in [0.0, 1.0]",
+    )
+    missed_update_policy: str = "hold_last_state"
+    aoi: AoIConfig = Field(default_factory=AoIConfig)
+
+    @field_validator("intervals_seconds")
+    @classmethod
+    def validate_intervals(cls, v: list[int]) -> list[int]:
+        if not v:
+            raise ValueError("intervals_seconds cannot be empty")
+        for val in v:
+            if val < 0:
+                raise ValueError(f"Intervals must be non-negative, got {val}")
+        if len(v) != len(set(v)):
+            raise ValueError("intervals_seconds must contain unique values")
+        return v
+
+    @field_validator("packet_drop_rates")
+    @classmethod
+    def validate_drop_rates(cls, v: list[float]) -> list[float]:
+        if not v:
+            raise ValueError("packet_drop_rates cannot be empty")
+        for val in v:
+            if not (0.0 <= val <= 1.0):
+                raise ValueError(f"Packet drop rate must be in [0.0, 1.0], got {val}")
+        if len(v) != len(set(v)):
+            raise ValueError("packet_drop_rates must contain unique values")
+        return v
+
+
+class E5ForecastingConfig(BaseModel):
+    """Forecasting settings for Experiment E5."""
+
+    models: list[str] = Field(default_factory=lambda: ["persistence", "xgboost", "lstm"])
+    target_name: str = "total_load_p_kw"
+    lookback_steps: int = 24
+    metrics: ForecastMetricsConfig = Field(default_factory=ForecastMetricsConfig)
+
+
+class E5AnomalyDetectionConfig(BaseModel):
+    """Anomaly detection settings for Experiment E5."""
+
+    detectors: list[str] = Field(default_factory=lambda: ["isolation_forest", "lstm_autoencoder"])
+    input_representations: list[str] = Field(default_factory=lambda: ["raw", "residual"])
+    threshold_percentile: float = 95.0
+    metrics: AnomalyMetricsConfig = Field(default_factory=AnomalyMetricsConfig)
+
+
+class E5ReproducibilityConfig(BaseModel):
+    """Reproducibility settings for Experiment E5."""
+
+    seed: int = 42
+    output_base_dir: str = "experiments/runs"
+
+
+class E5ExperimentConfig(BaseModel):
+    """Top-level configuration schema for Experiment E5."""
+
+    experiment: E5ExperimentMetadata = Field(default_factory=E5ExperimentMetadata)
+    synchronization: E5SynchronizationConfig = Field(default_factory=E5SynchronizationConfig)
+    forecasting: E5ForecastingConfig = Field(default_factory=E5ForecastingConfig)
+    anomaly_detection: E5AnomalyDetectionConfig = Field(default_factory=E5AnomalyDetectionConfig)
+    reproducibility: E5ReproducibilityConfig = Field(default_factory=E5ReproducibilityConfig)
+
+
+def load_e5_config(
+    file_path: Path | str = "configs/experiments/e5_staleness_sweep.yaml",
+) -> E5ExperimentConfig:
+    """Load and validate Experiment E5 configuration YAML."""
+    raw = load_yaml(file_path)
+    return E5ExperimentConfig(**raw)
+
