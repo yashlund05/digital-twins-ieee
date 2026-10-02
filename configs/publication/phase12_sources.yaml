@@ -1,0 +1,46 @@
+phase12:
+  source_runs:
+    phase7_e4:
+      path: "experiments/runs/E4_RAW_VS_RESIDUAL_SEED42_20260930"
+      frozen: true
+      description: "Phase 7 E4 Canonical Baseline Experiment (Ideal Synchronization Δt=0s, Pdrop=0%, Seed=42)"
+
+    phase8_e5:
+      path: "experiments/runs/E5_STALENESS_SWEEP_CORRECTED_SEED42_20260930"
+      frozen: true
+      description: "Phase 8 E5 Corrected Factorial Staleness Sweep (24 conditions: Δt ∈ {0,1,5,15,60,300}s, Pdrop ∈ {0,0.05,0.10,0.20}, Seed=42)"
+
+    phase9_e6:
+      path: "experiments/runs/E6_JOINT_ANALYSIS_SEED42_20261002"
+      frozen: true
+      description: "Phase 9 E6 Single-Seed Joint Statistical Degradation Analysis and H3 Hypothesis Testing"
+
+    phase10_e10:
+      path: "experiments/runs/E10_MULTI_SEED_ANALYSIS_20261002"
+      frozen: true
+      description: "Phase 10 E10 Multi-Seed Uncertainty Quantification and Robustness Analysis across 5 Seeds"
+
+    phase11_e11:
+      path: "experiments/runs/E11_PHASE11_20261002"
+      frozen: true
+      description: "Phase 11 E11 Reproducibility Verification, Controlled Ablations A1-A8, and Missed-Update Transient Dynamics"
+
+  publication:
+    target: "IEEE Transactions on Smart Grid"
+    feeder: "IEEE 33-Bus Radial Benchmark Feeder"
+    dataset: "Pecan Street Dataport (15-Minute Resolution Synced to 1-Second Grid Operations)"
+    seeds: [42, 123, 456, 789, 101112]
+    staleness_seconds: [0, 1, 5, 15, 60, 300]
+    packet_drop_rates: [0.00, 0.05, 0.10, 0.20]
+    detectors: ["isolation_forest", "lstm_autoencoder"]
+    representations: ["raw", "residual"]
+    forecasters: ["persistence", "xgboost", "lstm"]
+
+  output:
+    root: "experiments/runs/E12_PUBLICATION_ARTIFACTS_20261002"
+
+  integrity:
+    verify_source_hashes: true
+    fail_on_missing_source: true
+    fail_on_schema_mismatch: true
+    reproducibility_tolerance: 1.0e-5

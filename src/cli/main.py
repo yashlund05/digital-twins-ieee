@@ -465,6 +465,74 @@ def verify_artifacts_cli(run_dir: str) -> None:
     click.echo(f"  Corrupted files: {len(res['corrupted_files'])}")
 
 
+@cli.command()
+@click.option(
+    "--config",
+    default="configs/publication/phase12_sources.yaml",
+    help="Path to Phase 12 publication sources YAML",
+)
+@click.option(
+    "--output-dir",
+    default=None,
+    help="Optional output directory override",
+)
+@click.option(
+    "--verify-only",
+    is_flag=True,
+    default=False,
+    help="Verify source integrity and completeness without writing artifacts",
+)
+@click.option(
+    "--figures-only",
+    is_flag=True,
+    default=False,
+    help="Generate only publication figures and source CSVs",
+)
+@click.option(
+    "--tables-only",
+    is_flag=True,
+    default=False,
+    help="Generate only publication tables (CSV and LaTeX)",
+)
+@click.option(
+    "--latex-only",
+    is_flag=True,
+    default=False,
+    help="Generate only LaTeX document fragments",
+)
+@click.option(
+    "--strict/--no-strict",
+    default=True,
+    help="Enforce strict validation failure on source discrepancy",
+)
+def build_publication_artifacts(
+    config: str,
+    output_dir: str | None,
+    verify_only: bool,
+    figures_only: bool,
+    tables_only: bool,
+    latex_only: bool,
+    strict: bool,
+) -> None:
+    """Build Phase 12 IEEE publication-ready figures, tables, LaTeX, and provenance."""
+    from src.publication.publication_runner import run_phase12_publication_pipeline
+
+    click.echo(f"Executing Phase 12 Publication Artifact Pipeline (config={config})...")
+    res_dir = run_phase12_publication_pipeline(
+        config_path=config,
+        output_dir_override=output_dir,
+        verify_only=verify_only,
+        figures_only=figures_only,
+        tables_only=tables_only,
+        latex_only=latex_only,
+        strict=strict,
+    )
+    if verify_only:
+        click.echo("[SUCCESS] Publication source validation PASSED.")
+    else:
+        click.echo(f"[SUCCESS] Phase 12 publication artifacts successfully built: {res_dir}")
+
+
 if __name__ == "__main__":
     cli()
 
