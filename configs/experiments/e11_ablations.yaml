@@ -1,0 +1,69 @@
+# e11_ablations.yaml — Controlled Ablation Configuration for Phase 11
+# Research project: Quantifying the Effect of Digital Twin Synchronization Staleness
+
+experiment:
+  id: E11_ABLATIONS
+  name: controlled_ablation_suite
+  seed: 42
+  description: >
+    Evaluates 8 systematic controlled ablations (A1-A8) to isolate the causal
+    drivers of staleness degradation, representation advantage, and policy sensitivity.
+
+ablations:
+  # A1: Representation Ablation (Raw telemetry vs Physics Residual)
+  A1_representation:
+    component: input_representation
+    baseline_value: residual
+    ablation_value: raw
+    models: ["isolation_forest", "lstm_autoencoder"]
+    staleness_levels: [0, 1, 5, 15, 60, 300]
+    packet_drop_rates: [0.0]
+
+  # A2: Synchronization Freshness (Delta t sweep at zero packet loss)
+  A2_freshness:
+    component: staleness_seconds
+    baseline_value: 0
+    sweep_values: [0, 1, 5, 15, 60, 300]
+    packet_drop_rates: [0.0]
+
+  # A3: Packet Loss (P_drop sweep at fixed staleness)
+  A3_packet_loss:
+    component: packet_drop_rate
+    baseline_value: 0.0
+    sweep_values: [0.0, 0.05, 0.10, 0.20]
+    staleness_levels: [0, 1, 15, 60]
+
+  # A4: Factorial Interaction (Delta t x P_drop)
+  A4_interaction:
+    component: interaction_staleness_drop
+    baseline_value: "additive_only"
+    ablation_value: "full_factorial"
+
+  # A5: Missed-Update Policy (Hold-Last-State vs Linear Extrapolation vs Zero-Input)
+  A5_policy:
+    component: missed_update_policy
+    baseline_value: hold_last_state
+    alternative_values: ["linear_extrapolation", "zero_input"]
+    staleness_levels: [5, 15, 60]
+    packet_drop_rates: [0.10]
+
+  # A6: Detector Architecture (Isolation Forest vs LSTM-AE)
+  A6_detector:
+    component: detector_architecture
+    baseline_value: lstm_autoencoder
+    ablation_value: isolation_forest
+    representations: ["residual", "raw"]
+
+  # A7: Forecasting Model Architecture (LSTM vs XGBoost vs Persistence)
+  A7_forecaster:
+    component: forecasting_model
+    baseline_value: lstm
+    alternative_values: ["xgboost", "persistence"]
+    metrics: ["mae", "rmse", "mape"]
+
+  # A8: Threshold Sensitivity (Percentile calibration around 95%)
+  A8_threshold:
+    component: threshold_percentile
+    baseline_value: 95.0
+    sweep_values: [90.0, 95.0, 99.0]
+    detectors: ["isolation_forest", "lstm_autoencoder"]

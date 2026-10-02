@@ -362,6 +362,110 @@ def analyze_multiseed(config: str, bootstrap_iterations: int, confidence_level: 
     click.echo(f"[SUCCESS] Phase 10 Multi-Seed Analysis complete! Outputs saved to: {out_dir}")
 
 
+@cli.command()
+@click.option(
+    "--config",
+    default="configs/experiments/e11_phase11.yaml",
+    help="Path to Phase 11 configuration YAML",
+)
+@click.option(
+    "--reproducibility-only",
+    is_flag=True,
+    default=False,
+    help="Execute only Objective A reproducibility verification",
+)
+@click.option(
+    "--ablations-only",
+    is_flag=True,
+    default=False,
+    help="Execute only Objective B controlled ablations",
+)
+@click.option(
+    "--transient-only",
+    is_flag=True,
+    default=False,
+    help="Execute only Objective C missed-update transient analysis",
+)
+def run_e11(
+    config: str,
+    reproducibility_only: bool,
+    ablations_only: bool,
+    transient_only: bool,
+) -> None:
+    """Run Experiment E11: Phase 11 Master Reproducibility, Ablations, and Transient Dynamics."""
+    from src.experiments.phase11_runner import run_phase11_experiment
+
+    click.echo(f"Starting Phase 11 execution (config={config})...")
+    out_dir = run_phase11_experiment(
+        config_path=config,
+        reproducibility_only=reproducibility_only,
+        ablations_only=ablations_only,
+        transient_only=transient_only,
+    )
+    click.echo(f"[SUCCESS] Phase 11 complete! Artifacts saved to: {out_dir}")
+
+
+@cli.command()
+@click.option(
+    "--config",
+    default="configs/experiments/e11_phase11.yaml",
+    help="Path to Phase 11 configuration YAML",
+)
+@click.option(
+    "--output-dir",
+    default=None,
+    help="Output directory for reproducibility audit report",
+)
+def verify_reproducibility(config: str, output_dir: str | None) -> None:
+    """Verify historical benchmarks (Phase 7 E4, Phase 8 E5, Phase 9 E6, Phase 10 E10)."""
+    from datetime import datetime
+    import yaml
+    from src.reproducibility.verifier import verify_historical_benchmarks
+
+    with open(config, "r", encoding="utf-8") as f:
+        cfg = yaml.safe_load(f)
+
+    if output_dir is None:
+        date_str = datetime.now().strftime("%Y%m%d_%H%M%S")
+        out = Path("experiments/runs") / f"VERIFY_REPRODUCIBILITY_{date_str}"
+    else:
+        out = Path(output_dir)
+
+    benchmarks = cfg.get("reproducibility", {}).get("benchmarks", {})
+    report = verify_historical_benchmarks(
+        output_dir=out,
+        phase7_e4_dir=benchmarks.get("phase7_e4", "experiments/runs/E4_RAW_VS_RESIDUAL_SEED42_20260930"),
+        phase8_e5_dir=benchmarks.get("phase8_e5", "experiments/runs/E5_STALENESS_SWEEP_CORRECTED_SEED42_20260930"),
+        phase9_e6_dir=benchmarks.get("phase9_e6", "experiments/runs/E6_JOINT_ANALYSIS_SEED42_20261002"),
+        phase10_e10_dir=benchmarks.get("phase10_e10", "experiments/runs/E10_MULTI_SEED_ANALYSIS_20261002"),
+    )
+    click.echo(f"Verification Overall Status: {report['overall_status']}")
+    click.echo(f"  Phase 7 E4 Baseline : {report['phase7_e4_status']}")
+    click.echo(f"  Phase 8 E5 Sweep    : {report['phase8_e5_status']}")
+    click.echo(f"  Phase 9 E6 Analysis : {report['phase9_e6_status']}")
+    click.echo(f"  Phase 10 E10 Robust : {report['phase10_e10_status']}")
+    click.echo(f"Audit report saved to: {out}")
+
+
+@cli.command()
+@click.option(
+    "--run-dir",
+    required=True,
+    help="Path to run directory to audit",
+)
+def verify_artifacts_cli(run_dir: str) -> None:
+    """Audit artifact integrity, cryptographic non-emptiness, and condition count."""
+    from src.reproducibility.artifact_integrity import verify_artifacts
+
+    r_path = Path(run_dir)
+    res = verify_artifacts(r_path)
+    click.echo(f"Artifact Integrity Status: {res['status']}")
+    click.echo(f"  Files checked  : {res['total_files_checked']}")
+    click.echo(f"  Missing files  : {len(res['missing_files'])}")
+    click.echo(f"  Corrupted files: {len(res['corrupted_files'])}")
+
+
 if __name__ == "__main__":
     cli()
+
 
