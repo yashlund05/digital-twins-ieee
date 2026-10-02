@@ -1,0 +1,176 @@
+[
+  {
+    "figure_id": "fig_01",
+    "figure_title": "System Architecture & Co-Simulation Framework",
+    "source_runs": [
+      "configs/experiments/e5_staleness_sweep.yaml",
+      "docs/architecture/SYSTEM_ARCHITECTURE.md"
+    ],
+    "source_files": [
+      "SYSTEM_ARCHITECTURE.md"
+    ],
+    "transformations": [
+      "architectural_pipeline_rendering"
+    ],
+    "random_seed": null,
+    "generated_by": "src.publication.figure_factory",
+    "generated_at": "2026-10-02T16:15:46.177137",
+    "png_hash": "159dd4346c3b01125cacb96d233656c127d2854ac36913a8c45abf35778eff76",
+    "pdf_hash": "09b7d0579d3a15919ae31478312432d4003340522044eeda5ce6a5c54d0e31ca",
+    "source_csv_hash": "e2eb43f0b00b87f0767c091796ce1b90e727e8f46f495eb9d5661fdf33bf93ab"
+  },
+  {
+    "figure_id": "fig_02",
+    "figure_title": "Historical Baseline Reconciliation",
+    "source_runs": [
+      "phase7_e4",
+      "phase11_e11"
+    ],
+    "source_files": [
+      "table_01_reproducibility.csv",
+      "metrics.json"
+    ],
+    "transformations": [
+      "baseline_f1_comparison",
+      "numerical_equivalence_test"
+    ],
+    "random_seed": 42,
+    "generated_by": "src.publication.figure_factory",
+    "generated_at": "2026-10-02T16:15:46.177137",
+    "png_hash": "738012a8b1d8f360907b3508cfee35f8e8881c3c1c2dbff60b9c70a7e18c0c40",
+    "pdf_hash": "b1e16556b212dd923eaef7621572ac403d799d7d7bd2541672d03c0672d91e4a",
+    "source_csv_hash": "7a44bfb360864169fed0b5aab7223e5ca3737e6c236d326cb8d75f33fa22a31f"
+  },
+  {
+    "figure_id": "fig_03",
+    "figure_title": "Anomaly Detection Degradation vs. Staleness",
+    "source_runs": [
+      "phase8_e5"
+    ],
+    "source_files": [
+      "comparison.csv"
+    ],
+    "transformations": [
+      "filter_anomaly_detection_f1",
+      "group_by_staleness_and_packet_drop"
+    ],
+    "random_seed": 42,
+    "generated_by": "src.publication.figure_factory",
+    "generated_at": "2026-10-02T16:15:46.177137",
+    "png_hash": "a23b9129bc6477dbaa72843633af71418c1006ef2cf2684d39718393afb38a60",
+    "pdf_hash": "fdd8a014ded999c05d60b15df3d11d3194656d212f3a963211ead050e94835ed",
+    "source_csv_hash": "705af385fb5fcf673680055d6936afe362eeb49cdf29d968a0cda3843e559c88"
+  },
+  {
+    "figure_id": "fig_04",
+    "figure_title": "Load Estimation Degradation vs. Staleness",
+    "source_runs": [
+      "phase8_e5"
+    ],
+    "source_files": [
+      "comparison.csv"
+    ],
+    "transformations": [
+      "filter_load_estimation_mape",
+      "compute_packet_drop_bounds"
+    ],
+    "random_seed": 42,
+    "generated_by": "src.publication.figure_factory",
+    "generated_at": "2026-10-02T16:15:46.177137",
+    "png_hash": "b1bc1bf40a936d00e7d7172af177b10bbd69855cbd51ae8258e01b8b93eb2638",
+    "pdf_hash": "9d6d461b788cfc933ce13c3a3cfeb91cb5560e1a94df6decf384d65057d125f2",
+    "source_csv_hash": "8154223b3aefa4fcf4e06d0d3de9c25c6d13f02e983feee6148bc7c11aa8bf4e"
+  },
+  {
+    "figure_id": "fig_05",
+    "figure_title": "Raw vs. Residual Representation Transition",
+    "source_runs": [
+      "phase8_e5"
+    ],
+    "source_files": [
+      "comparison.csv"
+    ],
+    "transformations": [
+      "contrast_residual_and_raw_lstm_ae",
+      "mark_transition_region"
+    ],
+    "random_seed": 42,
+    "generated_by": "src.publication.figure_factory",
+    "generated_at": "2026-10-02T16:15:46.177137",
+    "png_hash": "6a54ece3a5812e249f483bcb1dc66549855467530a475c7efd56deb489cd92ef",
+    "pdf_hash": "f8221422a5fb002c5ba27d86d6a41416b7f70395b14f848af52b4417f8592ba8",
+    "source_csv_hash": "bd5490fc4028b1b1d0e6f57a11061c01c9ba4542bb1d65c0b6116107c716417d"
+  },
+  {
+    "figure_id": "fig_06",
+    "figure_title": "Multi-Seed Uncertainty Trajectories",
+    "source_runs": [
+      "phase10_e10"
+    ],
+    "source_files": [
+      "seed_results.csv"
+    ],
+    "transformations": [
+      "extract_seed_traces",
+      "compute_mean_and_95ci_band"
+    ],
+    "random_seed": [
+      42,
+      123,
+      456,
+      789,
+      101112
+    ],
+    "generated_by": "src.publication.figure_factory",
+    "generated_at": "2026-10-02T16:15:46.177137",
+    "png_hash": "131b5336dbfe0a7a31132cd444a745f35eefc2c5efc40dd16c44173283d5fb0d",
+    "pdf_hash": "bedc15e25193c38a00a12725be1070e18fbab33b6fd170585d81d3578d47231c",
+    "source_csv_hash": "3b2c0c4d4da79071eb20f272cff91ab75507004eb4f4334e61e2b25f81b9efe2"
+  },
+  {
+    "figure_id": "fig_07",
+    "figure_title": "Intra-Epoch Residual Drift vs. AoI",
+    "source_runs": [
+      "phase11_e11"
+    ],
+    "source_files": [
+      "table_03_transient_statistics.csv"
+    ],
+    "transformations": [
+      "bin_residual_norm_by_aoi",
+      "plot_dual_axis_drift_and_f1"
+    ],
+    "random_seed": 42,
+    "generated_by": "src.publication.figure_factory",
+    "generated_at": "2026-10-02T16:15:46.177137",
+    "png_hash": "103abc9cb9fa5f07dff7d5f02657820f6c035e866f0616ce97e63aaddaee0a32",
+    "pdf_hash": "29205e09a490b243ba39c0b35207efeb0a95130025df696bbd61e0e237801dd2",
+    "source_csv_hash": "bb400d1edad5f95b24bbb00306dccacb4b663330971a171793f01f0557729786"
+  },
+  {
+    "figure_id": "fig_08",
+    "figure_title": "H3 Hypothesis Testing Forest Plot",
+    "source_runs": [
+      "phase10_e10"
+    ],
+    "source_files": [
+      "multiseed_h3_summary.csv"
+    ],
+    "transformations": [
+      "extract_delta_beta_and_ci",
+      "forest_plot_rendering"
+    ],
+    "random_seed": [
+      42,
+      123,
+      456,
+      789,
+      101112
+    ],
+    "generated_by": "src.publication.figure_factory",
+    "generated_at": "2026-10-02T16:15:46.177137",
+    "png_hash": "e69d6013820ab7cdf176f648471138dbb76aa805744bd37baee1b2e5f8a67c7e",
+    "pdf_hash": "8adace9d390a89a3aacc2a7397ad52931f6f8a54561083f556004229a2ec2ed9",
+    "source_csv_hash": "918207576a12f09013730c110e24bc3ac7cd7ab50adfaed60c5f3e91d565e1e4"
+  }
+]

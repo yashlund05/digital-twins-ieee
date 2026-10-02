@@ -4,9 +4,9 @@ Builds figure_provenance.json, table_provenance.json, and hash_manifest.json per
 """
 
 from datetime import datetime
-import json
 from pathlib import Path
 from typing import Any
+
 import pandas as pd
 
 from src.reproducibility.hashing import hash_directory, hash_file
@@ -16,13 +16,18 @@ from src.utils.logging import get_logger
 logger = get_logger("publication.provenance")
 
 
-def build_figure_provenance(output_dir: Path, source_hashes: dict[str, str]) -> list[dict[str, Any]]:
+def build_figure_provenance(
+    output_dir: Path, source_hashes: dict[str, str]
+) -> list[dict[str, Any]]:
     """Construct provenance records for all 8 publication figures."""
     figures_def = [
         {
             "figure_id": "fig_01",
             "title": "System Architecture & Co-Simulation Framework",
-            "source_runs": ["configs/experiments/e5_staleness_sweep.yaml", "docs/architecture/SYSTEM_ARCHITECTURE.md"],
+            "source_runs": [
+                "configs/experiments/e5_staleness_sweep.yaml",
+                "docs/architecture/SYSTEM_ARCHITECTURE.md",
+            ],
             "source_files": ["SYSTEM_ARCHITECTURE.md"],
             "transformations": ["architectural_pipeline_rendering"],
             "random_seed": None,
@@ -46,7 +51,10 @@ def build_figure_provenance(output_dir: Path, source_hashes: dict[str, str]) -> 
             "title": "Anomaly Detection Degradation vs. Staleness",
             "source_runs": ["phase8_e5"],
             "source_files": ["comparison.csv"],
-            "transformations": ["filter_anomaly_detection_f1", "group_by_staleness_and_packet_drop"],
+            "transformations": [
+                "filter_anomaly_detection_f1",
+                "group_by_staleness_and_packet_drop",
+            ],
             "random_seed": 42,
             "png_file": "figures/fig_03_anomaly_staleness.png",
             "pdf_file": "figures/fig_03_anomaly_staleness.pdf",
@@ -116,19 +124,21 @@ def build_figure_provenance(output_dir: Path, source_hashes: dict[str, str]) -> 
         pdf_p = output_dir / fd["pdf_file"]
         csv_p = output_dir / fd["source_csv"]
 
-        records.append({
-            "figure_id": fd["figure_id"],
-            "figure_title": fd["title"],
-            "source_runs": fd["source_runs"],
-            "source_files": fd["source_files"],
-            "transformations": fd["transformations"],
-            "random_seed": fd["random_seed"],
-            "generated_by": "src.publication.figure_factory",
-            "generated_at": now_str,
-            "png_hash": hash_file(png_p) if png_p.is_file() else "",
-            "pdf_hash": hash_file(pdf_p) if pdf_p.is_file() else "",
-            "source_csv_hash": hash_file(csv_p) if csv_p.is_file() else "",
-        })
+        records.append(
+            {
+                "figure_id": fd["figure_id"],
+                "figure_title": fd["title"],
+                "source_runs": fd["source_runs"],
+                "source_files": fd["source_files"],
+                "transformations": fd["transformations"],
+                "random_seed": fd["random_seed"],
+                "generated_by": "src.publication.figure_factory",
+                "generated_at": now_str,
+                "png_hash": hash_file(png_p) if png_p.is_file() else "",
+                "pdf_hash": hash_file(pdf_p) if pdf_p.is_file() else "",
+                "source_csv_hash": hash_file(csv_p) if csv_p.is_file() else "",
+            }
+        )
 
     save_json(records, output_dir / "provenance" / "figure_provenance.json")
     return records
@@ -140,7 +150,10 @@ def build_table_provenance(output_dir: Path, source_hashes: dict[str, str]) -> l
         {
             "table_id": "table_01",
             "title": "Experimental Configuration",
-            "source_runs": ["configs/digital_twin.yaml", "configs/experiments/e5_staleness_sweep.yaml"],
+            "source_runs": [
+                "configs/digital_twin.yaml",
+                "configs/experiments/e5_staleness_sweep.yaml",
+            ],
             "source_files": ["config_snapshot.yaml"],
             "transformations": ["structured_parameter_extraction"],
             "csv_file": "tables/table_01_experimental_configuration.csv",
@@ -206,19 +219,21 @@ def build_table_provenance(output_dir: Path, source_hashes: dict[str, str]) -> l
             row_cnt = len(df)
             col_cnt = len(df.columns)
 
-        records.append({
-            "table_id": td["table_id"],
-            "table_title": td["title"],
-            "source_runs": td["source_runs"],
-            "source_files": td["source_files"],
-            "transformations": td["transformations"],
-            "row_count": row_cnt,
-            "column_count": col_cnt,
-            "generated_by": "src.publication.table_factory",
-            "generated_at": now_str,
-            "csv_hash": hash_file(csv_p) if csv_p.is_file() else "",
-            "tex_hash": hash_file(tex_p) if tex_p.is_file() else "",
-        })
+        records.append(
+            {
+                "table_id": td["table_id"],
+                "table_title": td["title"],
+                "source_runs": td["source_runs"],
+                "source_files": td["source_files"],
+                "transformations": td["transformations"],
+                "row_count": row_cnt,
+                "column_count": col_cnt,
+                "generated_by": "src.publication.table_factory",
+                "generated_at": now_str,
+                "csv_hash": hash_file(csv_p) if csv_p.is_file() else "",
+                "tex_hash": hash_file(tex_p) if tex_p.is_file() else "",
+            }
+        )
 
     save_json(records, output_dir / "provenance" / "table_provenance.json")
     return records

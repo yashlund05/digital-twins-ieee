@@ -1,0 +1,68 @@
+{
+  "pipeline": "Phase 13 Submission Readiness",
+  "generated_at": "2026-10-02T16:46:11.892463",
+  "status": "VALIDATED",
+  "audits": {
+    "canonical_claims": {
+      "total_claims": 13,
+      "verified_claims": 13,
+      "failed_claims": 0
+    },
+    "numerical_consistency": "PASS",
+    "cross_phase_consistency": "PASS",
+    "language_audit": "PASS"
+  },
+  "manuscript_files": {
+    "figures.tex": {
+      "size_bytes": 4135,
+      "exists": true
+    },
+    "main.tex": {
+      "size_bytes": 15939,
+      "exists": true
+    },
+    "references.bib": {
+      "size_bytes": 2914,
+      "exists": true
+    }
+  },
+  "hashes": {
+    "audit_reports/canonical_claims_registry.json": "0ddeaa052e6f9fe03a2aa7080d9fef8a16be1dfde9726624a743516771fb1fb6",
+    "audit_reports/claim_audit_report.json": "36bacb60a5d5f9b052dac0cc08343b5af2ad301b6d660fcd5eac0de2db0dada0",
+    "audit_reports/cross_phase_audit_report.json": "0c17d7da1c801416c70239c14c9730e8526296090415db7abeb16345e0b77b6b",
+    "audit_reports/language_audit_report.json": "e5df2ad18e89b1bfa215201a421a80f45b7f2d5c446d2285cc5b9f97902cde14",
+    "audit_reports/numerical_audit_report.json": "f8b8733520d6e863e61e35b91c1e5a30a151ee6e7f87feb05c8050c697a07bfa",
+    "manuscript/figures/fig_01_system_architecture.pdf": "09b7d0579d3a15919ae31478312432d4003340522044eeda5ce6a5c54d0e31ca",
+    "manuscript/figures/fig_01_system_architecture.png": "159dd4346c3b01125cacb96d233656c127d2854ac36913a8c45abf35778eff76",
+    "manuscript/figures/fig_02_baseline_reconciliation.pdf": "b1e16556b212dd923eaef7621572ac403d799d7d7bd2541672d03c0672d91e4a",
+    "manuscript/figures/fig_02_baseline_reconciliation.png": "738012a8b1d8f360907b3508cfee35f8e8881c3c1c2dbff60b9c70a7e18c0c40",
+    "manuscript/figures/fig_03_anomaly_staleness.pdf": "fdd8a014ded999c05d60b15df3d11d3194656d212f3a963211ead050e94835ed",
+    "manuscript/figures/fig_03_anomaly_staleness.png": "a23b9129bc6477dbaa72843633af71418c1006ef2cf2684d39718393afb38a60",
+    "manuscript/figures/fig_04_load_estimation_staleness.pdf": "9d6d461b788cfc933ce13c3a3cfeb91cb5560e1a94df6decf384d65057d125f2",
+    "manuscript/figures/fig_04_load_estimation_staleness.png": "b1bc1bf40a936d00e7d7172af177b10bbd69855cbd51ae8258e01b8b93eb2638",
+    "manuscript/figures/fig_05_residual_vs_raw_transition.pdf": "f8221422a5fb002c5ba27d86d6a41416b7f70395b14f848af52b4417f8592ba8",
+    "manuscript/figures/fig_05_residual_vs_raw_transition.png": "6a54ece3a5812e249f483bcb1dc66549855467530a475c7efd56deb489cd92ef",
+    "manuscript/figures/fig_06_multiseed_uncertainty.pdf": "bedc15e25193c38a00a12725be1070e18fbab33b6fd170585d81d3578d47231c",
+    "manuscript/figures/fig_06_multiseed_uncertainty.png": "131b5336dbfe0a7a31132cd444a745f35eefc2c5efc40dd16c44173283d5fb0d",
+    "manuscript/figures/fig_07_aoi_residual_transient.pdf": "29205e09a490b243ba39c0b35207efeb0a95130025df696bbd61e0e237801dd2",
+    "manuscript/figures/fig_07_aoi_residual_transient.png": "103abc9cb9fa5f07dff7d5f02657820f6c035e866f0616ce97e63aaddaee0a32",
+    "manuscript/figures/fig_08_h3_multiseed_effect.pdf": "8adace9d390a89a3aacc2a7397ad52931f6f8a54561083f556004229a2ec2ed9",
+    "manuscript/figures/fig_08_h3_multiseed_effect.png": "e69d6013820ab7cdf176f648471138dbb76aa805744bd37baee1b2e5f8a67c7e",
+    "manuscript/figures.tex": "64a34f2bf3b44cc4127765b6133e70fc45e2106ce06be17a65165c7777781b28",
+    "manuscript/main.tex": "1da0f07f9a044988e19555335823e1e0a2e41e9f407c996f3f7d356df105dbed",
+    "manuscript/references.bib": "7bb3fa0de786cf0affe71b23ae03e708fbf1e2cbdca9a656c9591a143d3c9fae",
+    "manuscript/tables/table_01_experimental_configuration.csv": "73892b5463368eb9e02f1a267115d02f9a3ae4622b26b9cc8729699357a20d9f",
+    "manuscript/tables/table_01_experimental_configuration.tex": "7629e86b222f9d2586a55abd4b3480f89739d2b150707dbab2064259ebd48144",
+    "manuscript/tables/table_02_baseline_reconciliation.csv": "7e72cd3579668e1ce8df849090bb691de35b236e9f7f6b5d055d6e4a43b2eb5e",
+    "manuscript/tables/table_02_baseline_reconciliation.tex": "733e77b627516f0337072b2f5cef2c060289ba58e422ea5eedea330f9d32f8bf",
+    "manuscript/tables/table_03_e5_condition_summary.csv": "3576aecc8ba78849517c48b8a3d067281932b279fc42b85a3f44275e55bf0f7e",
+    "manuscript/tables/table_03_e5_condition_summary.tex": "d69b66284689e7cba88a97ee0d1640fda00060b40b681e73790fd16acfa11f07",
+    "manuscript/tables/table_04_multiseed_results.csv": "8391f6add239971a16d5214b7bc9f895e69c2f9a7b6ca1502c5ea017a552b518",
+    "manuscript/tables/table_04_multiseed_results.tex": "74ca801715189c61a334d9f4bebd421bcc35191b79171f461c271b38393fe78a",
+    "manuscript/tables/table_05_ablation_summary.csv": "c9e5f3d5aee723a29f6f3bce898435e3b0ef15424412dde6c5f74f18cfa664b4",
+    "manuscript/tables/table_05_ablation_summary.tex": "036c53699c58ae7f25e74516e6d3914c69c62f786955f84fd478d8532c1fa8be",
+    "manuscript/tables/table_06_h3_statistics.csv": "453cccbc831cc1de4483db6eebf45532cb26be2bc96dfeaf82d1d784ca5c814d",
+    "manuscript/tables/table_06_h3_statistics.tex": "448b16f2f712d39cc3f4b1f5bd0faf523d441d73780e487e31428d011536c3a3",
+    "manuscript_summary.json": "a583ef68083d12919d008ac684e92be90986f95a3384c946249d856f16f79c4c"
+  }
+}

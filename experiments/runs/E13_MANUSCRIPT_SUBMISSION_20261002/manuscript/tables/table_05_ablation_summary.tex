@@ -1,0 +1,27 @@
+\begin{table*}[htbp]
+\centering
+\caption{Controlled Ablation Experiments (A1--A8) and Observed Factor Sensitivity}
+\label{tab:ablation_summary}
+\small
+\begin{tabular}{p{2.6cm}p{3.0cm}p{3.2cm}p{6.8cm}}
+\hline
+\textbf{Ablation ID} & \textbf{Controlled Factor} & \textbf{Primary Observed Effect} & \textbf{Scientific Interpretation} \\
+\hline
+A1: Input Representation & Physics-residual vs. raw telemetry & +0.4393 F1 advantage at $\Delta t$ = 0s; inverts to -0.4485 F1 at $\Delta t$ = 60s & Residual representation offers strong noise suppression under fresh sync, but hold-last-state drift corrupts residuals under staleness, reversing the performance hierarchy. \\
+\hline
+A2: Synchronization Freshness & Deterministic latency $\Delta t$ (0 to 300s) & -0.8694 F1 drop (88.9\% relative loss) between 1s and 5s & Pure staleness exhibits a steep phase-transition cliff between 1s and 5s, beyond which residual detection plateaus at the noise floor. \\
+\hline
+A3: Stochastic Packet Loss & Packet drop rate $P_{\text{drop}}$ (0\% to 20\%) & -0.6550 F1 drop (0.9780 to 0.3230) under 20\% loss & Stochastic drop expands burst Age of Information, compounding staleness effects even when nominal interval is short. \\
+\hline
+A4: Factorial Interaction & $\Delta t$ × $P_{\text{drop}}$ coupling & R² increases from 0.8841 to 0.9328 (p < 0.05) & Interaction terms are statistically significant, confirming non-linear compounding of delay and transmission loss. \\
+\hline
+A5: Missed-Update Policy & Extrapolation rule during drop & -0.0198 F1 drop; zero-input leads to instantaneous collapse to 0.0887 & Zero-order hold provides essential continuity over brief drop bursts; zero-input creates massive artificial transients. \\
+\hline
+A6: Detector Architecture & Sequential vs. spatial anomaly model & +0.8892 F1 advantage (0.9780 vs. 0.0887) for LSTM-AE & Temporal sequence reconstruction captures dynamic physics far more effectively than tree-based spatial partitioning. \\
+\hline
+A7: Forecaster Architecture & Temporal sequence vs. static gradient boosting & LSTM achieves 8.95\% vs. XGBoost 10.51\% and Persistence 11.23\% & Recurrent forecaster learns diurnal autocorrelation better, though all forecasters scale monotonically to \textasciitilde{}60\% MAPE at $\Delta t$ = 300s. \\
+\hline
+A8: Threshold Calibration & Reconstruction percentile threshold & 95th percentile yields F1 = 0.9780; 90th yields 0.8421; 99th yields 0.6052 & The 95th-percentile validation threshold was selected a priori and provided the evaluated empirical operating point under the experimental protocol. \\
+\hline
+\end{tabular}
+\end{table*}

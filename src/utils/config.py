@@ -576,5 +576,3 @@ def load_e10_config(
     """Load and validate Experiment E10 configuration YAML."""
     raw = load_yaml(file_path)
     return E10ExperimentConfig(**raw)
-
-

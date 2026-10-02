@@ -1,0 +1,13 @@
+{
+  "total_discrepancies": 3,
+  "by_severity": {
+    "MEDIUM": 1,
+    "LOW": 1,
+    "INFO": 1
+  },
+  "by_status": {
+    "RESOLVED": 2,
+    "ACCEPTED_DIFFERENCE": 1
+  },
+  "critical_unresolved": 0
+}

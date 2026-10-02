@@ -1,0 +1,11 @@
+{
+  "run_dir": "experiments\\runs\\E11_PHASE11_20261002",
+  "directory_exists": true,
+  "missing_files": [],
+  "corrupted_files": {},
+  "hash_mismatches": {},
+  "condition_check": "NOT_CHECKED",
+  "errors": [],
+  "all_valid": true,
+  "status": "PASS"
+}

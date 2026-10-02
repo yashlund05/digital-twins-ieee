@@ -1,7 +1,6 @@
 """tests/publication/test_release_manifest.py — Tests for Release Readiness and Safety Gate."""
 
 from pathlib import Path
-import pytest
 
 from src.audit.release_readiness import ReleaseReadinessEvaluator
 

@@ -1,0 +1,13 @@
+{
+  "phase": "Phase 7 E4 Baseline",
+  "run_dir": "experiments\\runs\\E4_RAW_VS_RESIDUAL_SEED42_20260930",
+  "status": "PASS",
+  "has_manifest": true,
+  "f1_values": {
+    "Raw + IF": 0.11764705882352941,
+    "Residual + IF": 0.08872727272727272,
+    "Raw + LSTM-AE": 0.5386064030131827,
+    "Residual + LSTM-AE": 0.9779559118236473
+  },
+  "file_count": 9
+}

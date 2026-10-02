@@ -55,6 +55,4 @@ def run_experiment(
             conditions_to_run=kwargs.get("conditions_to_run"),
         )
     else:
-        raise ValueError(
-            f"Unsupported experiment ID: '{experiment_id}'. Supported: E1, E2, E4, E5"
-        )
+        raise ValueError(f"Unsupported experiment ID: '{experiment_id}'. Supported: E1, E2, E4, E5")

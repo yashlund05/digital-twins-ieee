@@ -1,9 +1,10 @@
 """tests/publication/test_phase13_source_registry.py — Tests for Phase 13 source registry."""
 
 from pathlib import Path
+
 import pytest
 
-from src.publication.source_registry import CanonicalClaim, Phase13SourceRegistry
+from src.publication.source_registry import Phase13SourceRegistry
 from src.publication.sources import FrozenSourceRegistry
 
 

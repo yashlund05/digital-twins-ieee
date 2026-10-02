@@ -1,0 +1,117 @@
+{
+  "overall_status": "PASS",
+  "total_checks": 6,
+  "passed_checks": 6,
+  "failed_checks": 0,
+  "checks": {
+    "e4_baseline": {
+      "status": "PASS",
+      "check": "e4_baseline_f1",
+      "details": {
+        "Raw + IF": {
+          "expected": 0.117647,
+          "actual": 0.11764705882352941,
+          "passed": true,
+          "abs_diff": 5.882352940855817e-08
+        },
+        "Residual + IF": {
+          "expected": 0.088727,
+          "actual": 0.08872727272727272,
+          "passed": true,
+          "abs_diff": 2.7272727272376063e-07
+        },
+        "Raw + LSTM-AE": {
+          "expected": 0.538606,
+          "actual": 0.5386064030131827,
+          "passed": true,
+          "abs_diff": 4.0301318271485087e-07
+        },
+        "Residual + LSTM-AE": {
+          "expected": 0.977956,
+          "actual": 0.9779559118236473,
+          "passed": true,
+          "abs_diff": 8.817635277491576e-08
+        }
+      }
+    },
+    "e10_h3": {
+      "status": "PASS",
+      "check": "e10_h3_summary",
+      "details": {
+        "delta_beta": {
+          "expected": -1.2236455016005805,
+          "actual": -1.2236455016005805,
+          "passed": true,
+          "abs_diff": 0.0
+        },
+        "ci_lower": {
+          "expected": -1.3462600065803283,
+          "actual": -1.3462600065803283,
+          "passed": true,
+          "abs_diff": 0.0
+        },
+        "ci_upper": {
+          "expected": -1.1134119167064354,
+          "actual": -1.1134119167064354,
+          "passed": true,
+          "abs_diff": 0.0
+        },
+        "p_value_slope": {
+          "expected": 1.0,
+          "actual": 1.0,
+          "passed": true,
+          "abs_diff": 0.0
+        },
+        "decision": {
+          "expected": "NOT_SUPPORTED",
+          "actual": "NOT_SUPPORTED",
+          "passed": true
+        }
+      }
+    },
+    "e11_change_point": {
+      "status": "PASS",
+      "check": "e11_change_point_aoi",
+      "details": {
+        "estimated_transition_aoi_seconds": {
+          "expected": 0.0,
+          "actual": 0.0,
+          "passed": true
+        },
+        "detection_status": {
+          "expected": "DETECTED",
+          "actual": "DETECTED",
+          "passed": true
+        }
+      }
+    },
+    "e5_completeness": {
+      "status": "PASS",
+      "check": "e5_condition_completeness",
+      "details": {
+        "expected_conditions": 24,
+        "actual_conditions": 24,
+        "passed": true
+      }
+    },
+    "e10_completeness": {
+      "status": "PASS",
+      "check": "e10_seed_condition_completeness",
+      "details": {
+        "expected_seed_conditions": 120,
+        "actual_seed_conditions": 120,
+        "passed": true
+      }
+    },
+    "e11_completeness": {
+      "status": "PASS",
+      "check": "e11_ablation_completeness",
+      "details": {
+        "expected_ablation_evaluations": 88,
+        "actual_ablation_rows": 88,
+        "unique_ablation_ids": 8,
+        "passed": true
+      }
+    }
+  }
+}

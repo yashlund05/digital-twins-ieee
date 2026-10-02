@@ -5,10 +5,11 @@ and Missed-Update Transient Analysis (Objective C) into unified paper-ready arti
 """
 
 from datetime import datetime
-import json
 from pathlib import Path
 from typing import Any
+
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
@@ -19,10 +20,9 @@ from src.experiments.ablations import run_controlled_ablations
 from src.experiments.missed_update_transient import run_missed_update_transient_analysis
 from src.reproducibility.artifact_integrity import verify_artifacts
 from src.reproducibility.config_hash import compute_config_hash
-from src.reproducibility.hashing import hash_directory, hash_file
 from src.reproducibility.run_manifest import create_reproducibility_manifest
 from src.reproducibility.verifier import verify_historical_benchmarks
-from src.utils.io import ensure_dir, load_json, save_json
+from src.utils.io import save_json
 from src.utils.logging import get_logger
 
 logger = get_logger("experiments.phase11")
@@ -37,7 +37,9 @@ def render_phase11_figures(
 ) -> None:
     """Render all 8 publication figures for Phase 11 at 300 DPI."""
     figures_dir.mkdir(parents=True, exist_ok=True)
-    plt.style.use("seaborn-v0_8-whitegrid" if "seaborn-v0_8-whitegrid" in plt.style.available else "default")
+    plt.style.use(
+        "seaborn-v0_8-whitegrid" if "seaborn-v0_8-whitegrid" in plt.style.available else "default"
+    )
 
     # Figure 01: Reproducibility comparison
     plt.figure(figsize=(8, 5))
@@ -46,10 +48,20 @@ def render_phase11_figures(
         x = np.arange(len(b_df))
         w = 0.35
         plt.bar(x - w / 2, b_df["actual"], width=w, label="Actual / Reconciled", color="#1f77b4")
-        plt.bar(x + w / 2, b_df["expected"], width=w, label="Historical Target (Phase 7)", color="#2ca02c")
+        plt.bar(
+            x + w / 2,
+            b_df["expected"],
+            width=w,
+            label="Historical Target (Phase 7)",
+            color="#2ca02c",
+        )
         plt.xticks(x, b_df["model"], rotation=15)
         plt.ylabel("Baseline $F_1$-Score", fontsize=11)
-        plt.title("Figure 1: Historical Baseline Reproducibility Verification (E4 vs E11)", fontsize=12, fontweight="bold")
+        plt.title(
+            "Figure 1: Historical Baseline Reproducibility Verification (E4 vs E11)",
+            fontsize=12,
+            fontweight="bold",
+        )
         plt.legend(frameon=True)
         plt.ylim(0, 1.1)
     plt.tight_layout()
@@ -58,16 +70,36 @@ def render_phase11_figures(
 
     # Figure 02: Ablation F1 effect
     plt.figure(figsize=(9, 5.5))
-    a1_sub = ablation_df[ablation_df["ablation_id"] == "A1_representation"].sort_values("staleness_seconds")
+    a1_sub = ablation_df[ablation_df["ablation_id"] == "A1_representation"].sort_values(
+        "staleness_seconds"
+    )
     if not a1_sub.empty:
         lstm_sub = a1_sub[a1_sub["model"] == "lstm_autoencoder"]
-        plt.plot(lstm_sub["staleness_seconds"], lstm_sub["baseline_value"], marker="o", lw=2, label="Residual (Baseline)", color="#1f77b4")
-        plt.plot(lstm_sub["staleness_seconds"], lstm_sub["ablation_value"], marker="s", lw=2, label="Raw Telemetry (Ablated)", color="#d62728")
+        plt.plot(
+            lstm_sub["staleness_seconds"],
+            lstm_sub["baseline_value"],
+            marker="o",
+            lw=2,
+            label="Residual (Baseline)",
+            color="#1f77b4",
+        )
+        plt.plot(
+            lstm_sub["staleness_seconds"],
+            lstm_sub["ablation_value"],
+            marker="s",
+            lw=2,
+            label="Raw Telemetry (Ablated)",
+            color="#d62728",
+        )
         plt.xscale("symlog", linthresh=1.0)
         plt.xticks([0, 1, 5, 15, 60, 300], ["0", "1", "5", "15", "60", "300"])
         plt.xlabel("Synchronization Staleness $\\Delta t$ (s)", fontsize=11)
         plt.ylabel("Anomaly Detection $F_1$-Score", fontsize=11)
-        plt.title("Figure 2: Representation Ablation (A1): Raw vs. Residual across Staleness", fontsize=12, fontweight="bold")
+        plt.title(
+            "Figure 2: Representation Ablation (A1): Raw vs. Residual across Staleness",
+            fontsize=12,
+            fontweight="bold",
+        )
         plt.legend(frameon=True)
     plt.tight_layout()
     plt.savefig(figures_dir / "fig_02_ablation_f1.png", dpi=300)
@@ -76,24 +108,31 @@ def render_phase11_figures(
     # Figure 03: Forecasting error ablation
     plt.figure(figsize=(9, 5.5))
     a7_sub = ablation_df[
-        (ablation_df["ablation_id"] == "A7_forecaster")
-        & (ablation_df["metric"] == "mape")
+        (ablation_df["ablation_id"] == "A7_forecaster") & (ablation_df["metric"] == "mape")
     ]
     if not a7_sub.empty:
         # Plot LSTM vs XGBoost vs Persistence across staleness
         lstm_vals = a7_sub[a7_sub["ablation_representation"] == "xgboost"]["baseline_value"].values
         xgb_vals = a7_sub[a7_sub["ablation_representation"] == "xgboost"]["ablation_value"].values
-        pers_vals = a7_sub[a7_sub["ablation_representation"] == "persistence"]["ablation_value"].values
+        pers_vals = a7_sub[a7_sub["ablation_representation"] == "persistence"][
+            "ablation_value"
+        ].values
         dts = a7_sub[a7_sub["ablation_representation"] == "xgboost"]["staleness_seconds"].values
 
-        plt.plot(dts, lstm_vals, marker="o", label="LSTM Forecaster (Baseline)", lw=2, color="#1f77b4")
+        plt.plot(
+            dts, lstm_vals, marker="o", label="LSTM Forecaster (Baseline)", lw=2, color="#1f77b4"
+        )
         plt.plot(dts, xgb_vals, marker="^", label="XGBoost", lw=2, color="#2ca02c")
         plt.plot(dts, pers_vals, marker="x", label="Persistence", lw=2, color="#ff7f0e")
         plt.xscale("symlog", linthresh=1.0)
         plt.xticks([0, 1, 5, 15, 60, 300], ["0", "1", "5", "15", "60", "300"])
         plt.xlabel("Synchronization Staleness $\\Delta t$ (s)", fontsize=11)
         plt.ylabel("Load Estimation MAPE (%)", fontsize=11)
-        plt.title("Figure 3: Forecasting Architecture Ablation (A7) across Staleness", fontsize=12, fontweight="bold")
+        plt.title(
+            "Figure 3: Forecasting Architecture Ablation (A7) across Staleness",
+            fontsize=12,
+            fontweight="bold",
+        )
         plt.legend(frameon=True)
     plt.tight_layout()
     plt.savefig(figures_dir / "fig_03_ablation_load_error.png", dpi=300)
@@ -102,10 +141,21 @@ def render_phase11_figures(
     # Figure 04: Residual magnitude vs realized AoI
     plt.figure(figsize=(8.5, 5))
     if not transient_by_aoi.empty:
-        plt.bar(transient_by_aoi["aoi_bin"], transient_by_aoi["mean_residual_norm"], yerr=transient_by_aoi["std_residual_norm"], capsize=5, color="#1f77b4", alpha=0.85)
+        plt.bar(
+            transient_by_aoi["aoi_bin"],
+            transient_by_aoi["mean_residual_norm"],
+            yerr=transient_by_aoi["std_residual_norm"],
+            capsize=5,
+            color="#1f77b4",
+            alpha=0.85,
+        )
         plt.xlabel("Realized Age of Information (AoI) Bins", fontsize=11)
         plt.ylabel("Mean Residual Norm $\\|r_t\\|_2$", fontsize=11)
-        plt.title("Figure 4: Intra-Epoch Residual Inflation vs. Realized AoI", fontsize=12, fontweight="bold")
+        plt.title(
+            "Figure 4: Intra-Epoch Residual Inflation vs. Realized AoI",
+            fontsize=12,
+            fontweight="bold",
+        )
         plt.xticks(rotation=20)
     plt.tight_layout()
     plt.savefig(figures_dir / "fig_04_residual_vs_aoi.png", dpi=300)
@@ -114,10 +164,20 @@ def render_phase11_figures(
     # Figure 05: Anomaly score vs AoI
     plt.figure(figsize=(8.5, 5))
     if not transient_by_aoi.empty:
-        plt.plot(transient_by_aoi["aoi_bin"], transient_by_aoi["mean_anomaly_score"], marker="o", color="#d62728", lw=2)
+        plt.plot(
+            transient_by_aoi["aoi_bin"],
+            transient_by_aoi["mean_anomaly_score"],
+            marker="o",
+            color="#d62728",
+            lw=2,
+        )
         plt.xlabel("Realized AoI Bins", fontsize=11)
         plt.ylabel("Mean Reconstruction Anomaly Score", fontsize=11)
-        plt.title("Figure 5: Detector Anomaly Score Drift vs. Synchronization Age", fontsize=12, fontweight="bold")
+        plt.title(
+            "Figure 5: Detector Anomaly Score Drift vs. Synchronization Age",
+            fontsize=12,
+            fontweight="bold",
+        )
         plt.xticks(rotation=20)
     plt.tight_layout()
     plt.savefig(figures_dir / "fig_05_anomaly_score_vs_aoi.png", dpi=300)
@@ -126,10 +186,21 @@ def render_phase11_figures(
     # Figure 06: Transient detection performance
     plt.figure(figsize=(8.5, 5))
     if not transient_by_aoi.empty:
-        plt.plot(transient_by_aoi["aoi_bin"], transient_by_aoi["bin_f1_score"], marker="s", color="#2ca02c", lw=2, label="Bin $F_1$-Score")
+        plt.plot(
+            transient_by_aoi["aoi_bin"],
+            transient_by_aoi["bin_f1_score"],
+            marker="s",
+            color="#2ca02c",
+            lw=2,
+            label="Bin $F_1$-Score",
+        )
         plt.xlabel("Realized AoI Bins", fontsize=11)
         plt.ylabel("Local $F_1$-Score", fontsize=11)
-        plt.title("Figure 6: Transient Anomaly Detection Performance vs. Realized AoI", fontsize=12, fontweight="bold")
+        plt.title(
+            "Figure 6: Transient Anomaly Detection Performance vs. Realized AoI",
+            fontsize=12,
+            fontweight="bold",
+        )
         plt.xticks(rotation=20)
         plt.legend(frameon=True)
     plt.tight_layout()
@@ -142,10 +213,19 @@ def render_phase11_figures(
     if not a3_sub.empty:
         for dt in a3_sub["staleness_seconds"].unique():
             dt_df = a3_sub[a3_sub["staleness_seconds"] == dt].sort_values("packet_drop_rate")
-            plt.plot(dt_df["packet_drop_rate"], dt_df["ablation_value"], marker="o", label=f"$\\Delta t={dt}\\,$s")
+            plt.plot(
+                dt_df["packet_drop_rate"],
+                dt_df["ablation_value"],
+                marker="o",
+                label=f"$\\Delta t={dt}\\,$s",
+            )
         plt.xlabel("Packet Drop Rate $P_{drop}$", fontsize=11)
         plt.ylabel("Residual LSTM-AE $F_1$-Score", fontsize=11)
-        plt.title("Figure 7: Staleness $\\times$ Packet Drop Interaction across Conditions", fontsize=12, fontweight="bold")
+        plt.title(
+            "Figure 7: Staleness $\\times$ Packet Drop Interaction across Conditions",
+            fontsize=12,
+            fontweight="bold",
+        )
         plt.legend(frameon=True)
     plt.tight_layout()
     plt.savefig(figures_dir / "fig_07_staleness_packet_interaction.png", dpi=300)
@@ -159,7 +239,11 @@ def render_phase11_figures(
     y_vals = [5.0, 5.0, 5.0, 5.0, 5.0]
     plt.bar([f"Seed {s}" for s in seeds], y_vals, color="#1f77b4", alpha=0.85)
     plt.ylabel("Estimated Critical Transition AoI (s)", fontsize=11)
-    plt.title("Figure 8: Cross-Seed Stability of the Critical Staleness Transition Cliff", fontsize=12, fontweight="bold")
+    plt.title(
+        "Figure 8: Cross-Seed Stability of the Critical Staleness Transition Cliff",
+        fontsize=12,
+        fontweight="bold",
+    )
     plt.ylim(0, 10)
     plt.tight_layout()
     plt.savefig(figures_dir / "fig_08_seed_transient_variability.png", dpi=300)
@@ -188,7 +272,7 @@ def run_phase11_experiment(
         Path to completed Phase 11 execution directory.
     """
     cfg_p = Path(config_path)
-    with open(cfg_p, "r", encoding="utf-8") as f:
+    with open(cfg_p, encoding="utf-8") as f:
         cfg = yaml.safe_load(f)
 
     date_str = datetime.now().strftime("%Y%m%d")
@@ -285,18 +369,18 @@ def run_phase11_experiment(
 ## Executive Summary
 - **Execution Date**: `{date_str}`
 - **Run Directory**: `{run_dir}`
-- **Historical Reproducibility Status**: `{repro_report.get('overall_status', 'PASS')}`
+- **Historical Reproducibility Status**: `{repro_report.get("overall_status", "PASS")}`
 - **Controlled Ablations Executed**: `8` (A1–A8, `{len(ablation_df)}` condition evaluations)
 - **Transient Analysis Timesteps Audited**: `{len(transient_ts)}` timesteps across active staleness epochs
-- **Integrity Status**: `{int_report.get('status', 'PASS')}`
+- **Integrity Status**: `{int_report.get("status", "PASS")}`
 
 ---
 
 ## 1. Objective A: Reproducibility Verification
-- **Phase 7 E4 Baseline**: `{repro_report.get('phase7_e4_status', 'PASS')}` (Residual LSTM-AE $F_1 = 0.9780$, Raw LSTM-AE $F_1 = 0.5386$, Raw IF $F_1 = 0.1176$, Res IF $F_1 = 0.0887$)
-- **Phase 8 E5 Sweep**: `{repro_report.get('phase8_e5_status', 'PASS')}` (all representative conditions matched)
-- **Phase 9 E6 Statistical Test**: `{repro_report.get('phase9_e6_status', 'PASS')}` ($H_3$ NOT_SUPPORTED, $\\Delta \\beta = -1.1148$)
-- **Phase 10 E10 Multi-Seed Analysis**: `{repro_report.get('phase10_e10_status', 'PASS')}` ($100\\%$ sign consistency across 5 seeds)
+- **Phase 7 E4 Baseline**: `{repro_report.get("phase7_e4_status", "PASS")}` (Residual LSTM-AE $F_1 = 0.9780$, Raw LSTM-AE $F_1 = 0.5386$, Raw IF $F_1 = 0.1176$, Res IF $F_1 = 0.0887$)
+- **Phase 8 E5 Sweep**: `{repro_report.get("phase8_e5_status", "PASS")}` (all representative conditions matched)
+- **Phase 9 E6 Statistical Test**: `{repro_report.get("phase9_e6_status", "PASS")}` ($H_3$ NOT_SUPPORTED, $\\Delta \\beta = -1.1148$)
+- **Phase 10 E10 Multi-Seed Analysis**: `{repro_report.get("phase10_e10_status", "PASS")}` ($100\\%$ sign consistency across 5 seeds)
 
 ---
 
@@ -319,7 +403,7 @@ def run_phase11_experiment(
     (run_dir / "summary.md").write_text(summary_md, encoding="utf-8")
 
     # 8. Cryptographic Manifest
-    manifest = create_reproducibility_manifest(
+    create_reproducibility_manifest(
         experiment_id="E11",
         run_id=run_id,
         output_dir=run_dir,

@@ -1,8 +1,5 @@
 """tests/unit/test_publication_provenance.py — Unit tests for Phase 12 provenance and audit manifests."""
 
-from pathlib import Path
-import pytest
-
 from src.publication.figure_factory import build_all_figures
 from src.publication.latex import build_all_latex
 from src.publication.provenance import (
@@ -12,7 +9,6 @@ from src.publication.provenance import (
 )
 from src.publication.sources import FrozenSourceRegistry
 from src.publication.table_factory import build_all_tables
-from src.utils.io import load_json
 
 
 def test_provenance_manifest_generation(tmp_path):

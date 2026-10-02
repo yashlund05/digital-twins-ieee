@@ -1,0 +1,25 @@
+{
+  "method": "percentile_95",
+  "raw_lstm": {
+    "e4_threshold": 0.0007370078528765589,
+    "e5_before_threshold": 0.004739835276268423,
+    "e5_after_threshold": 0.0007370078528765589,
+    "abs_diff_after": 0.0
+  },
+  "res_lstm": {
+    "e4_threshold": 0.0003816792741417885,
+    "e5_before_threshold": 0.0001123104157159105,
+    "e5_after_threshold": 0.0003816792741417885,
+    "abs_diff_after": 0.0
+  },
+  "raw_if": {
+    "e4_threshold": 0.5031683371451802,
+    "e5_after_threshold": 0.5031683371451802,
+    "abs_diff_after": 0.0
+  },
+  "res_if": {
+    "e4_threshold": 0.29376565419608197,
+    "e5_after_threshold": 0.29376565419608197,
+    "abs_diff_after": 0.0
+  }
+}

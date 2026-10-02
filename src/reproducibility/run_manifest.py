@@ -4,13 +4,13 @@ Generates schema-compliant run manifests with input/output artifact checksums,
 configuration fingerprints, environment state, and explicit reproducibility statuses per Section 10.
 """
 
-from datetime import datetime
 import json
+from datetime import datetime
 from pathlib import Path
 from typing import Any, Literal
 
 from src.reproducibility.environment import capture_environment_metadata
-from src.reproducibility.hashing import hash_directory, hash_file
+from src.reproducibility.hashing import hash_directory
 
 ReproducibilityStatus = Literal["PASS", "FAIL", "PARTIAL", "NOT_VERIFIED"]
 

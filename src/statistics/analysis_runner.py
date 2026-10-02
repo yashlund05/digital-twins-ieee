@@ -8,21 +8,19 @@ and renders publication-grade figures and reports.
 """
 
 from datetime import datetime
-import json
 from pathlib import Path
 from typing import Any
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-from src.statistics.bootstrap import bootstrap_ci, bootstrap_slope_ci
+from src.statistics.bootstrap import bootstrap_slope_ci
 from src.statistics.degradation import (
-    METRIC_DIRECTION,
     build_degradation_dataframe,
-    compute_normalized_degradation,
 )
 from src.statistics.effect_sizes import compute_cliffs_delta, compute_cohens_d
 from src.statistics.hypothesis import (
@@ -31,7 +29,6 @@ from src.statistics.hypothesis import (
     test_differential_degradation_h3,
 )
 from src.statistics.regression import (
-    fit_linear_regression,
     fit_log_linear_regression,
     fit_two_way_factorial_regression,
 )
@@ -86,7 +83,7 @@ def run_phase9_analysis(
     comparison_df = pd.read_csv(comp_csv_path)
     aoi_stats = load_json(aoi_json_path)
     metrics_dict = load_json(metrics_json_path)
-    manifest_dict = load_json(manifest_path) if manifest_path.exists() else {}
+    load_json(manifest_path) if manifest_path.exists() else {}
 
     # 2. Step 2: Validate Baseline Equivalence (Hard Gate)
     logger.info("Executing hard baseline equivalence validation against Phase 7 E4...")
@@ -157,7 +154,9 @@ def run_phase9_analysis(
         # 4.2 Regression vs Realized AoI
         reg_aoi = fit_log_linear_regression(aoi_vals, deg_vals)
         # 4.3 Two-way factorial model
-        reg_two_way = fit_two_way_factorial_regression(dt_vals, p_drop_vals, deg_vals, use_log_dt=True)
+        reg_two_way = fit_two_way_factorial_regression(
+            dt_vals, p_drop_vals, deg_vals, use_log_dt=True
+        )
 
         rec = {
             "task": m_row["task"],
@@ -195,7 +194,9 @@ def run_phase9_analysis(
         stale_vals = sub[sub["staleness_seconds"] == 300]["value"].values
 
         if len(base_vals) > 0 and len(stale_vals) > 0:
-            c_d = compute_cohens_d(stale_vals, base_vals, paired=(len(base_vals) == len(stale_vals)))
+            c_d = compute_cohens_d(
+                stale_vals, base_vals, paired=(len(base_vals) == len(stale_vals))
+            )
             c_delta = compute_cliffs_delta(stale_vals, base_vals)
             effect_records.append(
                 {
@@ -231,7 +232,6 @@ def run_phase9_analysis(
     ].sort_values("condition_id")
 
     dt_grid = ad_sub["staleness_seconds"].values
-    aoi_grid = ad_sub["realized_mean_aoi"].values
     ad_norm_deg = ad_sub["normalized_degradation"].values
     le_norm_deg = le_sub["normalized_degradation"].values
 
@@ -421,7 +421,9 @@ def _generate_publication_figures(
     figures_dir: Path,
 ) -> None:
     """Generate all 8 pre-specified IEEE publication figures."""
-    plt.style.use("seaborn-v0_8-whitegrid" if "seaborn-v0_8-whitegrid" in plt.style.available else "default")
+    plt.style.use(
+        "seaborn-v0_8-whitegrid" if "seaborn-v0_8-whitegrid" in plt.style.available else "default"
+    )
 
     # Figure 1: Anomaly F1 vs nominal Delta t
     fig, ax = plt.subplots(figsize=(7, 4.5), dpi=300)
@@ -431,11 +433,16 @@ def _generate_publication_figures(
         label = f"{det.replace('_', ' ').title()} ({rep.capitalize()})"
         marker = "o" if rep == "residual" else "s"
         lw = 2.0 if rep == "residual" else 1.2
-        ax.plot(p0_grp["staleness_seconds"], p0_grp["value"], marker=marker, label=label, linewidth=lw)
+        ax.plot(
+            p0_grp["staleness_seconds"], p0_grp["value"], marker=marker, label=label, linewidth=lw
+        )
     ax.set_xscale("symlog", linthresh=1.0)
     ax.set_xlabel(r"Synchronization Interval $\Delta t$ (s)", fontsize=11)
     ax.set_ylabel(r"$F_1$-Score", fontsize=11)
-    ax.set_title(r"Figure 1: Anomaly Detection $F_1$-Score vs. Synchronization Staleness ($P_{drop}=0$)", fontsize=11)
+    ax.set_title(
+        r"Figure 1: Anomaly Detection $F_1$-Score vs. Synchronization Staleness ($P_{drop}=0$)",
+        fontsize=11,
+    )
     ax.legend(frameon=True, fontsize=9)
     fig.tight_layout()
     fig.savefig(figures_dir / "fig_01_anomaly_f1_vs_staleness.png")
@@ -447,11 +454,16 @@ def _generate_publication_figures(
     for (det, rep), grp in ad_prauc.groupby(["model", "representation"]):
         p0_grp = grp[grp["packet_drop_rate"] == 0.0].sort_values("staleness_seconds")
         label = f"{det.replace('_', ' ').title()} ({rep.capitalize()})"
-        ax.plot(p0_grp["staleness_seconds"], p0_grp["value"], marker="^", label=label, linewidth=1.8)
+        ax.plot(
+            p0_grp["staleness_seconds"], p0_grp["value"], marker="^", label=label, linewidth=1.8
+        )
     ax.set_xscale("symlog", linthresh=1.0)
     ax.set_xlabel(r"Synchronization Interval $\Delta t$ (s)", fontsize=11)
     ax.set_ylabel("PR-AUC", fontsize=11)
-    ax.set_title(r"Figure 2: Anomaly Detection PR-AUC vs. Synchronization Staleness ($P_{drop}=0$)", fontsize=11)
+    ax.set_title(
+        r"Figure 2: Anomaly Detection PR-AUC vs. Synchronization Staleness ($P_{drop}=0$)",
+        fontsize=11,
+    )
     ax.legend(frameon=True, fontsize=9)
     fig.tight_layout()
     fig.savefig(figures_dir / "fig_02_anomaly_prauc_vs_staleness.png")
@@ -462,11 +474,19 @@ def _generate_publication_figures(
     le_mae = deg_df[(deg_df["task"] == "load_estimation") & (deg_df["metric"] == "mae")]
     for model_name, grp in le_mae.groupby("model"):
         p0_grp = grp[grp["packet_drop_rate"] == 0.0].sort_values("staleness_seconds")
-        ax.plot(p0_grp["staleness_seconds"], p0_grp["value"], marker="d", label=model_name.capitalize(), linewidth=1.8)
+        ax.plot(
+            p0_grp["staleness_seconds"],
+            p0_grp["value"],
+            marker="d",
+            label=model_name.capitalize(),
+            linewidth=1.8,
+        )
     ax.set_xscale("symlog", linthresh=1.0)
     ax.set_xlabel(r"Synchronization Interval $\Delta t$ (s)", fontsize=11)
     ax.set_ylabel("MAE (kW)", fontsize=11)
-    ax.set_title(r"Figure 3: Short-Term Load Estimation MAE vs. Staleness ($P_{drop}=0$)", fontsize=11)
+    ax.set_title(
+        r"Figure 3: Short-Term Load Estimation MAE vs. Staleness ($P_{drop}=0$)", fontsize=11
+    )
     ax.legend(frameon=True, fontsize=9)
     fig.tight_layout()
     fig.savefig(figures_dir / "fig_03_load_mae_vs_staleness.png")
@@ -477,11 +497,19 @@ def _generate_publication_figures(
     le_rmse = deg_df[(deg_df["task"] == "load_estimation") & (deg_df["metric"] == "rmse")]
     for model_name, grp in le_rmse.groupby("model"):
         p0_grp = grp[grp["packet_drop_rate"] == 0.0].sort_values("staleness_seconds")
-        ax.plot(p0_grp["staleness_seconds"], p0_grp["value"], marker="v", label=model_name.capitalize(), linewidth=1.8)
+        ax.plot(
+            p0_grp["staleness_seconds"],
+            p0_grp["value"],
+            marker="v",
+            label=model_name.capitalize(),
+            linewidth=1.8,
+        )
     ax.set_xscale("symlog", linthresh=1.0)
     ax.set_xlabel(r"Synchronization Interval $\Delta t$ (s)", fontsize=11)
     ax.set_ylabel("RMSE (kW)", fontsize=11)
-    ax.set_title(r"Figure 4: Short-Term Load Estimation RMSE vs. Staleness ($P_{drop}=0$)", fontsize=11)
+    ax.set_title(
+        r"Figure 4: Short-Term Load Estimation RMSE vs. Staleness ($P_{drop}=0$)", fontsize=11
+    )
     ax.legend(frameon=True, fontsize=9)
     fig.tight_layout()
     fig.savefig(figures_dir / "fig_04_load_rmse_vs_staleness.png")
@@ -538,7 +566,10 @@ def _generate_publication_figures(
     ax.set_xscale("symlog", linthresh=1.0)
     ax.set_xlabel(r"Synchronization Staleness $\Delta t$ (s)", fontsize=11)
     ax.set_ylabel(r"Task-Normalized Degradation $D(\Delta t)$", fontsize=11)
-    ax.set_title(r"Figure 5: Normalized Degradation Profiles (Anomaly Detection vs. Load Estimation)", fontsize=11)
+    ax.set_title(
+        r"Figure 5: Normalized Degradation Profiles (Anomaly Detection vs. Load Estimation)",
+        fontsize=11,
+    )
     ax.legend(frameon=True, fontsize=9)
     fig.tight_layout()
     fig.savefig(figures_dir / "fig_05_task_degradation_comparison.png")
@@ -547,7 +578,7 @@ def _generate_publication_figures(
     # Figure 6: Realized AoI vs nominal Delta t across packet drops
     fig, ax = plt.subplots(figsize=(7, 4.5), dpi=300)
     aoi_records = []
-    for c_id, st in aoi_stats.items():
+    for _c_id, st in aoi_stats.items():
         aoi_records.append(
             {
                 "staleness_seconds": st["staleness_seconds"],
@@ -559,12 +590,20 @@ def _generate_publication_figures(
     aoi_df = pd.DataFrame(aoi_records)
     for p_val, grp in aoi_df.groupby("packet_drop_rate"):
         s_grp = grp.sort_values("staleness_seconds")
-        ax.plot(s_grp["staleness_seconds"], s_grp["mean_aoi"], marker="o", label=f"$P_{{drop}} = {p_val:.2f}$", linewidth=1.8)
+        ax.plot(
+            s_grp["staleness_seconds"],
+            s_grp["mean_aoi"],
+            marker="o",
+            label=f"$P_{{drop}} = {p_val:.2f}$",
+            linewidth=1.8,
+        )
     ax.set_xscale("symlog", linthresh=1.0)
     ax.set_yscale("symlog", linthresh=1.0)
     ax.set_xlabel(r"Nominal Synchronization Interval $\Delta t$ (s)", fontsize=11)
     ax.set_ylabel("Realized Mean Age of Information (s)", fontsize=11)
-    ax.set_title("Figure 6: Realized Age of Information (AoI) vs. Synchronization Interval", fontsize=11)
+    ax.set_title(
+        "Figure 6: Realized Age of Information (AoI) vs. Synchronization Interval", fontsize=11
+    )
     ax.legend(frameon=True, fontsize=9)
     fig.tight_layout()
     fig.savefig(figures_dir / "fig_06_realized_aoi.png")
@@ -580,11 +619,19 @@ def _generate_publication_figures(
     ]
     for p_drop, grp in ad_all_drops.groupby("packet_drop_rate"):
         s_grp = grp.sort_values("staleness_seconds")
-        ax.plot(s_grp["staleness_seconds"], s_grp["value"], marker="s", label=f"$P_{{drop}}={p_drop:.2f}$", linewidth=1.8)
+        ax.plot(
+            s_grp["staleness_seconds"],
+            s_grp["value"],
+            marker="s",
+            label=f"$P_{{drop}}={p_drop:.2f}$",
+            linewidth=1.8,
+        )
     ax.set_xscale("symlog", linthresh=1.0)
     ax.set_xlabel(r"Synchronization Interval $\Delta t$ (s)", fontsize=11)
     ax.set_ylabel(r"Residual LSTM-AE $F_1$-Score", fontsize=11)
-    ax.set_title(r"Figure 7: Staleness $\times$ Packet Drop Interaction on Anomaly Detection", fontsize=11)
+    ax.set_title(
+        r"Figure 7: Staleness $\times$ Packet Drop Interaction on Anomaly Detection", fontsize=11
+    )
     ax.legend(frameon=True, fontsize=9)
     fig.tight_layout()
     fig.savefig(figures_dir / "fig_07_staleness_packet_drop_interaction.png")
@@ -607,7 +654,15 @@ def _generate_publication_figures(
     )
     for bar in bars:
         h = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2.0, h / 2.0, f"{h:.3f}", ha="center", va="center", color="white", fontweight="bold")
+        ax.text(
+            bar.get_x() + bar.get_width() / 2.0,
+            h / 2.0,
+            f"{h:.3f}",
+            ha="center",
+            va="center",
+            color="white",
+            fontweight="bold",
+        )
     fig.tight_layout()
     fig.savefig(figures_dir / "fig_08_h3_effect_comparison.png")
     plt.close(fig)
@@ -631,7 +686,7 @@ def _generate_markdown_reports(
         "",
         "## 1. Primary Statistical Evidence",
         "",
-        f"- **Primary Task Comparison:** Anomaly Detection (Residual LSTM-AE $F_1$) vs. Load Estimation (LSTM Forecaster MAPE)",
+        "- **Primary Task Comparison:** Anomaly Detection (Residual LSTM-AE $F_1$) vs. Load Estimation (LSTM Forecaster MAPE)",
         f"- **Estimated Anomaly Degradation Slope ($\\beta_{{ad}}$):** `{h3_test_result['beta_ad']:.4f}`",
         f"- **Estimated Load Degradation Slope ($\\beta_{{le}}$):** `{h3_test_result['beta_le']:.4f}`",
         f"- **Slope Difference ($\\Delta \\beta = \\beta_{{ad}} - \\beta_{{le}}$):** `{h3_test_result['delta_beta']:.4f}`",
@@ -659,7 +714,7 @@ def _generate_markdown_reports(
 
     # 2. summary.md
     summary_lines = [
-        f"# Experiment E6: Joint Analysis and Hypothesis Testing — Summary Report",
+        "# Experiment E6: Joint Analysis and Hypothesis Testing — Summary Report",
         "",
         f"- **Run ID:** `{run_id}`",
         f"- **Timestamp:** `{datetime.now().isoformat()}`",
@@ -668,7 +723,17 @@ def _generate_markdown_reports(
         "",
         "## 1. Key Regression Slopes (Normalized Degradation vs. $\\log(1+\\Delta t)$)",
         "",
-        regression_df[["task", "model", "representation", "metric", "slope_log_dt", "r2_log_dt", "p_val_log_dt"]].to_markdown(index=False),
+        regression_df[
+            [
+                "task",
+                "model",
+                "representation",
+                "metric",
+                "slope_log_dt",
+                "r2_log_dt",
+                "p_val_log_dt",
+            ]
+        ].to_markdown(index=False),
         "",
         "## 2. Publication Figures Generated",
         "",

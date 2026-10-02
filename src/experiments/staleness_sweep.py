@@ -13,9 +13,9 @@ Governed by:
 - Strict zero-leakage, temporal causality, and reproducibility manifests.
 """
 
-from dataclasses import dataclass, field
-from datetime import datetime
 import json
+from dataclasses import dataclass
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -24,13 +24,9 @@ import pandas as pd
 
 from src.anomaly_detection.isolation_forest import IsolationForestDetector
 from src.anomaly_detection.lstm_autoencoder import LSTMAutoencoderDetector
-from src.anomaly_detection.thresholds import get_threshold_selector
-from src.data.loader import generate_benchmark_residential_traces, load_pecan_street_csv
-from src.data.mapper import map_homes_to_ieee33
-from src.data.schema import NormalizationParameters
 from src.evaluation.anomaly_metrics import compute_anomaly_metrics
 from src.evaluation.forecasting_metrics import compute_forecasting_metrics
-from src.forecasting.features import compute_target_series, prepare_forecasting_data
+from src.forecasting.features import prepare_forecasting_data
 from src.forecasting.lstm_model import LSTMForecaster
 from src.forecasting.persistence import PersistenceForecaster
 from src.forecasting.xgboost_model import XGBoostForecaster
@@ -41,7 +37,7 @@ from src.residuals.normalizer import ResidualNormalizer
 from src.synchronization.aoi import AoITracker
 from src.synchronization.policies import HoldLastStatePolicy
 from src.synchronization.scheduler import UpdateScheduler
-from src.utils.config import E5ExperimentConfig, load_data_config, load_e5_config
+from src.utils.config import E5ExperimentConfig, load_e5_config
 from src.utils.io import ensure_dir, load_parquet, save_json, save_parquet
 from src.utils.logging import get_logger
 from src.utils.reproducibility import create_manifest, set_all_seeds
@@ -100,14 +96,13 @@ def simulate_synchronization_trace(
         seed=condition.seed,
     )
     aoi_tracker = AoITracker()
-    policy = HoldLastStatePolicy()
+    HoldLastStatePolicy()
 
     num_steps = len(nominal_df)
     stale_values = np.zeros_like(nominal_df.values)
     aoi_values = np.zeros(num_steps, dtype=np.float64)
 
     last_sync_time: float | None = None
-    last_sync_idx: int = 0
     current_held_row: np.ndarray = nominal_df.values[0].copy()
 
     log_records: list[dict[str, Any]] = []
@@ -129,7 +124,6 @@ def simulate_synchronization_trace(
         if is_successful:
             successful_updates += 1
             last_sync_time = t
-            last_sync_idx = step_idx
             current_held_row = nominal_df.values[step_idx].copy()
             aoi_tracker.record_update(current_time=t, generation_time=t)
             packet_dropped = False
@@ -169,12 +163,8 @@ def simulate_synchronization_trace(
     stale_df = pd.DataFrame(stale_values, index=nominal_df.index, columns=nominal_df.columns)
 
     # Realized AoI statistics
-    actual_drop_rate = (
-        float(dropped_updates / scheduled_updates) if scheduled_updates > 0 else 0.0
-    )
-    success_rate = (
-        float(successful_updates / scheduled_updates) if scheduled_updates > 0 else 1.0
-    )
+    actual_drop_rate = float(dropped_updates / scheduled_updates) if scheduled_updates > 0 else 0.0
+    success_rate = float(successful_updates / scheduled_updates) if scheduled_updates > 0 else 1.0
 
     aoi_stats = {
         "condition_id": condition.condition_id,
@@ -696,7 +686,7 @@ def run_staleness_sweep(
 
     # 2. Iterate through all experimental conditions
     for idx, cond in enumerate(conditions):
-        logger.info(f"[{idx+1}/{len(conditions)}] Running {cond.condition_id}...")
+        logger.info(f"[{idx + 1}/{len(conditions)}] Running {cond.condition_id}...")
         if cond.staleness_seconds == 0 and cond.packet_drop_rate == 0.0:
             fc_res, anom_res, pred_df, sync_trace = b_fc, b_anom, b_preds, b_sync
         else:

@@ -1,7 +1,6 @@
 """tests/publication/test_phase14_final_audit.py — E2E test for Phase 14 Final Audit."""
 
 from pathlib import Path
-import pytest
 
 from src.audit.audit_runner import run_phase14_final_audit
 

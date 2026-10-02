@@ -1,0 +1,1 @@
+claim_id,claim_text,metric,expected_value,verified_value,tolerance,source_phase,source_artifact,source_field,source_hash,verification_method,status,publication_safe

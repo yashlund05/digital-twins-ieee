@@ -25,7 +25,6 @@ from src.experiments.staleness_sweep import (
     simulate_synchronization_trace,
 )
 from src.synchronization.aoi import AoITracker
-from src.synchronization.policies import HoldLastStatePolicy
 from src.synchronization.scheduler import UpdateScheduler
 
 

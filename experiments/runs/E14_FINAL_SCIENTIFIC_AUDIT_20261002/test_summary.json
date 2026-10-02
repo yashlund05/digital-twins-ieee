@@ -1,0 +1,11 @@
+{
+  "status": "ALL_TESTS_PASS",
+  "total_tests": 247,
+  "passed": 247,
+  "failed": 0,
+  "skipped": 0,
+  "duration_seconds": 124.08,
+  "test_framework": "pytest-9.1.1",
+  "python_runtime": "3.14.6",
+  "timestamp": "2026-10-02T17:12:00"
+}

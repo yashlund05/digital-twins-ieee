@@ -7,7 +7,6 @@ import pandas as pd
 import pytest
 
 from src.statistics.degradation import (
-    METRIC_DIRECTION,
     build_degradation_dataframe,
     compute_absolute_degradation,
     compute_normalized_degradation,

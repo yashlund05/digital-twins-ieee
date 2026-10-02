@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "input_e5_dir": "experiments\\runs\\E5_STALENESS_SWEEP_CORRECTED_SEED42_20260930",
+  "total_conditions": 24,
+  "conditions_expected": 24,
+  "baseline_checks": {
+    "if_raw_f1": 0.11764705882352941,
+    "if_res_f1": 0.08872727272727272,
+    "lstm_raw_f1": 0.5386064030131827,
+    "lstm_res_f1": 0.9779559118236473,
+    "all_passed": true
+  }
+}

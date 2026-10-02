@@ -5,7 +5,8 @@ Provides bootstrap estimation of confidence intervals for sample means, medians,
 paired differences, and regression slopes with strict reproducibility.
 """
 
-from typing import Any, Callable
+from collections.abc import Callable
+
 import numpy as np
 
 
@@ -85,7 +86,9 @@ def bootstrap_difference_ci(
     y_arr = np.asarray(y, dtype=np.float64)
 
     if paired and len(x_arr) != len(y_arr):
-        raise ValueError(f"Paired bootstrap difference requires matching sample sizes: {len(x_arr)} vs {len(y_arr)}")
+        raise ValueError(
+            f"Paired bootstrap difference requires matching sample sizes: {len(x_arr)} vs {len(y_arr)}"
+        )
 
     rng = np.random.default_rng(seed)
     diff_stats = np.empty(n_boot, dtype=np.float64)
@@ -158,7 +161,11 @@ def bootstrap_slope_ci(
 
     # Base slope
     denom = np.sum((x_arr - np.mean(x_arr)) ** 2)
-    base_slope = float(np.sum((x_arr - np.mean(x_arr)) * (y_arr - np.mean(y_arr))) / denom) if denom > 1e-12 else 0.0
+    base_slope = (
+        float(np.sum((x_arr - np.mean(x_arr)) * (y_arr - np.mean(y_arr))) / denom)
+        if denom > 1e-12
+        else 0.0
+    )
 
     for i in range(n_boot):
         idx = rng.choice(n, size=n, replace=True)

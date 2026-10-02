@@ -38,7 +38,7 @@ def prepared_data():
 def test_end_to_end_residual_pipeline(prepared_data):
     """Verify full pipeline: observation + estimate -> residual -> normalizer -> features -> detectors."""
     df_feats = prepared_data["df_feats"].iloc[:500]  # Fast slice for integration test
-    splits = prepared_data["splits"]
+    prepared_data["splits"]
 
     # Use first 300 for train, 100 for val, 100 for test
     train_idx = list(range(300))

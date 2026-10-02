@@ -1,0 +1,9 @@
+{
+  "include_raw": true,
+  "include_absolute": false,
+  "include_squared": false,
+  "include_l2_norm": false,
+  "include_mean_absolute": false,
+  "include_max_absolute": false,
+  "lags": []
+}

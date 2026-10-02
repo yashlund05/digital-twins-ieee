@@ -1,0 +1,929 @@
+{
+  "status": "success",
+  "total_claims_checked": 133,
+  "matched": 61,
+  "mismatched": 0,
+  "unverifiable": 72,
+  "details": [
+    {
+      "value": 0.0,
+      "original_text": "0",
+      "matched_claims": [
+        "C13"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 1.0,
+      "original_text": "1",
+      "matched_claims": [
+        "C08"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 5.0,
+      "original_text": "5",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 15.0,
+      "original_text": "15",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 60.0,
+      "original_text": "60",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 300.0,
+      "original_text": "300",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 0.0,
+      "original_text": "0.0",
+      "matched_claims": [
+        "C13"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 0.05,
+      "original_text": "0.05",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 0.1,
+      "original_text": "0.10",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 0.2,
+      "original_text": "0.20",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 33.0,
+      "original_text": "33",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 0.0,
+      "original_text": "0",
+      "matched_claims": [
+        "C13"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 0.0,
+      "original_text": "0",
+      "matched_claims": [
+        "C13"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 1.0,
+      "original_text": "1",
+      "matched_claims": [
+        "C08"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 0.978,
+      "original_text": "0.978",
+      "matched_claims": [
+        "C01"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 3.0,
+      "original_text": "3",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": -1.224,
+      "original_text": "-1.224",
+      "matched_claims": [
+        "C05"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 95.0,
+      "original_text": "95",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": -1.346,
+      "original_text": "-1.346",
+      "matched_claims": [
+        "C06"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": -1.113,
+      "original_text": "-1.113",
+      "matched_claims": [
+        "C07"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 1.0,
+      "original_text": "1.000",
+      "matched_claims": [
+        "C08"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 0.0,
+      "original_text": "0",
+      "matched_claims": [
+        "C13"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 2.5,
+      "original_text": "2.5",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 33.0,
+      "original_text": "33",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 33.0,
+      "original_text": "33",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 6.0,
+      "original_text": "6",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 4.0,
+      "original_text": "4",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 24.0,
+      "original_text": "24",
+      "matched_claims": [
+        "C10"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 5.0,
+      "original_text": "5",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 120.0,
+      "original_text": "120",
+      "matched_claims": [
+        "C11"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 33.0,
+      "original_text": "33",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 15.0,
+      "original_text": "15",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 33.0,
+      "original_text": "33",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 0.0,
+      "original_text": "0",
+      "matched_claims": [
+        "C13"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 1.0,
+      "original_text": "1",
+      "matched_claims": [
+        "C08"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 5.0,
+      "original_text": "5",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 15.0,
+      "original_text": "15",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 60.0,
+      "original_text": "60",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 300.0,
+      "original_text": "300",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 0.0,
+      "original_text": "0.0",
+      "matched_claims": [
+        "C13"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 0.05,
+      "original_text": "0.05",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 0.1,
+      "original_text": "0.10",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 0.2,
+      "original_text": "0.20",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 6.0,
+      "original_text": "6",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 4.0,
+      "original_text": "4",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 24.0,
+      "original_text": "24",
+      "matched_claims": [
+        "C10"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 42.0,
+      "original_text": "42",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 123.0,
+      "original_text": "123",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 456.0,
+      "original_text": "456",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 789.0,
+      "original_text": "789",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 101112.0,
+      "original_text": "101112",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 24.0,
+      "original_text": "24",
+      "matched_claims": [
+        "C10"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 5.0,
+      "original_text": "5",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 120.0,
+      "original_text": "120",
+      "matched_claims": [
+        "C11"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 3.0,
+      "original_text": "3",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 3.0,
+      "original_text": "3",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 0.0,
+      "original_text": "0",
+      "matched_claims": [
+        "C13"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 0.0,
+      "original_text": "0",
+      "matched_claims": [
+        "C13"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 3.0,
+      "original_text": "3",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 0.0,
+      "original_text": "0",
+      "matched_claims": [
+        "C13"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 1.0,
+      "original_text": "1",
+      "matched_claims": [
+        "C08"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 0.0,
+      "original_text": "0",
+      "matched_claims": [
+        "C13"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 0.0,
+      "original_text": "0",
+      "matched_claims": [
+        "C13"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 1000.0,
+      "original_text": "1000",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 4.0,
+      "original_text": "4",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 0.0,
+      "original_text": "0",
+      "matched_claims": [
+        "C13"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 0.0,
+      "original_text": "0.0",
+      "matched_claims": [
+        "C13"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 42.0,
+      "original_text": "42",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 1.0,
+      "original_text": "1",
+      "matched_claims": [
+        "C08"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 0.978,
+      "original_text": "0.978",
+      "matched_claims": [
+        "C01"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 1.0,
+      "original_text": "1",
+      "matched_claims": [
+        "C08"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 0.539,
+      "original_text": "0.539",
+      "matched_claims": [
+        "C02"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 1.0,
+      "original_text": "1",
+      "matched_claims": [
+        "C08"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 0.118,
+      "original_text": "0.118",
+      "matched_claims": [
+        "C03"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 1.0,
+      "original_text": "1",
+      "matched_claims": [
+        "C08"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 0.089,
+      "original_text": "0.089",
+      "matched_claims": [
+        "C04"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 11.0,
+      "original_text": "11",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 2.0,
+      "original_text": "02",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 5.0,
+      "original_text": "5",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 24.0,
+      "original_text": "24",
+      "matched_claims": [
+        "C10"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 5.0,
+      "original_text": "5",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 3.0,
+      "original_text": "03",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 5.0,
+      "original_text": "5",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 3.0,
+      "original_text": "3",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 6.0,
+      "original_text": "6",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 10.0,
+      "original_text": "10",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 3.0,
+      "original_text": "3",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": -1.224,
+      "original_text": "-1.224",
+      "matched_claims": [
+        "C05"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 95.0,
+      "original_text": "95",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": -1.346,
+      "original_text": "-1.346",
+      "matched_claims": [
+        "C06"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": -1.113,
+      "original_text": "-1.113",
+      "matched_claims": [
+        "C07"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 1.0,
+      "original_text": "1.000",
+      "matched_claims": [
+        "C08"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 3.0,
+      "original_text": "3",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 3.0,
+      "original_text": "3",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 3.0,
+      "original_text": "3",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 4.0,
+      "original_text": "04",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 3.0,
+      "original_text": "3",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 6.0,
+      "original_text": "06",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 3.0,
+      "original_text": "3",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 11.0,
+      "original_text": "11",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 1.0,
+      "original_text": "1",
+      "matched_claims": [
+        "C08"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 8.0,
+      "original_text": "8",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 1.0,
+      "original_text": "1",
+      "matched_claims": [
+        "C08"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 1.0,
+      "original_text": "1",
+      "matched_claims": [
+        "C08"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 6.0,
+      "original_text": "6",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 5.0,
+      "original_text": "05",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 11.0,
+      "original_text": "11",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 0.0,
+      "original_text": "0.0",
+      "matched_claims": [
+        "C13"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 95.0,
+      "original_text": "95",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 0.0,
+      "original_text": "0.0",
+      "matched_claims": [
+        "C13"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 2.5,
+      "original_text": "2.5",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 3.0,
+      "original_text": "3",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 3.0,
+      "original_text": "3",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 1.0,
+      "original_text": "1",
+      "matched_claims": [
+        "C08"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 0.0,
+      "original_text": "0",
+      "matched_claims": [
+        "C13"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 1.0,
+      "original_text": "1",
+      "matched_claims": [
+        "C08"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 1.0,
+      "original_text": "1",
+      "matched_claims": [
+        "C08"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 1.0,
+      "original_text": "1",
+      "matched_claims": [
+        "C08"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 0.0,
+      "original_text": "0",
+      "matched_claims": [
+        "C13"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 1.0,
+      "original_text": "1",
+      "matched_claims": [
+        "C08"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 0.0,
+      "original_text": "0",
+      "matched_claims": [
+        "C13"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 3.0,
+      "original_text": "3",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 33.0,
+      "original_text": "33",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 33.0,
+      "original_text": "33",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": 24.0,
+      "original_text": "24",
+      "matched_claims": [
+        "C10"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 120.0,
+      "original_text": "120",
+      "matched_claims": [
+        "C11"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 3.0,
+      "original_text": "3",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": -1.224,
+      "original_text": "-1.224",
+      "matched_claims": [
+        "C05"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 95.0,
+      "original_text": "95",
+      "matched_claims": [],
+      "status": "unverifiable"
+    },
+    {
+      "value": -1.346,
+      "original_text": "-1.346",
+      "matched_claims": [
+        "C06"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": -1.113,
+      "original_text": "-1.113",
+      "matched_claims": [
+        "C07"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 1.0,
+      "original_text": "1.000",
+      "matched_claims": [
+        "C08"
+      ],
+      "status": "matched"
+    },
+    {
+      "value": 1.0,
+      "original_text": "1",
+      "matched_claims": [
+        "C08"
+      ],
+      "status": "matched"
+    }
+  ]
+}

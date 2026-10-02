@@ -7,7 +7,6 @@ Verifies that results are mathematically and logically consistent across all pha
 - All 5 seeds independently support the NOT_SUPPORTED conclusion
 """
 
-import math
 from pathlib import Path
 from typing import Any
 
@@ -32,12 +31,16 @@ class CrossPhaseConsistencyAudit:
     def verify_e4_e11_reproducibility(self) -> dict[str, Any]:
         """Verify Phase 11 reproducibility check confirms Phase 7 E4 values within tolerance."""
         df_repro = self.frozen_reg.load_phase11_reproducibility()
-        e4_metrics = self.frozen_reg.load_phase7_e4_metrics()
+        self.frozen_reg.load_phase7_e4_metrics()
 
         # Phase 11 table_01_reproducibility.csv contains columns:
         # experiment, task, model, representation, metric, original_value, reproduced_value, abs_diff, match
         max_diff = float(df_repro["abs_diff"].astype(float).max())
-        all_match = bool(df_repro["match"].all()) if "match" in df_repro.columns else max_diff < self.tolerance
+        all_match = (
+            bool(df_repro["match"].all())
+            if "match" in df_repro.columns
+            else max_diff < self.tolerance
+        )
 
         passed = max_diff < self.tolerance and all_match
 
@@ -105,7 +108,9 @@ class CrossPhaseConsistencyAudit:
 
         # E6 delta_beta: find the primary comparison row AD(LSTM-AE Residual F1) vs LE(lstm MAPE)
         if "task_comparison" in e6_h3.columns:
-            target_row = e6_h3[e6_h3["task_comparison"].str.contains("lstm MAPE", case=False, na=False)]
+            target_row = e6_h3[
+                e6_h3["task_comparison"].str.contains("lstm MAPE", case=False, na=False)
+            ]
             if not target_row.empty:
                 delta_beta_e6 = float(target_row["delta_beta"].iloc[0])
             else:

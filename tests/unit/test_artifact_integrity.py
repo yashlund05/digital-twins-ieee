@@ -1,7 +1,6 @@
 """tests/unit/test_artifact_integrity.py — Unit tests for artifact integrity checking."""
 
 import pandas as pd
-import pytest
 
 from src.reproducibility.artifact_integrity import verify_artifacts, verify_file_parseable
 
@@ -15,7 +14,7 @@ def test_verify_file_parseable(tmp_path):
 
     # Invalid JSON
     j_bad = tmp_path / "bad.json"
-    j_bad.write_text('{status: ok}', encoding="utf-8")
+    j_bad.write_text("{status: ok}", encoding="utf-8")
     ok, msg = verify_file_parseable(j_bad)
     assert ok is False
 

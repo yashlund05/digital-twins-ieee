@@ -35,7 +35,8 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -e ".[dev]"
+          pip install --extra-index-url https://download.pytorch.org/whl/cpu torch
+          pip install -e ".[dev,dl]"
 
       - name: Code style check (ruff format)
         run: |
@@ -48,6 +49,10 @@ jobs:
       - name: Type check (mypy)
         run: |
           mypy src/
+
+      - name: Prepare benchmark test data
+        run: |
+          python -m src.cli prepare-data
 
       - name: Run test suite (pytest)
         run: |

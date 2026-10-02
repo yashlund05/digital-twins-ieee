@@ -1,7 +1,7 @@
 """tests/unit/test_publication_figures.py — Unit tests for Phase 12 figure generation."""
 
 from pathlib import Path
-import pytest
+
 import pandas as pd
 
 from src.publication.figure_factory import (

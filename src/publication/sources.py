@@ -6,6 +6,7 @@ source integrity per Section 2.
 
 from pathlib import Path
 from typing import Any
+
 import pandas as pd
 import yaml
 
@@ -16,12 +17,14 @@ from src.utils.logging import get_logger
 logger = get_logger("publication.sources")
 
 
-def load_phase12_sources_config(config_path: Path | str = "configs/publication/phase12_sources.yaml") -> dict[str, Any]:
+def load_phase12_sources_config(
+    config_path: Path | str = "configs/publication/phase12_sources.yaml",
+) -> dict[str, Any]:
     """Load and parse the Phase 12 sources YAML configuration."""
     p = Path(config_path)
     if not p.is_file():
         raise FileNotFoundError(f"Phase 12 configuration not found at {p}")
-    with open(p, "r", encoding="utf-8") as f:
+    with open(p, encoding="utf-8") as f:
         data = yaml.safe_load(f)
     return data.get("phase12", data)
 
@@ -34,11 +37,31 @@ class FrozenSourceRegistry:
         self.source_defs = self.config.get("source_runs", {})
 
         # Resolve paths
-        self.phase7_dir = Path(self.source_defs.get("phase7_e4", {}).get("path", "experiments/runs/E4_RAW_VS_RESIDUAL_SEED42_20260930"))
-        self.phase8_dir = Path(self.source_defs.get("phase8_e5", {}).get("path", "experiments/runs/E5_STALENESS_SWEEP_CORRECTED_SEED42_20260930"))
-        self.phase9_dir = Path(self.source_defs.get("phase9_e6", {}).get("path", "experiments/runs/E6_JOINT_ANALYSIS_SEED42_20261002"))
-        self.phase10_dir = Path(self.source_defs.get("phase10_e10", {}).get("path", "experiments/runs/E10_MULTI_SEED_ANALYSIS_20261002"))
-        self.phase11_dir = Path(self.source_defs.get("phase11_e11", {}).get("path", "experiments/runs/E11_PHASE11_20261002"))
+        self.phase7_dir = Path(
+            self.source_defs.get("phase7_e4", {}).get(
+                "path", "experiments/runs/E4_RAW_VS_RESIDUAL_SEED42_20260930"
+            )
+        )
+        self.phase8_dir = Path(
+            self.source_defs.get("phase8_e5", {}).get(
+                "path", "experiments/runs/E5_STALENESS_SWEEP_CORRECTED_SEED42_20260930"
+            )
+        )
+        self.phase9_dir = Path(
+            self.source_defs.get("phase9_e6", {}).get(
+                "path", "experiments/runs/E6_JOINT_ANALYSIS_SEED42_20261002"
+            )
+        )
+        self.phase10_dir = Path(
+            self.source_defs.get("phase10_e10", {}).get(
+                "path", "experiments/runs/E10_MULTI_SEED_ANALYSIS_20261002"
+            )
+        )
+        self.phase11_dir = Path(
+            self.source_defs.get("phase11_e11", {}).get(
+                "path", "experiments/runs/E11_PHASE11_20261002"
+            )
+        )
 
         self.source_hashes: dict[str, str] = {}
         self._record_source_hashes()

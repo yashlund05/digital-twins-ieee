@@ -1,0 +1,21 @@
+{
+  "raw_features": {
+    "dim": 64,
+    "samples": 5256,
+    "max_abs_diff_e4_e5": 0.0,
+    "status": "BITWISE_IDENTICAL"
+  },
+  "residual_features": {
+    "dim_e4": 64,
+    "dim_e5_before": 193,
+    "dim_e5_after": 64,
+    "max_abs_diff_e4_e5_after": 0.0,
+    "status": "RECONCILED_BITWISE_IDENTICAL"
+  },
+  "test_labels": {
+    "total": 5256,
+    "anomalies": 244,
+    "mismatch_count": 0,
+    "status": "BITWISE_IDENTICAL"
+  }
+}

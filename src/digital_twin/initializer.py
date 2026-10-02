@@ -5,7 +5,7 @@ Provides initialization from configuration files and orchestrates
 Experiment E1: Digital Twin Baseline Validation.
 """
 
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -133,7 +133,7 @@ def run_experiment_e1_validation(
     all_passed = voltage_ok and power_balance_ok and convergence_ok
 
     # Prepare output directories
-    date_str = datetime.utcnow().strftime("%Y%m%d")
+    date_str = datetime.now(timezone.utc).strftime("%Y%m%d")
     run_id = f"E1_DT_VALIDATION_SEED{seed}_{date_str}"
     run_dir = Path(output_root) / run_id
     results_dir = run_dir / "results"
@@ -148,7 +148,7 @@ def run_experiment_e1_validation(
     stats = {
         "experiment_id": "E1",
         "description": "Digital Twin Baseline Validation",
-        "timestamp_utc": datetime.utcnow().isoformat() + "Z",
+        "timestamp_utc": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
         "all_criteria_passed": all_passed,
         "criteria": {
             "convergence": convergence_ok,

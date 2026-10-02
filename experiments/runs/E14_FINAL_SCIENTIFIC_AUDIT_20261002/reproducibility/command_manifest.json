@@ -1,0 +1,36 @@
+{
+  "title": "Deterministic Research Reproduction Command Manifest",
+  "specification": "IEEE Transactions on Smart Grid Paper Package",
+  "commands": [
+    {
+      "step": 1,
+      "description": "Install Python dependencies",
+      "command": "python -m pip install -e ."
+    },
+    {
+      "step": 2,
+      "description": "Verify environment and historical artifacts",
+      "command": "python -m src.cli verify-artifacts --run-dir experiments/runs/E11_PHASE11_20261002"
+    },
+    {
+      "step": 3,
+      "description": "Run Phase 12 publication artifact build",
+      "command": "python -m src.cli build-publication-artifacts --strict"
+    },
+    {
+      "step": 4,
+      "description": "Assemble Phase 13 IEEE TSG manuscript and run scientific audits",
+      "command": "python -m src.cli assemble-manuscript --strict"
+    },
+    {
+      "step": 5,
+      "description": "Execute Phase 14 final scientific audit and release validation",
+      "command": "python -m src.cli run-final-audit --strict"
+    },
+    {
+      "step": 6,
+      "description": "Execute full test suite regression",
+      "command": "python -m pytest tests/ -q"
+    }
+  ]
+}

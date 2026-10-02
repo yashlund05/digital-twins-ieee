@@ -1,0 +1,29 @@
+{
+  "condition": "\u0394t=0s, Pdrop=0.0, seed=42",
+  "models": {
+    "if_raw": {
+      "e4_f1": 0.11764705882352941,
+      "e5_before_f1": 0.11764705882352941,
+      "e5_after_f1": 0.11764705882352941,
+      "status": "EXACT_MATCH"
+    },
+    "if_res": {
+      "e4_f1": 0.08872727272727272,
+      "e5_before_f1": 0.08872727272727272,
+      "e5_after_f1": 0.08872727272727272,
+      "status": "EXACT_MATCH"
+    },
+    "lstm_raw": {
+      "e4_f1": 0.5386064030131827,
+      "e5_before_f1": 0.21092278719397364,
+      "e5_after_f1": 0.5386064030131827,
+      "status": "RECONCILED_EXACT_MATCH"
+    },
+    "lstm_res": {
+      "e4_f1": 0.9779559118236473,
+      "e5_before_f1": 0.702158273381295,
+      "e5_after_f1": 0.9779559118236473,
+      "status": "RECONCILED_EXACT_MATCH"
+    }
+  }
+}

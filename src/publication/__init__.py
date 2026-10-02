@@ -10,8 +10,27 @@ Provides paper-ready artifacts, IEEE manuscript generation, and scientific audit
 """
 
 # Phase 12 exports
+# Phase 13 exports
+from src.publication.claim_audit import (
+    audit_manuscript_claims,
+    extract_numerical_claims,
+    map_claim_to_source,
+)
+from src.publication.cross_phase_audit import CrossPhaseConsistencyAudit
 from src.publication.figure_factory import build_all_figures
+from src.publication.language_audit import (
+    LanguageAuditFinding,
+    LanguageAuditReport,
+    audit_manuscript_directory,
+    audit_manuscript_language,
+    export_language_audit_report,
+)
 from src.publication.latex import build_all_latex
+from src.publication.manuscript_generator import (
+    generate_full_manuscript,
+    generate_manuscript_summary,
+)
+from src.publication.numerical_audit import NumericalConsistencyAudit
 from src.publication.provenance import (
     build_figure_provenance,
     build_hash_manifest,
@@ -24,6 +43,10 @@ from src.publication.schemas import (
     PublicationMetaConfig,
     SourceRunConfig,
     TableProvenanceRecord,
+)
+from src.publication.source_registry import (
+    CanonicalClaim,
+    Phase13SourceRegistry,
 )
 from src.publication.sources import FrozenSourceRegistry, load_phase12_sources_config
 from src.publication.statistics_formatter import (
@@ -39,30 +62,6 @@ from src.publication.validation import (
     audit_scientific_language,
     clean_scientific_language,
     validate_publication_sources,
-)
-
-# Phase 13 exports
-from src.publication.claim_audit import (
-    audit_manuscript_claims,
-    extract_numerical_claims,
-    map_claim_to_source,
-)
-from src.publication.cross_phase_audit import CrossPhaseConsistencyAudit
-from src.publication.language_audit import (
-    LanguageAuditFinding,
-    LanguageAuditReport,
-    audit_manuscript_directory,
-    audit_manuscript_language,
-    export_language_audit_report,
-)
-from src.publication.manuscript_generator import (
-    generate_full_manuscript,
-    generate_manuscript_summary,
-)
-from src.publication.numerical_audit import NumericalConsistencyAudit
-from src.publication.source_registry import (
-    CanonicalClaim,
-    Phase13SourceRegistry,
 )
 
 __all__ = [

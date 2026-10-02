@@ -1,7 +1,6 @@
 """tests/publication/test_phase13_manuscript_generator.py — Tests for manuscript generator."""
 
 from pathlib import Path
-import pytest
 
 from src.publication.manuscript_generator import (
     generate_full_manuscript,

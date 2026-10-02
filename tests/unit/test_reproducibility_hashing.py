@@ -2,7 +2,6 @@
 
 import numpy as np
 import pandas as pd
-import pytest
 
 from src.reproducibility.hashing import (
     hash_bytes,

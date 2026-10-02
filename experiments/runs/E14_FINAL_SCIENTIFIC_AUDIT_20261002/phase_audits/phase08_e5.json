@@ -1,0 +1,10 @@
+{
+  "phase": "Phase 8 E5 Factorial Staleness Sweep",
+  "run_dir": "experiments\\runs\\E5_STALENESS_SWEEP_CORRECTED_SEED42_20260930",
+  "status": "PASS",
+  "condition_count": 24,
+  "expected_conditions": 24,
+  "has_predictions_parquet": true,
+  "aoi_stats_present": true,
+  "file_count": 8
+}

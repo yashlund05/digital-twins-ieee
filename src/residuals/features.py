@@ -20,9 +20,7 @@ class ResidualFeatureConfig(BaseModel):
     """Configuration options for residual feature engineering."""
 
     include_raw: bool = Field(default=True, description="Include direct raw residual r_t")
-    include_absolute: bool = Field(
-        default=False, description="Include absolute residual |r_t|"
-    )
+    include_absolute: bool = Field(default=False, description="Include absolute residual |r_t|")
     include_squared: bool = Field(default=False, description="Include squared residual r_t^2")
     include_l2_norm: bool = Field(
         default=False, description="Include spatial L2 norm across all buses ||r_t||_2"

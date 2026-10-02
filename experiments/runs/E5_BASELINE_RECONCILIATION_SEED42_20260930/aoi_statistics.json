@@ -1,0 +1,20 @@
+{
+  "E5_DT0_PD00_SEED42": {
+    "condition_id": "E5_DT0_PD00_SEED42",
+    "staleness_seconds": 0,
+    "packet_drop_rate": 0.0,
+    "mean_aoi": 0.0,
+    "median_aoi": 0.0,
+    "std_aoi": 0.0,
+    "min_aoi": 0.0,
+    "max_aoi": 0.0,
+    "p50_aoi": 0.0,
+    "p95_aoi": 0.0,
+    "p99_aoi": 0.0,
+    "scheduled_updates": 35040,
+    "successful_updates": 35040,
+    "dropped_updates": 0,
+    "actual_drop_rate": 0.0,
+    "update_success_rate": 1.0
+  }
+}

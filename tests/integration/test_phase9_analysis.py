@@ -3,8 +3,9 @@ tests/integration/test_phase9_analysis.py — Integration test for Phase 9 joint
 """
 
 from pathlib import Path
-import pytest
+
 import pandas as pd
+import pytest
 
 from src.statistics.analysis_runner import run_phase9_analysis
 from src.utils.io import load_json

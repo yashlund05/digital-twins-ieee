@@ -7,6 +7,7 @@ hash mismatches, and condition coverage completeness per Section 11.
 import json
 from pathlib import Path
 from typing import Any
+
 import pandas as pd
 
 from src.reproducibility.hashing import hash_file
@@ -17,7 +18,7 @@ def verify_file_parseable(filepath: Path) -> tuple[bool, str]:
     suffix = filepath.suffix.lower()
     try:
         if suffix == ".json":
-            with open(filepath, "r", encoding="utf-8") as f:
+            with open(filepath, encoding="utf-8") as f:
                 json.load(f)
         elif suffix == ".csv":
             df = pd.read_csv(filepath)
@@ -30,7 +31,7 @@ def verify_file_parseable(filepath: Path) -> tuple[bool, str]:
         elif suffix in [".yaml", ".yml"]:
             import yaml
 
-            with open(filepath, "r", encoding="utf-8") as f:
+            with open(filepath, encoding="utf-8") as f:
                 yaml.safe_load(f)
         return True, "valid"
     except Exception as e:

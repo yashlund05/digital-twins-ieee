@@ -1,0 +1,11 @@
+seed,task,model,representation,metric,slope,intercept,r_squared
+42,anomaly_detection,lstm_autoencoder,residual,f1,0.10039289615667227,0.4758183401106244,0.47459406613410066
+42,load_estimation,lstm,raw,mape,1.21516627543812,-0.38314353535967083,0.8940796524304738
+123,anomaly_detection,lstm_autoencoder,residual,f1,0.0,0.0,
+123,load_estimation,lstm,raw,mape,1.343926604983076,-0.46737174672393245,0.9131903615696665
+456,anomaly_detection,lstm_autoencoder,residual,f1,0.0,0.0,
+456,load_estimation,lstm,raw,mape,1.424200016212372,-0.5317841602687396,0.9082000416139229
+789,anomaly_detection,lstm_autoencoder,residual,f1,0.0,0.0,
+789,load_estimation,lstm,raw,mape,1.102185317443275,-0.2619131505606931,0.8695054183978624
+101112,anomaly_detection,lstm_autoencoder,residual,f1,0.0,0.0,
+101112,load_estimation,lstm,raw,mape,1.1331421900827336,-0.2520392582717763,0.8716725875270184

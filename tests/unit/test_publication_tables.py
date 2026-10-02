@@ -1,9 +1,5 @@
 """tests/unit/test_publication_tables.py — Unit tests for Phase 12 publication tables."""
 
-from pathlib import Path
-import pytest
-import pandas as pd
-
 from src.publication.sources import FrozenSourceRegistry
 from src.publication.table_factory import (
     generate_table_01_configuration,

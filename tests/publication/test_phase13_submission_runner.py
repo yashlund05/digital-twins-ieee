@@ -1,7 +1,6 @@
 """tests/publication/test_phase13_submission_runner.py — Tests for Phase 13 submission pipeline."""
 
 from pathlib import Path
-import pytest
 
 from src.publication.submission_runner import run_phase13_submission_pipeline
 

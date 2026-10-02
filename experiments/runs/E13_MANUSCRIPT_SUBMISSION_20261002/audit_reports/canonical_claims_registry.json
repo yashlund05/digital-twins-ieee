@@ -1,0 +1,145 @@
+{
+  "C01": {
+    "claim_id": "C01",
+    "description": "Residual + LSTM-AE F1 score under ideal synchronization",
+    "value": 0.977956,
+    "source_phase": "phase7_e4",
+    "source_file": "metrics.json",
+    "source_field": "E4-4.test.f1",
+    "tolerance": 0.0001,
+    "verified": true,
+    "actual_value": 0.9779559118236473
+  },
+  "C02": {
+    "claim_id": "C02",
+    "description": "Raw + LSTM-AE F1 score under ideal synchronization",
+    "value": 0.538606,
+    "source_phase": "phase7_e4",
+    "source_file": "metrics.json",
+    "source_field": "E4-3.test.f1",
+    "tolerance": 0.0001,
+    "verified": true,
+    "actual_value": 0.5386064030131827
+  },
+  "C03": {
+    "claim_id": "C03",
+    "description": "Raw + Isolation Forest F1 score under ideal synchronization",
+    "value": 0.117647,
+    "source_phase": "phase7_e4",
+    "source_file": "metrics.json",
+    "source_field": "E4-1.test.f1",
+    "tolerance": 0.0001,
+    "verified": true,
+    "actual_value": 0.11764705882352941
+  },
+  "C04": {
+    "claim_id": "C04",
+    "description": "Residual + Isolation Forest F1 score under ideal synchronization",
+    "value": 0.088727,
+    "source_phase": "phase7_e4",
+    "source_file": "metrics.json",
+    "source_field": "E4-2.test.f1",
+    "tolerance": 0.0001,
+    "verified": true,
+    "actual_value": 0.08872727272727272
+  },
+  "C05": {
+    "claim_id": "C05",
+    "description": "H3 multi-seed aggregate \u0394\u03b2",
+    "value": -1.2236455016005805,
+    "source_phase": "phase10_e10",
+    "source_file": "multiseed_h3_summary.csv",
+    "source_field": "Multi-seed.delta_beta",
+    "tolerance": 0.0001,
+    "verified": true,
+    "actual_value": -1.2236455016005805
+  },
+  "C06": {
+    "claim_id": "C06",
+    "description": "H3 multi-seed 95% CI lower bound",
+    "value": -1.3462600065803283,
+    "source_phase": "phase10_e10",
+    "source_file": "multiseed_h3_summary.csv",
+    "source_field": "Multi-seed.ci_lower",
+    "tolerance": 0.0001,
+    "verified": true,
+    "actual_value": -1.3462600065803283
+  },
+  "C07": {
+    "claim_id": "C07",
+    "description": "H3 multi-seed 95% CI upper bound",
+    "value": -1.1134119167064354,
+    "source_phase": "phase10_e10",
+    "source_file": "multiseed_h3_summary.csv",
+    "source_field": "Multi-seed.ci_upper",
+    "tolerance": 0.0001,
+    "verified": true,
+    "actual_value": -1.1134119167064354
+  },
+  "C08": {
+    "claim_id": "C08",
+    "description": "H3 multi-seed p-value (slope test)",
+    "value": 1.0,
+    "source_phase": "phase10_e10",
+    "source_file": "multiseed_h3_summary.csv",
+    "source_field": "Multi-seed.p_value_slope",
+    "tolerance": 0.0001,
+    "verified": true,
+    "actual_value": 1.0
+  },
+  "C09": {
+    "claim_id": "C09",
+    "description": "H3 multi-seed decision",
+    "value": "NOT_SUPPORTED",
+    "source_phase": "phase10_e10",
+    "source_file": "multiseed_h3_summary.csv",
+    "source_field": "Multi-seed.decision",
+    "tolerance": 0.0001,
+    "verified": true,
+    "actual_value": "NOT_SUPPORTED"
+  },
+  "C10": {
+    "claim_id": "C10",
+    "description": "Number of E5 factorial conditions",
+    "value": 24,
+    "source_phase": "phase8_e5",
+    "source_file": "comparison.csv",
+    "source_field": "condition_id.nunique",
+    "tolerance": 0,
+    "verified": true,
+    "actual_value": 24
+  },
+  "C11": {
+    "claim_id": "C11",
+    "description": "Number of E10 seed-conditions",
+    "value": 120,
+    "source_phase": "phase10_e10",
+    "source_file": "seed_results.csv",
+    "source_field": "seed_condition.nunique",
+    "tolerance": 0,
+    "verified": true,
+    "actual_value": 120
+  },
+  "C12": {
+    "claim_id": "C12",
+    "description": "Number of E11 ablation evaluations",
+    "value": 88,
+    "source_phase": "phase11_e11",
+    "source_file": "table_02_ablation_results.csv",
+    "source_field": "row_count",
+    "tolerance": 0,
+    "verified": true,
+    "actual_value": 88
+  },
+  "C13": {
+    "claim_id": "C13",
+    "description": "Estimated residual-drift change point AoI",
+    "value": 0.0,
+    "source_phase": "phase11_e11",
+    "source_file": "table_04_change_point_analysis.csv",
+    "source_field": "estimated_transition_aoi_seconds",
+    "tolerance": 0.0001,
+    "verified": true,
+    "actual_value": 0.0
+  }
+}

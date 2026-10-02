@@ -1,0 +1,11 @@
+seed,task,model,representation,metric,cohens_d_dt300_vs_dt0,cliffs_delta_dt300_vs_dt0,interpretation
+42,anomaly_detection,lstm_autoencoder,residual,f1,"{'d': -2.6229722153545993, 'magnitude': 2.6229722153545993, 'interpretation': 'large', 'paired': False, 'n1': 4, 'n2': 4}",-1.0,large
+42,load_estimation,lstm,raw,mape,"{'d': 57.200607773182455, 'magnitude': 57.200607773182455, 'interpretation': 'large', 'paired': False, 'n1': 4, 'n2': 4}",1.0,large
+123,anomaly_detection,lstm_autoencoder,residual,f1,"{'d': 0.0, 'magnitude': 0.0, 'interpretation': 'negligible', 'paired': False, 'n1': 4, 'n2': 4}",0.0,negligible
+123,load_estimation,lstm,raw,mape,"{'d': 35.085816974414826, 'magnitude': 35.085816974414826, 'interpretation': 'large', 'paired': False, 'n1': 4, 'n2': 4}",1.0,large
+456,anomaly_detection,lstm_autoencoder,residual,f1,"{'d': 0.0, 'magnitude': 0.0, 'interpretation': 'negligible', 'paired': False, 'n1': 4, 'n2': 4}",0.0,negligible
+456,load_estimation,lstm,raw,mape,"{'d': 72.51737541431045, 'magnitude': 72.51737541431045, 'interpretation': 'large', 'paired': False, 'n1': 4, 'n2': 4}",1.0,large
+789,anomaly_detection,lstm_autoencoder,residual,f1,"{'d': 0.0, 'magnitude': 0.0, 'interpretation': 'negligible', 'paired': False, 'n1': 4, 'n2': 4}",0.0,negligible
+789,load_estimation,lstm,raw,mape,"{'d': 63.87942173831674, 'magnitude': 63.87942173831674, 'interpretation': 'large', 'paired': False, 'n1': 4, 'n2': 4}",1.0,large
+101112,anomaly_detection,lstm_autoencoder,residual,f1,"{'d': 0.0, 'magnitude': 0.0, 'interpretation': 'negligible', 'paired': False, 'n1': 4, 'n2': 4}",0.0,negligible
+101112,load_estimation,lstm,raw,mape,"{'d': 79.7835502949552, 'magnitude': 79.7835502949552, 'interpretation': 'large', 'paired': False, 'n1': 4, 'n2': 4}",1.0,large

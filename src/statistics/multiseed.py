@@ -13,29 +13,27 @@ Strictly adheres to:
 - Complete cryptographic SHA256 input/output manifest tracking.
 """
 
-from dataclasses import dataclass
-from datetime import datetime
 import hashlib
-import json
-from pathlib import Path
 import platform
 import sys
+from datetime import datetime
+from pathlib import Path
 from typing import Any
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import scipy.stats as stats
 
-from src.statistics.bootstrap import bootstrap_difference_ci, bootstrap_slope_ci
 from src.statistics.degradation import build_degradation_dataframe
 from src.statistics.effect_sizes import compute_cliffs_delta, compute_cohens_d
 from src.statistics.hypothesis import benjamini_hochberg_correction, paired_wilcoxon_test
 from src.statistics.regression import fit_log_linear_regression, fit_two_way_factorial_regression
 from src.utils.config import load_e10_config
-from src.utils.io import ensure_dir, load_json, save_json
+from src.utils.io import load_json, save_json
 from src.utils.logging import get_logger
 
 logger = get_logger("statistics.multiseed")
@@ -155,7 +153,9 @@ def reconcile_seed_baseline(seed: int, e5_dir: Path) -> dict[str, Any]:
     return res
 
 
-def load_and_aggregate_seed_datasets(seed_dirs: dict[int, Path]) -> tuple[pd.DataFrame, pd.DataFrame]:
+def load_and_aggregate_seed_datasets(
+    seed_dirs: dict[int, Path],
+) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Load all 5 seeds, enrich with directional degradation, and compile unified tables."""
     seed_records = []
     enriched_records = []
@@ -207,27 +207,29 @@ def compute_condition_statistics(aggregated_df: pd.DataFrame) -> pd.DataFrame:
         v_std = float(np.std(vals, ddof=1)) if n > 1 else 0.0
         v_cv = (v_std / abs(v_mean)) if abs(v_mean) > 1e-8 else 0.0
 
-        records.append({
-            "staleness_seconds": dt,
-            "packet_drop_rate": drop,
-            "task": task,
-            "model": model,
-            "representation": rep,
-            "metric": metric,
-            "n_seeds": n,
-            "value_mean": v_mean,
-            "value_median": float(np.median(vals)),
-            "value_std": v_std,
-            "value_var": float(np.var(vals, ddof=1)) if n > 1 else 0.0,
-            "value_min": float(np.min(vals)),
-            "value_max": float(np.max(vals)),
-            "value_range": float(np.max(vals) - np.min(vals)),
-            "value_cv": v_cv,
-            "norm_deg_mean": float(np.mean(norm_degs)),
-            "norm_deg_std": float(np.std(norm_degs, ddof=1)) if n > 1 else 0.0,
-            "abs_deg_mean": float(np.mean(abs_degs)),
-            "abs_deg_std": float(np.std(abs_degs, ddof=1)) if n > 1 else 0.0,
-        })
+        records.append(
+            {
+                "staleness_seconds": dt,
+                "packet_drop_rate": drop,
+                "task": task,
+                "model": model,
+                "representation": rep,
+                "metric": metric,
+                "n_seeds": n,
+                "value_mean": v_mean,
+                "value_median": float(np.median(vals)),
+                "value_std": v_std,
+                "value_var": float(np.var(vals, ddof=1)) if n > 1 else 0.0,
+                "value_min": float(np.min(vals)),
+                "value_max": float(np.max(vals)),
+                "value_range": float(np.max(vals) - np.min(vals)),
+                "value_cv": v_cv,
+                "norm_deg_mean": float(np.mean(norm_degs)),
+                "norm_deg_std": float(np.std(norm_degs, ddof=1)) if n > 1 else 0.0,
+                "abs_deg_mean": float(np.mean(abs_degs)),
+                "abs_deg_std": float(np.std(abs_degs, ddof=1)) if n > 1 else 0.0,
+            }
+        )
 
     return pd.DataFrame(records)
 
@@ -279,24 +281,26 @@ def compute_uncertainty_intervals(
             deg_ci_low = deg_mean
             deg_ci_high = deg_mean
 
-        records.append({
-            "staleness_seconds": dt,
-            "packet_drop_rate": drop,
-            "task": task,
-            "model": model,
-            "representation": rep,
-            "metric": metric,
-            "n_seeds": n,
-            "value_mean": v_mean,
-            "value_sem": v_sem,
-            "value_ci_lower": ci_low,
-            "value_ci_upper": ci_high,
-            "norm_deg_mean": deg_mean,
-            "norm_deg_sem": deg_sem,
-            "norm_deg_ci_lower": deg_ci_low,
-            "norm_deg_ci_upper": deg_ci_high,
-            "ci_level": ci_level,
-        })
+        records.append(
+            {
+                "staleness_seconds": dt,
+                "packet_drop_rate": drop,
+                "task": task,
+                "model": model,
+                "representation": rep,
+                "metric": metric,
+                "n_seeds": n,
+                "value_mean": v_mean,
+                "value_sem": v_sem,
+                "value_ci_lower": ci_low,
+                "value_ci_upper": ci_high,
+                "norm_deg_mean": deg_mean,
+                "norm_deg_sem": deg_sem,
+                "norm_deg_ci_lower": deg_ci_low,
+                "norm_deg_ci_upper": deg_ci_high,
+                "ci_level": ci_level,
+            }
+        )
 
     return pd.DataFrame(records)
 
@@ -355,20 +359,24 @@ def compute_multiseed_h3_analysis(
 
         w_res = paired_wilcoxon_test(ad_deg, le_deg, alternative="greater")
 
-        decision = "SUPPORTED" if (delta_beta > 0 and p_val < 0.05 and ci_low > 0) else "NOT_SUPPORTED"
+        decision = (
+            "SUPPORTED" if (delta_beta > 0 and p_val < 0.05 and ci_low > 0) else "NOT_SUPPORTED"
+        )
 
-        h3_records.append({
-            "seed": str(s),
-            "beta_ad": beta_ad,
-            "beta_le": beta_le,
-            "delta_beta": delta_beta,
-            "ci_lower": ci_low,
-            "ci_upper": ci_high,
-            "p_value_slope": p_val,
-            "wilcoxon_stat": w_res["statistic"],
-            "wilcoxon_p": w_res["p_value"],
-            "decision": decision,
-        })
+        h3_records.append(
+            {
+                "seed": str(s),
+                "beta_ad": beta_ad,
+                "beta_le": beta_le,
+                "delta_beta": delta_beta,
+                "ci_lower": ci_low,
+                "ci_upper": ci_high,
+                "p_value_slope": p_val,
+                "wilcoxon_stat": w_res["statistic"],
+                "wilcoxon_p": w_res["p_value"],
+                "decision": decision,
+            }
+        )
 
     # 2. Aggregated Multi-Seed Analysis across all 120 observations
     agg_ad = aggregated_df[
@@ -398,7 +406,7 @@ def compute_multiseed_h3_analysis(
     # Hierarchical matched cluster bootstrap (resample seed clusters + conditions)
     rng = np.random.default_rng(seed)
     agg_boot_diffs = []
-    n_tot = len(agg_dt)
+    len(agg_dt)
     for _ in range(n_boot):
         # Resample seeds with replacement, keeping all 24 conditions matched
         boot_seeds = rng.choice(seeds, size=len(seeds), replace=True)
@@ -418,20 +426,26 @@ def compute_multiseed_h3_analysis(
     agg_p_val = float(np.mean(agg_b_arr <= 0.0))
 
     agg_w_res = paired_wilcoxon_test(agg_ad_deg, agg_le_deg, alternative="greater")
-    agg_decision = "SUPPORTED" if (agg_delta_beta > 0 and agg_p_val < 0.05 and agg_ci_low > 0) else "NOT_SUPPORTED"
+    agg_decision = (
+        "SUPPORTED"
+        if (agg_delta_beta > 0 and agg_p_val < 0.05 and agg_ci_low > 0)
+        else "NOT_SUPPORTED"
+    )
 
-    h3_records.append({
-        "seed": "Multi-seed",
-        "beta_ad": agg_beta_ad,
-        "beta_le": agg_beta_le,
-        "delta_beta": agg_delta_beta,
-        "ci_lower": agg_ci_low,
-        "ci_upper": agg_ci_high,
-        "p_value_slope": agg_p_val,
-        "wilcoxon_stat": agg_w_res["statistic"],
-        "wilcoxon_p": agg_w_res["p_value"],
-        "decision": agg_decision,
-    })
+    h3_records.append(
+        {
+            "seed": "Multi-seed",
+            "beta_ad": agg_beta_ad,
+            "beta_le": agg_beta_le,
+            "delta_beta": agg_delta_beta,
+            "ci_lower": agg_ci_low,
+            "ci_upper": agg_ci_high,
+            "p_value_slope": agg_p_val,
+            "wilcoxon_stat": agg_w_res["statistic"],
+            "wilcoxon_p": agg_w_res["p_value"],
+            "decision": agg_decision,
+        }
+    )
 
     h3_df = pd.DataFrame(h3_records)
 
@@ -449,8 +463,10 @@ def compute_multiseed_h3_analysis(
         "delta_beta_zero": n_zero,
         "sign_consistency_percentage": pct_consistent,
         "robustness_assessment": (
-            "HIGHLY_ROBUST_NEGATIVE" if n_neg == len(seeds)
-            else "HIGHLY_ROBUST_POSITIVE" if n_pos == len(seeds)
+            "HIGHLY_ROBUST_NEGATIVE"
+            if n_neg == len(seeds)
+            else "HIGHLY_ROBUST_POSITIVE"
+            if n_pos == len(seeds)
             else "HETEROGENEOUS"
         ),
     }
@@ -494,7 +510,7 @@ def compute_multiseed_model_pair_robustness(
             # Bootstrap difference CI
             rng = np.random.default_rng(42)
             boot_diffs = []
-            n_tot = len(dt_arr)
+            len(dt_arr)
             for _ in range(2000):
                 boot_seeds = rng.choice(seeds, size=len(seeds), replace=True)
                 idx_list = []
@@ -514,18 +530,22 @@ def compute_multiseed_model_pair_robustness(
             w_res = paired_wilcoxon_test(ad_deg, le_deg, alternative="greater")
 
             pair_name = f"AD(Residual LSTM-AE F1) vs LE({le_m} {le_metric.upper()})"
-            pair_specs.append({
-                "task_comparison": pair_name,
-                "beta_ad": beta_ad,
-                "beta_le": beta_le,
-                "delta_beta": delta_beta,
-                "ci_lower": ci_low,
-                "ci_upper": ci_high,
-                "p_value_slope": p_val,
-                "wilcoxon_stat": w_res["statistic"],
-                "wilcoxon_p": w_res["p_value"],
-                "decision": "SUPPORTED" if (delta_beta > 0 and p_val < 0.05 and ci_low > 0) else "NOT_SUPPORTED",
-            })
+            pair_specs.append(
+                {
+                    "task_comparison": pair_name,
+                    "beta_ad": beta_ad,
+                    "beta_le": beta_le,
+                    "delta_beta": delta_beta,
+                    "ci_lower": ci_low,
+                    "ci_upper": ci_high,
+                    "p_value_slope": p_val,
+                    "wilcoxon_stat": w_res["statistic"],
+                    "wilcoxon_p": w_res["p_value"],
+                    "decision": "SUPPORTED"
+                    if (delta_beta > 0 and p_val < 0.05 and ci_low > 0)
+                    else "NOT_SUPPORTED",
+                }
+            )
             raw_p_values.append(p_val)
 
     # Benjamini-Hochberg FDR correction
@@ -560,20 +580,28 @@ def compute_packet_drop_and_staleness_sensitivity(aggregated_df: pd.DataFrame) -
 
             for p_drop in PACKET_DROP_GRID:
                 drop_vals = dt_sub[dt_sub["packet_drop_rate"] == p_drop]["value"].values
-                d_val = compute_cohens_d(drop_vals, base_drop, paired=True) if len(base_drop) > 0 else 0.0
+                d_val = (
+                    compute_cohens_d(drop_vals, base_drop, paired=True)
+                    if len(base_drop) > 0
+                    else 0.0
+                )
 
-                records.append({
-                    "factor": "packet_drop",
-                    "task": task_name,
-                    "model": model_name,
-                    "representation": rep,
-                    "metric": metric_name,
-                    "staleness_seconds": dt,
-                    "packet_drop_rate": p_drop,
-                    "mean_value": float(np.mean(drop_vals)),
-                    "std_value": float(np.std(drop_vals, ddof=1)) if len(drop_vals) > 1 else 0.0,
-                    "cohens_d_vs_p0": d_val,
-                })
+                records.append(
+                    {
+                        "factor": "packet_drop",
+                        "task": task_name,
+                        "model": model_name,
+                        "representation": rep,
+                        "metric": metric_name,
+                        "staleness_seconds": dt,
+                        "packet_drop_rate": p_drop,
+                        "mean_value": float(np.mean(drop_vals)),
+                        "std_value": float(np.std(drop_vals, ddof=1))
+                        if len(drop_vals) > 1
+                        else 0.0,
+                        "cohens_d_vs_p0": d_val,
+                    }
+                )
 
     return pd.DataFrame(records)
 
@@ -603,17 +631,19 @@ def compute_multiseed_interaction_effects(aggregated_df: pd.DataFrame) -> pd.Dat
 
         fit_res = fit_two_way_factorial_regression(dt_arr, drop_arr, deg_arr, use_log_dt=True)
 
-        records.append({
-            "task": task,
-            "model": model,
-            "representation": rep,
-            "metric": metric,
-            "intercept": fit_res["intercept"],
-            "beta_staleness": fit_res["b_dt"],
-            "beta_packet_drop": fit_res["b_pdrop"],
-            "beta_interaction": fit_res["b_interaction"],
-            "r_squared": fit_res["r_squared"],
-        })
+        records.append(
+            {
+                "task": task,
+                "model": model,
+                "representation": rep,
+                "metric": metric,
+                "intercept": fit_res["intercept"],
+                "beta_staleness": fit_res["b_dt"],
+                "beta_packet_drop": fit_res["b_pdrop"],
+                "beta_interaction": fit_res["b_interaction"],
+                "r_squared": fit_res["r_squared"],
+            }
+        )
 
     return pd.DataFrame(records)
 
@@ -638,7 +668,9 @@ def compute_variance_decomposition(aggregated_df: pd.DataFrame) -> pd.DataFrame:
         ]
 
         # One-way ANOVA decomposition treating (Delta t, P_drop) condition as factor (k=24 groups, n=5 per group)
-        groups = [grp["value"].values for _, grp in sub.groupby(["staleness_seconds", "packet_drop_rate"])]
+        groups = [
+            grp["value"].values for _, grp in sub.groupby(["staleness_seconds", "packet_drop_rate"])
+        ]
         k = len(groups)
         n_per_group = len(groups[0])
         N_tot = k * n_per_group
@@ -664,24 +696,30 @@ def compute_variance_decomposition(aggregated_df: pd.DataFrame) -> pd.DataFrame:
         # Intraclass Correlation Coefficient (ICC(1)): proportion of variance between conditions
         var_between = max(0.0, (ms_between - ms_within) / n_per_group)
         var_within = ms_within
-        icc = var_between / (var_between + var_within) if (var_between + var_within) > 1e-12 else 0.0
+        icc = (
+            var_between / (var_between + var_within) if (var_between + var_within) > 1e-12 else 0.0
+        )
 
-        records.append({
-            "task": task,
-            "model": model,
-            "representation": rep,
-            "metric": metric,
-            "ss_condition": ss_between,
-            "ss_between_seed": ss_within,
-            "ms_condition": ms_between,
-            "ms_between_seed": ms_within,
-            "f_statistic": f_stat,
-            "p_value": p_val,
-            "pct_variance_condition": (ss_between / ss_total * 100.0) if ss_total > 0 else 0.0,
-            "pct_variance_seed": (ss_within / ss_total * 100.0) if ss_total > 0 else 0.0,
-            "icc": icc,
-            "primary_variance_source": "CONDITION_DRIVEN" if ss_between > ss_within else "SEED_DRIVEN",
-        })
+        records.append(
+            {
+                "task": task,
+                "model": model,
+                "representation": rep,
+                "metric": metric,
+                "ss_condition": ss_between,
+                "ss_between_seed": ss_within,
+                "ms_condition": ms_between,
+                "ms_between_seed": ms_within,
+                "f_statistic": f_stat,
+                "p_value": p_val,
+                "pct_variance_condition": (ss_between / ss_total * 100.0) if ss_total > 0 else 0.0,
+                "pct_variance_seed": (ss_within / ss_total * 100.0) if ss_total > 0 else 0.0,
+                "icc": icc,
+                "primary_variance_source": "CONDITION_DRIVEN"
+                if ss_between > ss_within
+                else "SEED_DRIVEN",
+            }
+        )
 
     return pd.DataFrame(records)
 
@@ -716,16 +754,18 @@ def compute_residual_advantage_robustness(aggregated_df: pd.DataFrame) -> pd.Dat
         d_mean = float(np.mean(d_arr))
         d_std = float(np.std(d_arr, ddof=1)) if n > 1 else 0.0
 
-        records.append({
-            "staleness_seconds": dt,
-            "packet_drop_rate": drop,
-            "delta_f1_mean": d_mean,
-            "delta_f1_median": float(np.median(d_arr)),
-            "delta_f1_std": d_std,
-            "delta_f1_min": float(np.min(d_arr)),
-            "delta_f1_max": float(np.max(d_arr)),
-            "residual_advantage": "RESIDUAL_SUPERIOR" if d_mean > 0 else "RAW_SUPERIOR",
-        })
+        records.append(
+            {
+                "staleness_seconds": dt,
+                "packet_drop_rate": drop,
+                "delta_f1_mean": d_mean,
+                "delta_f1_median": float(np.median(d_arr)),
+                "delta_f1_std": d_std,
+                "delta_f1_min": float(np.min(d_arr)),
+                "delta_f1_max": float(np.max(d_arr)),
+                "residual_advantage": "RESIDUAL_SUPERIOR" if d_mean > 0 else "RAW_SUPERIOR",
+            }
+        )
 
     return pd.DataFrame(records)
 
@@ -745,20 +785,26 @@ def compute_cliff_analysis(aggregated_df: pd.DataFrame) -> pd.DataFrame:
         for t_start, t_end in [(0, 1), (1, 5), (5, 15)]:
             deltas = []
             for s in sub["seed"].unique():
-                v_start = sub[(sub["seed"] == s) & (sub["staleness_seconds"] == t_start)]["value"].values
-                v_end = sub[(sub["seed"] == s) & (sub["staleness_seconds"] == t_end)]["value"].values
+                v_start = sub[(sub["seed"] == s) & (sub["staleness_seconds"] == t_start)][
+                    "value"
+                ].values
+                v_end = sub[(sub["seed"] == s) & (sub["staleness_seconds"] == t_end)][
+                    "value"
+                ].values
                 if len(v_start) > 0 and len(v_end) > 0:
                     deltas.append(float(v_end[0] - v_start[0]))
 
             d_arr = np.array(deltas)
-            records.append({
-                "packet_drop_rate": p_drop,
-                "transition": f"dt_{t_start}_to_{t_end}",
-                "mean_delta_f1": float(np.mean(d_arr)),
-                "std_delta_f1": float(np.std(d_arr, ddof=1)) if len(d_arr) > 1 else 0.0,
-                "min_delta_f1": float(np.min(d_arr)),
-                "max_delta_f1": float(np.max(d_arr)),
-            })
+            records.append(
+                {
+                    "packet_drop_rate": p_drop,
+                    "transition": f"dt_{t_start}_to_{t_end}",
+                    "mean_delta_f1": float(np.mean(d_arr)),
+                    "std_delta_f1": float(np.std(d_arr, ddof=1)) if len(d_arr) > 1 else 0.0,
+                    "min_delta_f1": float(np.min(d_arr)),
+                    "max_delta_f1": float(np.max(d_arr)),
+                }
+            )
 
     return pd.DataFrame(records)
 
@@ -771,7 +817,9 @@ def render_multiseed_figures(
 ) -> None:
     """Render all 8 publication-grade vector/raster figures at 300 DPI."""
     figures_dir.mkdir(parents=True, exist_ok=True)
-    plt.style.use("seaborn-v0_8-whitegrid" if "seaborn-v0_8-whitegrid" in plt.style.available else "default")
+    plt.style.use(
+        "seaborn-v0_8-whitegrid" if "seaborn-v0_8-whitegrid" in plt.style.available else "default"
+    )
 
     # Figure 01: Multiseed Anomaly F1 vs Staleness with uncertainty bands
     plt.figure(figsize=(9, 5.5))
@@ -787,14 +835,25 @@ def render_multiseed_figures(
         x = sub["staleness_seconds"].values
         y = sub["value_mean"].values
         s = sub["value_std"].values
-        plt.plot(x, y, marker="o", label=f"$P_{{drop}} = {int(p_drop*100)}\\%$", color=colors[p_drop], lw=2)
+        plt.plot(
+            x,
+            y,
+            marker="o",
+            label=f"$P_{{drop}} = {int(p_drop * 100)}\\%$",
+            color=colors[p_drop],
+            lw=2,
+        )
         plt.fill_between(x, np.maximum(0, y - s), y + s, color=colors[p_drop], alpha=0.18)
 
     plt.xscale("symlog", linthresh=1.0)
     plt.xticks([0, 1, 5, 15, 60, 300], ["0", "1", "5", "15", "60", "300"])
     plt.xlabel("Synchronization Staleness $\\Delta t$ (seconds)", fontsize=11)
     plt.ylabel("Anomaly Detection $F_1$-Score (Mean $\\pm$ 1 SD)", fontsize=11)
-    plt.title("Figure 1: Multi-Seed Anomaly Detection $F_1$ vs. Synchronization Staleness", fontsize=12, fontweight="bold")
+    plt.title(
+        "Figure 1: Multi-Seed Anomaly Detection $F_1$ vs. Synchronization Staleness",
+        fontsize=12,
+        fontweight="bold",
+    )
     plt.legend(frameon=True)
     plt.tight_layout()
     plt.savefig(figures_dir / "fig_01_multiseed_anomaly_f1_vs_staleness.png", dpi=300)
@@ -812,14 +871,25 @@ def render_multiseed_figures(
         x = sub["staleness_seconds"].values
         y = sub["value_mean"].values
         s = sub["value_std"].values
-        plt.plot(x, y, marker="s", label=f"$P_{{drop}} = {int(p_drop*100)}\\%$", color=colors[p_drop], lw=2)
+        plt.plot(
+            x,
+            y,
+            marker="s",
+            label=f"$P_{{drop}} = {int(p_drop * 100)}\\%$",
+            color=colors[p_drop],
+            lw=2,
+        )
         plt.fill_between(x, np.maximum(0, y - s), y + s, color=colors[p_drop], alpha=0.18)
 
     plt.xscale("symlog", linthresh=1.0)
     plt.xticks([0, 1, 5, 15, 60, 300], ["0", "1", "5", "15", "60", "300"])
     plt.xlabel("Synchronization Staleness $\\Delta t$ (seconds)", fontsize=11)
     plt.ylabel("LSTM Load Forecasting MAPE (\\%, Mean $\\pm$ 1 SD)", fontsize=11)
-    plt.title("Figure 2: Multi-Seed Load Estimation MAPE vs. Synchronization Staleness", fontsize=12, fontweight="bold")
+    plt.title(
+        "Figure 2: Multi-Seed Load Estimation MAPE vs. Synchronization Staleness",
+        fontsize=12,
+        fontweight="bold",
+    )
     plt.legend(frameon=True)
     plt.tight_layout()
     plt.savefig(figures_dir / "fig_02_multiseed_load_error_vs_staleness.png", dpi=300)
@@ -844,7 +914,11 @@ def render_multiseed_figures(
     except TypeError:
         plt.boxplot(f1_by_seed, labels=[f"Seed {s}" for s in seeds_list], patch_artist=True)
     plt.ylabel("Residual LSTM-AE $F_1$ across 24 Conditions", fontsize=11)
-    plt.title("Figure 3: Between-Seed Dispersion across Experimental Conditions", fontsize=12, fontweight="bold")
+    plt.title(
+        "Figure 3: Between-Seed Dispersion across Experimental Conditions",
+        fontsize=12,
+        fontweight="bold",
+    )
     plt.tight_layout()
     plt.savefig(figures_dir / "fig_03_seed_variability.png", dpi=300)
     plt.close()
@@ -854,11 +928,27 @@ def render_multiseed_figures(
     h3_seed_sub = h3_summary[h3_summary["seed"] != "Multi-seed"]
     x_indices = np.arange(len(h3_seed_sub))
     w = 0.35
-    plt.bar(x_indices - w / 2, h3_seed_sub["beta_ad"].values, width=w, label="$\\beta_{AD}$ (Anomaly Slope)", color="#1f77b4")
-    plt.bar(x_indices + w / 2, h3_seed_sub["beta_le"].values, width=w, label="$\\beta_{LE}$ (Load Slope)", color="#d62728")
+    plt.bar(
+        x_indices - w / 2,
+        h3_seed_sub["beta_ad"].values,
+        width=w,
+        label="$\\beta_{AD}$ (Anomaly Slope)",
+        color="#1f77b4",
+    )
+    plt.bar(
+        x_indices + w / 2,
+        h3_seed_sub["beta_le"].values,
+        width=w,
+        label="$\\beta_{LE}$ (Load Slope)",
+        color="#d62728",
+    )
     plt.xticks(x_indices, [f"Seed {s}" for s in h3_seed_sub["seed"].values])
     plt.ylabel("Log-Linear Degradation Slope $\\beta$", fontsize=11)
-    plt.title("Figure 4: Task Degradation Slopes $\\beta_{AD}$ vs. $\\beta_{LE}$ by Seed", fontsize=12, fontweight="bold")
+    plt.title(
+        "Figure 4: Task Degradation Slopes $\\beta_{AD}$ vs. $\\beta_{LE}$ by Seed",
+        fontsize=12,
+        fontweight="bold",
+    )
     plt.legend(frameon=True)
     plt.tight_layout()
     plt.savefig(figures_dir / "fig_04_h3_slope_by_seed.png", dpi=300)
@@ -873,12 +963,37 @@ def render_multiseed_figures(
     err_low = deltas - ci_lows
     err_high = ci_highs - deltas
 
-    labels = [f"Seed {s}" if s != "Multi-seed" else "Multi-Seed Aggregate" for s in h3_summary["seed"].values]
-    plt.errorbar(deltas, y_pos, xerr=[err_low, err_high], fmt="o", color="#2ca02c", ecolor="#2ca02c", elinewidth=2, capsize=5, ms=7)
-    plt.axvline(0.0, color="red", linestyle="--", alpha=0.8, label=r"Null Threshold ($H_0: \Delta\beta \leq 0$)")
+    labels = [
+        f"Seed {s}" if s != "Multi-seed" else "Multi-Seed Aggregate"
+        for s in h3_summary["seed"].values
+    ]
+    plt.errorbar(
+        deltas,
+        y_pos,
+        xerr=[err_low, err_high],
+        fmt="o",
+        color="#2ca02c",
+        ecolor="#2ca02c",
+        elinewidth=2,
+        capsize=5,
+        ms=7,
+    )
+    plt.axvline(
+        0.0,
+        color="red",
+        linestyle="--",
+        alpha=0.8,
+        label=r"Null Threshold ($H_0: \Delta\beta \leq 0$)",
+    )
     plt.yticks(y_pos, labels)
-    plt.xlabel("Slope Difference $\\Delta \\beta = \\beta_{AD} - \\beta_{LE}$ (95\\% CI)", fontsize=11)
-    plt.title("Figure 5: Forest Plot of Hypothesis $H_3$ Degradation Difference", fontsize=12, fontweight="bold")
+    plt.xlabel(
+        "Slope Difference $\\Delta \\beta = \\beta_{AD} - \\beta_{LE}$ (95\\% CI)", fontsize=11
+    )
+    plt.title(
+        "Figure 5: Forest Plot of Hypothesis $H_3$ Degradation Difference",
+        fontsize=12,
+        fontweight="bold",
+    )
     plt.legend(loc="lower right")
     plt.tight_layout()
     plt.savefig(figures_dir / "fig_05_h3_multiseed_forest.png", dpi=300)
@@ -902,7 +1017,9 @@ def render_multiseed_figures(
 
     plt.xlabel("Packet Drop Rate $P_{drop}$", fontsize=11)
     plt.ylabel("Mean Residual LSTM-AE $F_1$ across Staleness Levels", fontsize=11)
-    plt.title("Figure 6: Packet Drop Sensitivity Across Independent Seeds", fontsize=12, fontweight="bold")
+    plt.title(
+        "Figure 6: Packet Drop Sensitivity Across Independent Seeds", fontsize=12, fontweight="bold"
+    )
     plt.legend(frameon=True)
     plt.tight_layout()
     plt.savefig(figures_dir / "fig_06_packet_drop_sensitivity.png", dpi=300)
@@ -926,13 +1043,25 @@ def render_multiseed_figures(
     im = plt.imshow(grid_mat, cmap="viridis", aspect="auto")
     plt.colorbar(im, label="Mean Residual LSTM-AE $F_1$")
     plt.xticks(np.arange(len(STALENESS_GRID)), [str(x) for x in STALENESS_GRID])
-    plt.yticks(np.arange(len(PACKET_DROP_GRID)), [f"{int(x*100)}%" for x in PACKET_DROP_GRID])
+    plt.yticks(np.arange(len(PACKET_DROP_GRID)), [f"{int(x * 100)}%" for x in PACKET_DROP_GRID])
     plt.xlabel("Staleness Interval $\\Delta t$ (s)", fontsize=11)
     plt.ylabel("Packet Drop Rate $P_{drop}$", fontsize=11)
-    plt.title("Figure 7: Multi-Seed Staleness $\\times$ Packet Drop Interaction Surface", fontsize=12, fontweight="bold")
+    plt.title(
+        "Figure 7: Multi-Seed Staleness $\\times$ Packet Drop Interaction Surface",
+        fontsize=12,
+        fontweight="bold",
+    )
     for i in range(len(PACKET_DROP_GRID)):
         for j in range(len(STALENESS_GRID)):
-            plt.text(j, i, f"{grid_mat[i, j]:.3f}", ha="center", va="center", color="white" if grid_mat[i, j] < 0.5 else "black", fontsize=9)
+            plt.text(
+                j,
+                i,
+                f"{grid_mat[i, j]:.3f}",
+                ha="center",
+                va="center",
+                color="white" if grid_mat[i, j] < 0.5 else "black",
+                fontsize=9,
+            )
     plt.tight_layout()
     plt.savefig(figures_dir / "fig_07_staleness_packet_interaction_multiseed.png", dpi=300)
     plt.close()
@@ -966,11 +1095,17 @@ def render_multiseed_figures(
 
     means = [np.mean(x) for x in dt0_diffs]
     stds = [np.std(x, ddof=1) if len(x) > 1 else 0.0 for x in dt0_diffs]
-    plt.bar(np.arange(len(STALENESS_GRID)), means, yerr=stds, capsize=5, color="#1f77b4", alpha=0.85)
+    plt.bar(
+        np.arange(len(STALENESS_GRID)), means, yerr=stds, capsize=5, color="#1f77b4", alpha=0.85
+    )
     plt.axhline(0.0, color="black", lw=1)
     plt.xticks(np.arange(len(STALENESS_GRID)), [f"$\\Delta t={dt}\\,$s" for dt in STALENESS_GRID])
     plt.ylabel("$\\Delta F_1$ (Residual $-$ Raw, LSTM-AE)", fontsize=11)
-    plt.title("Figure 8: Robustness of Residual Advantage over Raw Telemetry", fontsize=12, fontweight="bold")
+    plt.title(
+        "Figure 8: Robustness of Residual Advantage over Raw Telemetry",
+        fontsize=12,
+        fontweight="bold",
+    )
     plt.tight_layout()
     plt.savefig(figures_dir / "fig_08_residual_vs_raw_robustness.png", dpi=300)
     plt.close()
@@ -1021,7 +1156,10 @@ def run_multiseed_analysis(
         baseline_reconciliations.append(rec_res)
 
     save_json({"seed_validations": seed_validations}, run_dir / "seed_validation.json")
-    save_json({"baseline_reconciliations": baseline_reconciliations}, run_dir / "baseline_reconciliation.json")
+    save_json(
+        {"baseline_reconciliations": baseline_reconciliations},
+        run_dir / "baseline_reconciliation.json",
+    )
     logger.info("Seed validation and baseline reconciliation completed.")
 
     # 2. Load and aggregate datasets across all seeds
@@ -1059,24 +1197,26 @@ def run_multiseed_analysis(
     var_decomp_df.to_csv(run_dir / "variance_decomposition.csv", index=False)
 
     # 7. Residual advantage robustness and cliff analysis
-    res_adv_df = compute_residual_advantage_robustness(aggregated_df)
-    cliff_df = compute_cliff_analysis(aggregated_df)
+    compute_residual_advantage_robustness(aggregated_df)
+    compute_cliff_analysis(aggregated_df)
 
     # Robustness summary table (Section 41)
-    rob_summary = cond_stats_df[[
-        "metric",
-        "staleness_seconds",
-        "packet_drop_rate",
-        "task",
-        "model",
-        "representation",
-        "value_mean",
-        "value_median",
-        "value_std",
-        "value_cv",
-        "value_min",
-        "value_max",
-    ]].copy()
+    rob_summary = cond_stats_df[
+        [
+            "metric",
+            "staleness_seconds",
+            "packet_drop_rate",
+            "task",
+            "model",
+            "representation",
+            "value_mean",
+            "value_median",
+            "value_std",
+            "value_cv",
+            "value_min",
+            "value_max",
+        ]
+    ].copy()
     rob_summary.rename(
         columns={
             "value_mean": "mean",
@@ -1090,16 +1230,18 @@ def run_multiseed_analysis(
     )
     # Merge uncertainty intervals
     rob_summary = rob_summary.merge(
-        uncertainty_df[[
-            "metric",
-            "staleness_seconds",
-            "packet_drop_rate",
-            "task",
-            "model",
-            "representation",
-            "value_ci_lower",
-            "value_ci_upper",
-        ]],
+        uncertainty_df[
+            [
+                "metric",
+                "staleness_seconds",
+                "packet_drop_rate",
+                "task",
+                "model",
+                "representation",
+                "value_ci_lower",
+                "value_ci_upper",
+            ]
+        ],
         on=["metric", "staleness_seconds", "packet_drop_rate", "task", "model", "representation"],
     )
     rob_summary.rename(
@@ -1126,32 +1268,36 @@ def run_multiseed_analysis(
                 mod_sub["staleness_seconds"].values.astype(float),
                 mod_sub["normalized_degradation"].values.astype(float),
             )
-            regr_records.append({
-                "seed": s,
-                "task": task,
-                "model": m_name,
-                "representation": rep,
-                "metric": met,
-                "slope": fit_s["slope"],
-                "intercept": fit_s["intercept"],
-                "r_squared": fit_s["r_squared"],
-            })
+            regr_records.append(
+                {
+                    "seed": s,
+                    "task": task,
+                    "model": m_name,
+                    "representation": rep,
+                    "metric": met,
+                    "slope": fit_s["slope"],
+                    "intercept": fit_s["intercept"],
+                    "r_squared": fit_s["r_squared"],
+                }
+            )
 
             # Effect size relative to dt=0
             base_v = mod_sub[mod_sub["staleness_seconds"] == 0]["value"].values
             stale_v = mod_sub[mod_sub["staleness_seconds"] == 300]["value"].values
             cd = compute_cohens_d(stale_v, base_v)
             cld = compute_cliffs_delta(stale_v, base_v)
-            effect_records.append({
-                "seed": s,
-                "task": task,
-                "model": m_name,
-                "representation": rep,
-                "metric": met,
-                "cohens_d_dt300_vs_dt0": cd,
-                "cliffs_delta_dt300_vs_dt0": cld["delta"],
-                "interpretation": cld["interpretation"],
-            })
+            effect_records.append(
+                {
+                    "seed": s,
+                    "task": task,
+                    "model": m_name,
+                    "representation": rep,
+                    "metric": met,
+                    "cohens_d_dt300_vs_dt0": cd,
+                    "cliffs_delta_dt300_vs_dt0": cld["delta"],
+                    "interpretation": cld["interpretation"],
+                }
+            )
 
     pd.DataFrame(regr_records).to_csv(run_dir / "multiseed_regression_results.csv", index=False)
     pd.DataFrame(effect_records).to_csv(run_dir / "multiseed_effect_sizes.csv", index=False)
@@ -1183,10 +1329,10 @@ def run_multiseed_analysis(
 
     summary_md += f"""
 ### H3 Sign Stability & Robustness Assessment
-- **Seeds with $\\Delta \\beta > 0$**: `{sign_stability['delta_beta_positive']}`
-- **Seeds with $\\Delta \\beta < 0$**: `{sign_stability['delta_beta_negative']}`
-- **Sign Consistency**: `{sign_stability['sign_consistency_percentage']:.1f}%`
-- **Assessment**: **{sign_stability['robustness_assessment']}**
+- **Seeds with $\\Delta \\beta > 0$**: `{sign_stability["delta_beta_positive"]}`
+- **Seeds with $\\Delta \\beta < 0$**: `{sign_stability["delta_beta_negative"]}`
+- **Sign Consistency**: `{sign_stability["sign_consistency_percentage"]:.1f}%`
+- **Assessment**: **{sign_stability["robustness_assessment"]}**
 
 ---
 

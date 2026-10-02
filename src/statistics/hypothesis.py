@@ -8,10 +8,10 @@ along with paired non-parametric tests (Wilcoxon) and Benjamini-Hochberg FDR cor
 """
 
 from typing import Any
+
 import numpy as np
 import scipy.stats as stats
 
-from src.statistics.bootstrap import bootstrap_difference_ci
 from src.statistics.regression import fit_log_linear_regression
 
 
@@ -51,7 +51,9 @@ def test_differential_degradation_h3(
 
     n = len(x_arr)
     if not (len(ad_arr) == len(le_arr) == n):
-        raise ValueError("Predictor, AD degradation, and LE degradation must have identical lengths.")
+        raise ValueError(
+            "Predictor, AD degradation, and LE degradation must have identical lengths."
+        )
 
     # 1. Point estimates on log1p scale
     ad_fit = fit_log_linear_regression(x_arr, ad_arr)

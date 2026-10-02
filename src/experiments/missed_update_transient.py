@@ -5,15 +5,13 @@ Age of Information (AoI), physical-virtual state drift ||y_t - y_DT,t||_2, resid
 anomaly score drift, and detection/forecasting accuracy as a function of elapsed age k.
 """
 
-from datetime import datetime
-import json
 from pathlib import Path
 from typing import Any
+
 import numpy as np
 import pandas as pd
 
 from src.evaluation.anomaly_metrics import compute_anomaly_metrics
-from src.utils.io import ensure_dir, load_parquet
 from src.utils.logging import get_logger
 
 logger = get_logger("experiments.transient")
@@ -40,7 +38,7 @@ def run_missed_update_transient_analysis(
 
     e5_path = Path(e5_seed42_dir)
     preds_file = e5_path / "predictions.parquet"
-    sync_file = e5_path / "synchronization_logs.parquet"
+    e5_path / "synchronization_logs.parquet"
 
     if not preds_file.is_file():
         raise FileNotFoundError(f"Missing predictions.parquet at {preds_file}")
@@ -49,7 +47,9 @@ def run_missed_update_transient_analysis(
 
     # 1. Filter representative conditions with non-zero staleness and packet loss to study transients
     # Focus on conditions: DT15_PD10, DT60_PD10, DT300_PD20
-    target_conditions = [c for c in preds_df["condition_id"].unique() if "PD10" in c or "PD20" in c or "DT60" in c]
+    target_conditions = [
+        c for c in preds_df["condition_id"].unique() if "PD10" in c or "PD20" in c or "DT60" in c
+    ]
     if not target_conditions:
         target_conditions = list(preds_df["condition_id"].unique())[:3]
 
@@ -60,7 +60,11 @@ def run_missed_update_transient_analysis(
         if cond_df.empty:
             continue
 
-        aoi_arr = cond_df["aoi_seconds"].values.astype(float) if "aoi_seconds" in cond_df.columns else np.zeros(len(cond_df))
+        aoi_arr = (
+            cond_df["aoi_seconds"].values.astype(float)
+            if "aoi_seconds" in cond_df.columns
+            else np.zeros(len(cond_df))
+        )
         y_true = cond_df["true_anomaly_label"].values.astype(int)
 
         score_col = "score_lstm_res" if "score_lstm_res" in cond_df.columns else "pred_lstm_res"
@@ -77,16 +81,20 @@ def run_missed_update_transient_analysis(
 
         for idx in range(len(cond_df)):
             aoi_val = aoi_arr[idx]
-            transient_rows.append({
-                "condition_id": cond_id,
-                "step_index": int(cond_df["step_index"].values[idx]) if "step_index" in cond_df.columns else idx,
-                "realized_aoi": aoi_val,
-                "time_since_last_update": aoi_val,
-                "residual_norm": float(residual_norm[idx]),
-                "anomaly_score": float(scores[idx]),
-                "load_error_kw": float(load_err[idx]),
-                "true_anomaly": int(y_true[idx]),
-            })
+            transient_rows.append(
+                {
+                    "condition_id": cond_id,
+                    "step_index": int(cond_df["step_index"].values[idx])
+                    if "step_index" in cond_df.columns
+                    else idx,
+                    "realized_aoi": aoi_val,
+                    "time_since_last_update": aoi_val,
+                    "residual_norm": float(residual_norm[idx]),
+                    "anomaly_score": float(scores[idx]),
+                    "load_error_kw": float(load_err[idx]),
+                    "true_anomaly": int(y_true[idx]),
+                }
+            )
 
     timeseries_df = pd.DataFrame(transient_rows)
     timeseries_df.to_parquet(trans_dir / "transient_timeseries.parquet", index=False)
@@ -95,7 +103,9 @@ def run_missed_update_transient_analysis(
     # Define AoI bins: 0, 1-5, 6-15, 16-60, 61-120, 121-300, >300
     aoi_bins = [-0.1, 0.5, 5.5, 15.5, 60.5, 120.5, 300.5, 1e6]
     aoi_labels = ["0s (Fresh)", "1-5s", "6-15s", "16-60s", "61-120s", "121-300s", ">300s"]
-    timeseries_df["aoi_bin"] = pd.cut(timeseries_df["realized_aoi"], bins=aoi_bins, labels=aoi_labels)
+    timeseries_df["aoi_bin"] = pd.cut(
+        timeseries_df["realized_aoi"], bins=aoi_bins, labels=aoi_labels
+    )
 
     by_aoi_records = []
     for bin_label, grp in timeseries_df.groupby("aoi_bin", observed=False):
@@ -124,17 +134,19 @@ def run_missed_update_transient_analysis(
             bin_prec = 0.0
             bin_rec = 0.0
 
-        by_aoi_records.append({
-            "aoi_bin": str(bin_label),
-            "observations": n_obs,
-            "mean_residual_norm": mean_res,
-            "std_residual_norm": std_res,
-            "mean_anomaly_score": mean_score,
-            "mean_load_error_kw": mean_load_err,
-            "bin_f1_score": bin_f1,
-            "bin_precision": bin_prec,
-            "bin_recall": bin_rec,
-        })
+        by_aoi_records.append(
+            {
+                "aoi_bin": str(bin_label),
+                "observations": n_obs,
+                "mean_residual_norm": mean_res,
+                "std_residual_norm": std_res,
+                "mean_anomaly_score": mean_score,
+                "mean_load_error_kw": mean_load_err,
+                "bin_f1_score": bin_f1,
+                "bin_precision": bin_prec,
+                "bin_recall": bin_rec,
+            }
+        )
 
     by_aoi_df = pd.DataFrame(by_aoi_records)
     by_aoi_df.to_csv(trans_dir / "transient_by_aoi.csv", index=False)
@@ -157,31 +169,37 @@ def run_missed_update_transient_analysis(
         est_transition_aoi = 5.0  # Empirical cliff observed at 5 seconds
         status = "EMPIRICAL_CLIFF"
 
-    change_point_records.append({
-        "target": "residual_inflation_transition",
-        "estimated_transition_aoi_seconds": est_transition_aoi,
-        "ci_lower_seconds": max(0.0, est_transition_aoi - 1.5),
-        "ci_upper_seconds": est_transition_aoi + 2.5,
-        "method": "residual_divergence_ratio_threshold",
-        "status": status,
-        "interpretation": f"Residual drift exceeds baseline noise floor at AoI ~ {est_transition_aoi:.1f} s",
-    })
+    change_point_records.append(
+        {
+            "target": "residual_inflation_transition",
+            "estimated_transition_aoi_seconds": est_transition_aoi,
+            "ci_lower_seconds": max(0.0, est_transition_aoi - 1.5),
+            "ci_upper_seconds": est_transition_aoi + 2.5,
+            "method": "residual_divergence_ratio_threshold",
+            "status": status,
+            "interpretation": f"Residual drift exceeds baseline noise floor at AoI ~ {est_transition_aoi:.1f} s",
+        }
+    )
 
     cp_df = pd.DataFrame(change_point_records)
     cp_df.to_csv(trans_dir / "change_point_results.csv", index=False)
 
     # 4. Summary metrics
-    summary_records = [{
-        "total_timesteps_audited": len(timeseries_df),
-        "conditions_evaluated": len(target_conditions),
-        "mean_realized_aoi": float(timeseries_df["realized_aoi"].mean()),
-        "max_realized_aoi": float(timeseries_df["realized_aoi"].max()),
-        "mean_residual_norm": float(timeseries_df["residual_norm"].mean()),
-        "transition_aoi_seconds": est_transition_aoi,
-    }]
+    summary_records = [
+        {
+            "total_timesteps_audited": len(timeseries_df),
+            "conditions_evaluated": len(target_conditions),
+            "mean_realized_aoi": float(timeseries_df["realized_aoi"].mean()),
+            "max_realized_aoi": float(timeseries_df["realized_aoi"].max()),
+            "mean_residual_norm": float(timeseries_df["residual_norm"].mean()),
+            "transition_aoi_seconds": est_transition_aoi,
+        }
+    ]
     pd.DataFrame(summary_records).to_csv(trans_dir / "transient_summary.csv", index=False)
 
-    logger.info(f"Missed-update transient analysis completed ({len(timeseries_df)} timesteps analyzed).")
+    logger.info(
+        f"Missed-update transient analysis completed ({len(timeseries_df)} timesteps analyzed)."
+    )
     return {
         "timeseries_df": timeseries_df,
         "by_aoi_df": by_aoi_df,

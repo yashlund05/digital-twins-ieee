@@ -1,0 +1,80 @@
+{
+  "experiment_id": "E5",
+  "run_id": "E5_STALENESS_SWEEP_CORRECTED_SEED101112_20261002",
+  "timestamp": "2026-10-02T12:38:51.205388",
+  "status": "COMPLETED",
+  "reproducibility": {
+    "git_commit": "11dcabdf95d4bd7a3c9e1cf5a50a818fae6121d5",
+    "git_branch": "main",
+    "git_clean": false,
+    "configuration_file": "configs/experiments/e5_staleness_sweep.yaml",
+    "configuration_version": "1.0.0",
+    "dataset_version": "v1.0",
+    "random_seed": 101112
+  },
+  "model": {
+    "type": "multi_model_suite",
+    "version": "1.0.0"
+  },
+  "synchronization": {
+    "interval_seconds": 0,
+    "missed_update_policy": "hold_last_state"
+  },
+  "experiment_design": {
+    "input_representation": "raw_and_residual",
+    "model_type": "multi_model_suite"
+  },
+  "environment": {
+    "timestamp": "2026-10-02T12:38:51.342427",
+    "python_version": "3.14.6",
+    "os": "Windows 11",
+    "architecture": "AMD64",
+    "packages": {
+      "numpy": "2.4.6",
+      "pandas": "2.3.3",
+      "scipy": "1.18.0",
+      "scikit-learn": "1.9.0",
+      "xgboost": "3.4.1",
+      "opendssdirect.py": "0.9.4",
+      "pydantic": "2.13.4",
+      "pyyaml": "6.0.3",
+      "matplotlib": "3.11.0",
+      "click": "8.4.2",
+      "pytest": "9.1.1",
+      "torch": "2.13.0"
+    }
+  },
+  "experiment_name": "staleness_sweep",
+  "conditions_count": 24,
+  "intervals_seconds": [
+    0,
+    1,
+    5,
+    15,
+    60,
+    300
+  ],
+  "packet_drop_rates": [
+    0.0,
+    0.05,
+    0.1,
+    0.2
+  ],
+  "dataset_info": {
+    "description": "IEEE 33-bus benchmark feeder hybrid simulation dataset",
+    "resolution_minutes": 15,
+    "total_timesteps": 35040,
+    "test_timesteps": 5256,
+    "test_anomalies": 244
+  },
+  "output_files": [
+    "manifest.json",
+    "config_snapshot.yaml",
+    "aoi_statistics.json",
+    "metrics.json",
+    "comparison.csv",
+    "synchronization_logs.parquet",
+    "predictions.parquet",
+    "summary.md"
+  ]
+}

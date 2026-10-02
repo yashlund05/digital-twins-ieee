@@ -8,10 +8,11 @@ Audits Figure ↔ Table ↔ Source Data traceability per Objective B & Section 1
 import math
 from pathlib import Path
 from typing import Any
+
 import pandas as pd
 
 from src.publication.sources import FrozenSourceRegistry
-from src.utils.io import load_json, save_json
+from src.utils.io import save_json
 from src.utils.logging import get_logger
 
 logger = get_logger("audit.cross_phase_auditor")
@@ -185,7 +186,9 @@ class CrossPhaseScientificAuditor:
         fig_tab_res = self.verify_figure_table_source_linkage()
         save_json(fig_tab_res, output_dir / "figure_table_consistency.json")
 
-        all_passed = all(c["status"] == "PASS" for c in checks.values()) and fig_tab_res["status"] == "PASS"
+        all_passed = (
+            all(c["status"] == "PASS" for c in checks.values()) and fig_tab_res["status"] == "PASS"
+        )
 
         report = {
             "overall_cross_phase_status": "PASS" if all_passed else "FAIL",

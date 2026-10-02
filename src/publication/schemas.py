@@ -1,13 +1,14 @@
 """src/publication/schemas.py — Schemas and data models for Phase 12 publication artifacts."""
 
 from dataclasses import dataclass, field
-from pathlib import Path
-from typing import Any, Literal
+from typing import Any
+
 from pydantic import BaseModel, Field
 
 
 class SourceRunConfig(BaseModel):
     """Configuration definition for a single frozen source run."""
+
     path: str
     frozen: bool = True
     description: str = ""
@@ -15,6 +16,7 @@ class SourceRunConfig(BaseModel):
 
 class PublicationMetaConfig(BaseModel):
     """Publication target metadata."""
+
     target: str = "IEEE Transactions on Smart Grid"
     feeder: str = "IEEE 33-Bus Radial Benchmark Feeder"
     dataset: str = "Pecan Street Dataport"
@@ -28,20 +30,26 @@ class PublicationMetaConfig(BaseModel):
 
 class Phase12Config(BaseModel):
     """Master Phase 12 configuration model."""
+
     source_runs: dict[str, SourceRunConfig]
     publication: PublicationMetaConfig = Field(default_factory=PublicationMetaConfig)
-    output: dict[str, str] = Field(default_factory=lambda: {"root": "experiments/runs/E12_PUBLICATION_ARTIFACTS_20261002"})
-    integrity: dict[str, Any] = Field(default_factory=lambda: {
-        "verify_source_hashes": True,
-        "fail_on_missing_source": True,
-        "fail_on_schema_mismatch": True,
-        "reproducibility_tolerance": 1.0e-5,
-    })
+    output: dict[str, str] = Field(
+        default_factory=lambda: {"root": "experiments/runs/E12_PUBLICATION_ARTIFACTS_20261002"}
+    )
+    integrity: dict[str, Any] = Field(
+        default_factory=lambda: {
+            "verify_source_hashes": True,
+            "fail_on_missing_source": True,
+            "fail_on_schema_mismatch": True,
+            "reproducibility_tolerance": 1.0e-5,
+        }
+    )
 
 
 @dataclass
 class FigureProvenanceRecord:
     """Provenance record tracking how a publication figure was derived."""
+
     figure_id: str
     figure_title: str
     source_runs: list[str]
@@ -59,6 +67,7 @@ class FigureProvenanceRecord:
 @dataclass
 class TableProvenanceRecord:
     """Provenance record tracking how a publication table was derived."""
+
     table_id: str
     table_title: str
     source_runs: list[str]

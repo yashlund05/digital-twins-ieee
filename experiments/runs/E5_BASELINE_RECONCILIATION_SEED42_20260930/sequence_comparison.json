@@ -1,0 +1,11 @@
+{
+  "seq_len": 1,
+  "input_dim": 64,
+  "tensor_shape": [
+    5256,
+    1,
+    64
+  ],
+  "device": "cpu",
+  "match": true
+}

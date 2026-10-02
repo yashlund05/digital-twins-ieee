@@ -1,0 +1,46 @@
+experiment:
+  id: E11
+  name: reproducibility_ablations_transient
+  description: 'Phase 11: Comprehensive reproducibility verification of historical
+    E4/E5/E6/E10 benchmarks, controlled ablation analysis (A1-A8), and missed-update
+    intra-epoch transient modeling.
+
+    '
+  version: 1.0.0
+reproducibility:
+  enabled: true
+  hash_algorithm: sha256
+  verify_historical: true
+  benchmarks:
+    phase7_e4: experiments/runs/E4_RAW_VS_RESIDUAL_SEED42_20260930
+    phase8_e5: experiments/runs/E5_STALENESS_SWEEP_CORRECTED_SEED42_20260930
+    phase9_e6: experiments/runs/E6_JOINT_ANALYSIS_SEED42_20261002
+    phase10_e10: experiments/runs/E10_MULTI_SEED_ANALYSIS_20261002
+ablations:
+  enabled: true
+  config: configs/experiments/e11_ablations.yaml
+transient_analysis:
+  enabled: true
+  max_aoi_seconds: 300
+  target_conditions:
+  - E5_DT15_PD10_SEED42
+  - E5_DT60_PD10_SEED42
+  - E5_DT300_PD20_SEED42
+staleness_levels:
+- 0
+- 1
+- 5
+- 15
+- 60
+- 300
+packet_drop_rates:
+- 0.0
+- 0.05
+- 0.1
+- 0.2
+seed_set:
+- 42
+- 123
+- 456
+- 789
+- 101112

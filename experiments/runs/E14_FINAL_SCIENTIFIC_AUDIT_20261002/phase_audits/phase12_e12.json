@@ -1,0 +1,10 @@
+{
+  "phase": "Phase 12 Publication Artifacts",
+  "run_dir": "experiments\\runs\\E12_PUBLICATION_ARTIFACTS_20261002",
+  "status": "PASS",
+  "figures_pdf_count": 8,
+  "tables_csv_count": 6,
+  "source_csvs_count": 8,
+  "has_integrity_report": true,
+  "has_hash_manifest": true
+}

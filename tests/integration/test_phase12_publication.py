@@ -1,7 +1,5 @@
 """tests/integration/test_phase12_publication.py — End-to-end integration test for Phase 12 pipeline."""
 
-from pathlib import Path
-import pytest
 import pandas as pd
 
 from src.publication.publication_runner import run_phase12_publication_pipeline
@@ -62,7 +60,13 @@ def test_phase12_end_to_end_pipeline(tmp_path):
 
     # 4. Check LaTeX Documents
     lat_dir = out_dir / "latex"
-    for req_tex in ["figures.tex", "tables.tex", "notation.tex", "publication_results.tex", "phase12_artifacts.tex"]:
+    for req_tex in [
+        "figures.tex",
+        "tables.tex",
+        "notation.tex",
+        "publication_results.tex",
+        "phase12_artifacts.tex",
+    ]:
         assert (lat_dir / req_tex).is_file()
 
     # 5. Check Provenance

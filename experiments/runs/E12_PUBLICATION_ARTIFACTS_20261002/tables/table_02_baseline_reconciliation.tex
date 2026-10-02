@@ -1,0 +1,15 @@
+\begin{table}[htbp]
+\centering
+\caption{Historical Baseline Reproducibility and Reconciliation (Phase 7 E4 vs. Phase 11 E11)}
+\label{tab:baseline_reconciliation}
+\begin{tabular}{lcccc}
+\hline
+\textbf{Detector Pipeline} & \textbf{Phase 7 Target $F_1$} & \textbf{Phase 11 Actual $F_1$} & \textbf{Absolute Difference} & \textbf{Reproducibility Status} \\
+\hline
+Raw + Isolation Forest & 0.117647 & 0.117647 & $5.88 \times 10^{-8}$ & \texttt{NUMERICALLY_EQUIVALENT} \\
+Residual + Isolation Forest & 0.088727 & 0.088727 & $2.73 \times 10^{-7}$ & \texttt{NUMERICALLY_EQUIVALENT} \\
+Raw + LSTM-AE & 0.538606 & 0.538606 & $4.03 \times 10^{-7}$ & \texttt{NUMERICALLY_EQUIVALENT} \\
+Residual + LSTM-AE & 0.977956 & 0.977956 & $8.82 \times 10^{-8}$ & \texttt{NUMERICALLY_EQUIVALENT} \\
+\hline
+\end{tabular}
+\end{table}

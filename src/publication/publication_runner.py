@@ -4,11 +4,10 @@ Executes source validation, table generation, figure rendering, LaTeX generation
 provenance tracking, scientific language auditing, and manifest creation.
 """
 
-from datetime import datetime
 import json
+from datetime import datetime
 from pathlib import Path
 from typing import Any
-import pandas as pd
 
 from src.publication.figure_factory import build_all_figures
 from src.publication.latex import build_all_latex
@@ -21,7 +20,7 @@ from src.publication.sources import FrozenSourceRegistry, load_phase12_sources_c
 from src.publication.table_factory import build_all_tables
 from src.publication.validation import audit_scientific_language, validate_publication_sources
 from src.reproducibility.run_manifest import create_reproducibility_manifest
-from src.utils.io import ensure_dir, save_json
+from src.utils.io import save_json
 from src.utils.logging import get_logger
 
 logger = get_logger("publication.runner")
@@ -74,7 +73,11 @@ def run_phase12_publication_pipeline(
     if output_dir_override:
         out_dir = Path(output_dir_override)
     else:
-        out_dir = Path(cfg.get("output", {}).get("root", f"experiments/runs/E12_PUBLICATION_ARTIFACTS_{date_str}"))
+        out_dir = Path(
+            cfg.get("output", {}).get(
+                "root", f"experiments/runs/E12_PUBLICATION_ARTIFACTS_{date_str}"
+            )
+        )
 
     out_dir.mkdir(parents=True, exist_ok=True)
     prov_dir = out_dir / "provenance"
@@ -118,7 +121,7 @@ def run_phase12_publication_pipeline(
     save_json(lang_audit, out_dir / "provenance" / "language_audit.json")
 
     # 10. Generate Master Manifest
-    manifest = create_reproducibility_manifest(
+    create_reproducibility_manifest(
         experiment_id="E12",
         run_id=out_dir.name,
         output_dir=out_dir,
@@ -147,10 +150,10 @@ def _build_paper_ready_summary(
     """Construct Section 15 structured summary distinguishing OBSERVED RESULT, INTERPRETATION, and LIMITATION."""
     return f"""# Phase 12: Publication-Ready Evidence Summary & Artifact Manifest
 
-**Target Publication:** IEEE Transactions on Smart Grid  
-**Project:** Quantifying the Effect of Digital Twin Synchronization Staleness on Joint Short-Term Load Estimation and Unsupervised Anomaly Detection in a Distribution-Feeder Digital Twin  
-**Execution Date:** `{date_str}`  
-**Artifact Directory:** `{out_dir}`  
+**Target Publication:** IEEE Transactions on Smart Grid
+**Project:** Quantifying the Effect of Digital Twin Synchronization Staleness on Joint Short-Term Load Estimation and Unsupervised Anomaly Detection in a Distribution-Feeder Digital Twin
+**Execution Date:** `{date_str}`
+**Artifact Directory:** `{out_dir}`
 
 ---
 

@@ -3,7 +3,6 @@ tests/unit/test_hypothesis.py — Unit tests for H3 testing, Wilcoxon, and FDR c
 """
 
 import numpy as np
-import pytest
 
 from src.statistics.hypothesis import (
     benjamini_hochberg_correction,

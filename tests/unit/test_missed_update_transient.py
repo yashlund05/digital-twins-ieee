@@ -1,8 +1,9 @@
 """tests/unit/test_missed_update_transient.py — Unit tests for missed update transient analysis."""
 
 from pathlib import Path
-import pytest
+
 import pandas as pd
+import pytest
 
 from src.experiments.missed_update_transient import run_missed_update_transient_analysis
 

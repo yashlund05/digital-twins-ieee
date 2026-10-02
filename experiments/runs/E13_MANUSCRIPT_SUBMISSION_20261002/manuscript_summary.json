@@ -1,0 +1,30 @@
+{
+  "generated_at": "2026-10-02T16:46:11.702859",
+  "manuscript_directory": "experiments\\runs\\E13_MANUSCRIPT_SUBMISSION_20261002\\manuscript",
+  "files": {
+    "figures.tex": {
+      "size_bytes": 4135,
+      "exists": true
+    },
+    "main.tex": {
+      "size_bytes": 15939,
+      "exists": true
+    },
+    "references.bib": {
+      "size_bytes": 2914,
+      "exists": true
+    }
+  },
+  "sections": [
+    "Abstract",
+    "I. Introduction",
+    "II. Related Work",
+    "III. Experimental Methodology",
+    "IV. Results",
+    "V. Discussion",
+    "VI. Conclusion",
+    "References"
+  ],
+  "unverified_references": [],
+  "unverified_references_count": 16
+}

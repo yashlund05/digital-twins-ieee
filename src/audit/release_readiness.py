@@ -75,8 +75,8 @@ class ReleaseReadinessEvaluator:
         rel_checklist = f"""# Release Checklist — Phase 14 Publication Package
 
 ## Overall Publication Safety Gate
-- **Status**: **{'READY FOR SUBMISSION REVIEW' if gate_status.is_publication_ready else 'NOT READY — BLOCKERS DETECTED'}**
-- **Evaluation Date**: `{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}`
+- **Status**: **{"READY FOR SUBMISSION REVIEW" if gate_status.is_publication_ready else "NOT READY — BLOCKERS DETECTED"}**
+- **Evaluation Date**: `{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}`
 
 ### Scientific Integrity
 - [x] All historical runs preserved (E4, E5, E6, E10, E11, E12, E13)
@@ -152,7 +152,7 @@ class ReleaseReadinessEvaluator:
 
 ## Release Identifier
 - **Package**: `E14_FINAL_SCIENTIFIC_AUDIT_20261002`
-- **Date**: `{datetime.now().strftime('%Y-%m-%d')}`
+- **Date**: `{datetime.now().strftime("%Y-%m-%d")}`
 - **Repository Commit**: `Phase 14 Certified`
 
 ## Highlights

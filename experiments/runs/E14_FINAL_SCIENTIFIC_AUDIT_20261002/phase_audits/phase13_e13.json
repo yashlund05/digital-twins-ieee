@@ -1,0 +1,9 @@
+{
+  "phase": "Phase 13 Manuscript & Claims Registry",
+  "run_dir": "experiments\\runs\\E13_MANUSCRIPT_SUBMISSION_20261002",
+  "status": "PASS",
+  "has_main_tex": true,
+  "has_references_bib": true,
+  "claims_verified_count": 13,
+  "total_claims_in_registry": 13
+}

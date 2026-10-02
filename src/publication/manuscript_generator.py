@@ -9,7 +9,6 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from src.utils.io import save_json
 from src.utils.logging import get_logger
 
 logger = get_logger("publication.manuscript_generator")

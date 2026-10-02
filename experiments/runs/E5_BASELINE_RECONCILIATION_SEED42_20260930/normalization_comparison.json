@@ -1,0 +1,9 @@
+{
+  "method": "z_score",
+  "e4_feature_count": 64,
+  "e5_before_feature_count": 193,
+  "e5_after_feature_count": 64,
+  "max_abs_diff_mean": 0.0,
+  "max_abs_diff_scale": 0.0,
+  "status": "RECONCILED_BITWISE_IDENTICAL"
+}

@@ -9,10 +9,6 @@ Tests the full pipeline on a fast smoke matrix:
 - Verifies artifact creation, schema compliance, and baseline equivalence.
 """
 
-from pathlib import Path
-import tempfile
-
-import numpy as np
 import pandas as pd
 import pytest
 

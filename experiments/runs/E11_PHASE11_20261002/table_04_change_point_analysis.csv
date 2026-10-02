@@ -1,0 +1,2 @@
+target,estimated_transition_aoi_seconds,ci_lower_seconds,ci_upper_seconds,method,status,interpretation
+residual_inflation_transition,0.0,0.0,2.5,residual_divergence_ratio_threshold,DETECTED,Residual drift exceeds baseline noise floor at AoI ~ 0.0 s

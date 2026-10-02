@@ -4,10 +4,11 @@ Maintains and validates all quantitative claims across the entire research frame
 computing cryptographic source hashes and verifying exact matches against frozen artifacts.
 """
 
-from dataclasses import asdict, dataclass
 import math
+from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Any, Union
+from typing import Any
+
 import pandas as pd
 import yaml
 
@@ -26,8 +27,8 @@ class FinalClaim:
     claim_id: str
     claim_text: str
     metric: str
-    expected_value: Union[float, str]
-    verified_value: Union[float, str, None]
+    expected_value: float | str
+    verified_value: float | str | None
     tolerance: float
     source_phase: str
     source_artifact: str
@@ -43,10 +44,10 @@ class FinalClaimRegistry:
 
     def __init__(
         self,
-        config_path: Union[str, Path] = "configs/publication/phase14_final_audit.yaml",
+        config_path: str | Path = "configs/publication/phase14_final_audit.yaml",
     ) -> None:
         self.config_path = Path(config_path)
-        with open(self.config_path, "r", encoding="utf-8") as f:
+        with open(self.config_path, encoding="utf-8") as f:
             cfg = yaml.safe_load(f)
         self.config = cfg.get("phase14", cfg)
         self.claims: dict[str, FinalClaim] = {}
@@ -120,7 +121,9 @@ class FinalClaimRegistry:
                     if claim.tolerance == 0.0:
                         matched = int(claim.expected_value) == int(val)
                     else:
-                        matched = math.isclose(float(claim.expected_value), float(val), abs_tol=claim.tolerance)
+                        matched = math.isclose(
+                            float(claim.expected_value), float(val), abs_tol=claim.tolerance
+                        )
                 else:
                     matched = str(claim.expected_value).strip() == str(val).strip()
 
@@ -146,7 +149,7 @@ class FinalClaimRegistry:
         self,
         claim: FinalClaim,
         **data: Any,
-    ) -> Union[float, str, None]:
+    ) -> float | str | None:
         """Extract exact value for a claim from frozen artifacts."""
         # 1. E4 baseline metrics
         if claim.source_phase == "phase7_e4":

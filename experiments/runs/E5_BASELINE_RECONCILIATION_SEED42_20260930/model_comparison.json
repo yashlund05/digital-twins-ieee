@@ -1,0 +1,32 @@
+{
+  "raw_lstm": {
+    "architecture": "PyTorchLSTMAutoencoderNetwork",
+    "encoder_units": [
+      64,
+      32
+    ],
+    "latent_dim": 16,
+    "decoder_units": [
+      32,
+      64
+    ],
+    "e4_checkpoint_sha256": "a74c339877b2bbed0a350c840a37ac50b3dbf17a34b07e51f822e9c994169f37",
+    "e5_after_loaded_checkpoint": "a74c339877b2bbed0a350c840a37ac50b3dbf17a34b07e51f822e9c994169f37",
+    "match": true
+  },
+  "res_lstm": {
+    "architecture": "PyTorchLSTMAutoencoderNetwork",
+    "encoder_units": [
+      64,
+      32
+    ],
+    "latent_dim": 16,
+    "decoder_units": [
+      32,
+      64
+    ],
+    "e4_checkpoint_sha256": "29819923a373116d0f1819901d2add9d4be7b80dc1c83c488ade5f9c53591720",
+    "e5_after_loaded_checkpoint": "29819923a373116d0f1819901d2add9d4be7b80dc1c83c488ade5f9c53591720",
+    "match": true
+  }
+}

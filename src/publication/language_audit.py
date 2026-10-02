@@ -148,7 +148,7 @@ def audit_manuscript_language(text: str, filename: str = "<text>") -> LanguageAu
         phrase_lower = phrase.lower()
         for match in re.finditer(re.escape(phrase_lower), text_lower):
             # Find the line number
-            line_num = text[:match.start()].count("\n") + 1
+            line_num = text[: match.start()].count("\n") + 1
             line_idx = line_num - 1
             context = _get_context(lines, line_idx)
 
@@ -161,21 +161,23 @@ def audit_manuscript_language(text: str, filename: str = "<text>") -> LanguageAu
                 phrase_lower,
                 "carefully bounded phrasing",
             )
-            report.findings.append({
-                "phrase": phrase,
-                "severity": "ERROR",
-                "line_number": line_num,
-                "file": filename,
-                "context": context,
-                "suggested_replacement": replacement,
-            })
+            report.findings.append(
+                {
+                    "phrase": phrase,
+                    "severity": "ERROR",
+                    "line_number": line_num,
+                    "file": filename,
+                    "context": context,
+                    "suggested_replacement": replacement,
+                }
+            )
             report.total_errors += 1
 
     # Check cautionary phrases (WARNING level)
     for phrase in CAUTIONARY_PHRASES:
         phrase_lower = phrase.lower()
         for match in re.finditer(r"\b" + re.escape(phrase_lower) + r"\b", text_lower):
-            line_num = text[:match.start()].count("\n") + 1
+            line_num = text[: match.start()].count("\n") + 1
             line_idx = line_num - 1
             context = _get_context(lines, line_idx)
 
@@ -183,14 +185,16 @@ def audit_manuscript_language(text: str, filename: str = "<text>") -> LanguageAu
             if line_text.startswith("%") or line_text.startswith("<!--"):
                 continue
 
-            report.findings.append({
-                "phrase": phrase,
-                "severity": "WARNING",
-                "line_number": line_num,
-                "file": filename,
-                "context": context,
-                "suggested_replacement": f"Use '{phrase}' with qualification (e.g., 'statistically significant', 'empirically optimal')",
-            })
+            report.findings.append(
+                {
+                    "phrase": phrase,
+                    "severity": "WARNING",
+                    "line_number": line_num,
+                    "file": filename,
+                    "context": context,
+                    "suggested_replacement": f"Use '{phrase}' with qualification (e.g., 'statistically significant', 'empirically optimal')",
+                }
+            )
             report.total_warnings += 1
 
     report.status = "PASS" if report.total_errors == 0 else "FLAGGED"

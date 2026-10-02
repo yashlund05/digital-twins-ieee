@@ -1,0 +1,10 @@
+% =============================================================================
+% Empirical Results and Analysis Summary
+% =============================================================================
+
+\section{Experimental Evaluation and Findings}
+Under continuous real-time synchronization ($\Delta t = 0$\,s, $P_{\text{drop}} = 0\%$), the physics-based residual representation $r(t)$ achieved an $F_1$-score of $0.9780$ using an LSTM Autoencoder, significantly outperforming raw telemetry ($F_1 = 0.5386$) due to effective background load cancellation.
+
+However, as synchronization staleness increased, zero-order hold state divergence induced rapid degradation. At $\Delta t \ge 5$\,s, hold-last-state drift surpassed nominal reconstruction thresholds, collapsing residual $F_1$ to $0.1085$ and inverting the representation advantage in favor of raw telemetry ($F_1 = 0.5386$), which remained immune to virtual model divergence.
+
+Formal hypothesis testing of $H_3$ ($\beta_{\text{AD}} > \beta_{\text{LE}}$) yielded $\Delta\beta = -1.2236$ ($95\%\, \text{CI}: [-1.3463, -1.1134]$, one-sided $p = 1.0000$), refuting $H_3$ with $100\%$ sign consistency across five independent random seeds. Rather than indicating superior resilience, this outcome demonstrates that anomaly detection collapses into an empirical noise floor within $\Delta t \le 5$\,s, whereas load estimation errors scale continuously and monotonically across several orders of magnitude.

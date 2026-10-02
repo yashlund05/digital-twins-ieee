@@ -1,0 +1,24 @@
+\begin{table}[htbp]
+\centering
+\caption{Experimental Configuration and Evaluated System Parameters}
+\label{tab:experimental_configuration}
+\begin{tabular}{ll}
+\hline
+\textbf{Parameter Category} & \textbf{Specification} \\
+\hline
+Power System Topology & IEEE 33-Bus Radial Distribution Feeder (12.66 kV, 32 branches, 3.715 MW nominal) \\
+Load \& Telemetry Dataset & Pecan Street Dataport (Austin, TX; 15-minute intervals mapped to 1-second DT resolution) \\
+Simulation Platform & OpenDSS AC Power Flow Engine coupled with Python Grid Environment \\
+Synchronization Policy & Hold-Last-State (Zero-Order Hold boundary extrapolation) \\
+Staleness Grid (Δt) & $\Delta t$ ∈ \{0, 1, 5, 15, 60, 300\} seconds (6 levels) \\
+Packet Drop Rate (Pdrop) & $P_{\text{drop}}$ ∈ \{0.00, 0.05, 0.10, 0.20\} (4 levels, 24 total factorial conditions) \\
+Anomaly Detection Models & Isolation Forest (100 estimators), LSTM Autoencoder (2×64 units, seq\_len=10) \\
+Feature Representations & Raw Telemetry yt vs. Physics-Based Residual rt = yt - ŷDT(t) \\
+Load Forecasting Models & Persistence baseline, XGBoost regressor (100 trees), Deep LSTM forecaster (2×64 units) \\
+Independent Random Seeds & Seeds ∈ \{42, 123, 456, 789, 101112\} (5 seeds, 120 total experiment runs) \\
+Temporal Data Splits & 70\% Train, 15\% Validation, 15\% Test (Strict zero temporal leakage) \\
+Threshold Calibration & 95th Percentile of reconstruction error on nominal validation split (fixed a priori) \\
+Primary Evaluation Metrics & Anomaly Detection: Test F1-Score; Load Estimation: Test MAPE (\%) \\
+\hline
+\end{tabular}
+\end{table}

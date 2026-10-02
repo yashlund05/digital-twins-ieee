@@ -6,7 +6,8 @@ under synchronization staleness to baseline performance (Delta t = 0, Pdrop = 0)
 Guarantees consistent polarity: positive values indicate performance deterioration.
 """
 
-from typing import Any, Literal
+from typing import Literal
+
 import numpy as np
 import pandas as pd
 
@@ -44,7 +45,9 @@ def get_metric_direction(metric_name: str) -> MetricDirection:
     key = metric_name.lower().strip()
     if key in METRIC_DIRECTION:
         return METRIC_DIRECTION[key]
-    raise ValueError(f"Unknown metric '{metric_name}'. Registered metrics: {list(METRIC_DIRECTION.keys())}")
+    raise ValueError(
+        f"Unknown metric '{metric_name}'. Registered metrics: {list(METRIC_DIRECTION.keys())}"
+    )
 
 
 def compute_absolute_degradation(

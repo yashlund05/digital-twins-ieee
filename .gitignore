@@ -80,9 +80,13 @@ data/**/*.hdf5
 data/**/*.pkl
 data/**/*.pickle
 
-# Experiment run outputs (can be very large)
-experiments/runs/*
-!experiments/runs/.gitkeep
+# Experiment run outputs — ignore heavy arrays, bulk parquet, and bulk per-step time series
+experiments/runs/**/*.npy
+experiments/runs/**/*.parquet
+experiments/runs/**/raw_residual_features.csv
+experiments/runs/**/synchronization_states.csv
+experiments/runs/**/predictions_*.csv
+experiments/runs/**/residuals_*.csv
 experiments/logs/*
 !experiments/logs/.gitkeep
 
@@ -138,4 +142,8 @@ temp/
 *.pdf
 *.png
 *.svg
-# Un-ignore specific paper figures by name when ready
+# Track publication figures needed for provenance and validation tests
+!experiments/runs/E12_PUBLICATION_ARTIFACTS_20261002/figures/*.pdf
+!experiments/runs/E12_PUBLICATION_ARTIFACTS_20261002/figures/*.png
+!experiments/runs/E14_FINAL_SCIENTIFIC_AUDIT_20261002/manuscript/figures/*.pdf
+!experiments/runs/E14_FINAL_SCIENTIFIC_AUDIT_20261002/manuscript/figures/*.png

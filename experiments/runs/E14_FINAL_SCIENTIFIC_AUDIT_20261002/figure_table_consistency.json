@@ -1,0 +1,101 @@
+{
+  "status": "PASS",
+  "figures_audited": 8,
+  "tables_audited": 6,
+  "figures": {
+    "fig_01": {
+      "has_source_csv": true,
+      "has_pdf": true,
+      "has_png": true,
+      "source_rows": 6,
+      "traceable": true
+    },
+    "fig_02": {
+      "has_source_csv": true,
+      "has_pdf": true,
+      "has_png": true,
+      "source_rows": 4,
+      "traceable": true
+    },
+    "fig_03": {
+      "has_source_csv": true,
+      "has_pdf": true,
+      "has_png": true,
+      "source_rows": 96,
+      "traceable": true
+    },
+    "fig_04": {
+      "has_source_csv": true,
+      "has_pdf": true,
+      "has_png": true,
+      "source_rows": 18,
+      "traceable": true
+    },
+    "fig_05": {
+      "has_source_csv": true,
+      "has_pdf": true,
+      "has_png": true,
+      "source_rows": 6,
+      "traceable": true
+    },
+    "fig_06": {
+      "has_source_csv": true,
+      "has_pdf": true,
+      "has_png": true,
+      "source_rows": 6,
+      "traceable": true
+    },
+    "fig_07": {
+      "has_source_csv": true,
+      "has_pdf": true,
+      "has_png": true,
+      "source_rows": 7,
+      "traceable": true
+    },
+    "fig_08": {
+      "has_source_csv": true,
+      "has_pdf": true,
+      "has_png": true,
+      "source_rows": 6,
+      "traceable": true
+    }
+  },
+  "tables": {
+    "table_01": {
+      "has_csv": true,
+      "has_tex": true,
+      "row_count": 13,
+      "traceable": true
+    },
+    "table_02": {
+      "has_csv": true,
+      "has_tex": true,
+      "row_count": 4,
+      "traceable": true
+    },
+    "table_03": {
+      "has_csv": true,
+      "has_tex": true,
+      "row_count": 24,
+      "traceable": true
+    },
+    "table_04": {
+      "has_csv": true,
+      "has_tex": true,
+      "row_count": 6,
+      "traceable": true
+    },
+    "table_05": {
+      "has_csv": true,
+      "has_tex": true,
+      "row_count": 8,
+      "traceable": true
+    },
+    "table_06": {
+      "has_csv": true,
+      "has_tex": true,
+      "row_count": 9,
+      "traceable": true
+    }
+  }
+}

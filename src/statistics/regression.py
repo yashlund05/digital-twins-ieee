@@ -6,9 +6,9 @@ regression models to quantify empirical association between staleness/AoI and de
 """
 
 from typing import Any
+
 import numpy as np
 import scipy.stats as stats
-import pandas as pd
 
 
 def fit_linear_regression(
@@ -50,7 +50,7 @@ def fit_linear_regression(
     return {
         "slope": float(res.slope),
         "intercept": float(res.intercept),
-        "r_squared": float(res.rvalue ** 2),
+        "r_squared": float(res.rvalue**2),
         "std_err": float(res.stderr) if res.stderr is not None else 0.0,
         "t_statistic": t_stat,
         "p_value": float(res.pvalue),

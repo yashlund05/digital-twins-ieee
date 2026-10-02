@@ -1,0 +1,123 @@
+[
+  {
+    "table_id": "table_01",
+    "table_title": "Experimental Configuration",
+    "source_runs": [
+      "configs/digital_twin.yaml",
+      "configs/experiments/e5_staleness_sweep.yaml"
+    ],
+    "source_files": [
+      "config_snapshot.yaml"
+    ],
+    "transformations": [
+      "structured_parameter_extraction"
+    ],
+    "row_count": 13,
+    "column_count": 2,
+    "generated_by": "src.publication.table_factory",
+    "generated_at": "2026-10-02T16:15:46.553317",
+    "csv_hash": "73892b5463368eb9e02f1a267115d02f9a3ae4622b26b9cc8729699357a20d9f",
+    "tex_hash": "7629e86b222f9d2586a55abd4b3480f89739d2b150707dbab2064259ebd48144"
+  },
+  {
+    "table_id": "table_02",
+    "table_title": "Baseline Reconciliation",
+    "source_runs": [
+      "phase7_e4",
+      "phase11_e11"
+    ],
+    "source_files": [
+      "metrics.json",
+      "table_01_reproducibility.csv"
+    ],
+    "transformations": [
+      "metric_comparison",
+      "tolerance_verification"
+    ],
+    "row_count": 4,
+    "column_count": 5,
+    "generated_by": "src.publication.table_factory",
+    "generated_at": "2026-10-02T16:15:46.553317",
+    "csv_hash": "7e72cd3579668e1ce8df849090bb691de35b236e9f7f6b5d055d6e4a43b2eb5e",
+    "tex_hash": "733e77b627516f0337072b2f5cef2c060289ba58e422ea5eedea330f9d32f8bf"
+  },
+  {
+    "table_id": "table_03",
+    "table_title": "E5 Factorial Condition Summary",
+    "source_runs": [
+      "phase8_e5"
+    ],
+    "source_files": [
+      "comparison.csv"
+    ],
+    "transformations": [
+      "pivot_24_conditions",
+      "aggregate_models"
+    ],
+    "row_count": 24,
+    "column_count": 10,
+    "generated_by": "src.publication.table_factory",
+    "generated_at": "2026-10-02T16:15:46.553317",
+    "csv_hash": "3576aecc8ba78849517c48b8a3d067281932b279fc42b85a3f44275e55bf0f7e",
+    "tex_hash": "d69b66284689e7cba88a97ee0d1640fda00060b40b681e73790fd16acfa11f07"
+  },
+  {
+    "table_id": "table_04",
+    "table_title": "Multi-Seed Degradation Results",
+    "source_runs": [
+      "phase10_e10"
+    ],
+    "source_files": [
+      "multiseed_h3_summary.csv"
+    ],
+    "transformations": [
+      "multi_seed_extraction",
+      "ci_formatting"
+    ],
+    "row_count": 6,
+    "column_count": 8,
+    "generated_by": "src.publication.table_factory",
+    "generated_at": "2026-10-02T16:15:46.553317",
+    "csv_hash": "8391f6add239971a16d5214b7bc9f895e69c2f9a7b6ca1502c5ea017a552b518",
+    "tex_hash": "74ca801715189c61a334d9f4bebd421bcc35191b79171f461c271b38393fe78a"
+  },
+  {
+    "table_id": "table_05",
+    "table_title": "Controlled Ablation Summary",
+    "source_runs": [
+      "phase11_e11"
+    ],
+    "source_files": [
+      "table_02_ablation_results.csv"
+    ],
+    "transformations": [
+      "ablation_synthesis",
+      "cautious_interpretation_mapping"
+    ],
+    "row_count": 8,
+    "column_count": 6,
+    "generated_by": "src.publication.table_factory",
+    "generated_at": "2026-10-02T16:15:46.553317",
+    "csv_hash": "9cc8556bf4f78ec8d4e621d951d7b48b13bfd744b75f0e88e160b5605f0f1ad0",
+    "tex_hash": "3ccaebe1cf610acc6c52c7df0bea01b057490ba87461c9627de79bfd4ed0e329"
+  },
+  {
+    "table_id": "table_06",
+    "table_title": "Pairwise H3 Statistical Tests",
+    "source_runs": [
+      "phase10_e10"
+    ],
+    "source_files": [
+      "multiseed_hypothesis_tests.csv"
+    ],
+    "transformations": [
+      "hypothesis_test_table_formatting"
+    ],
+    "row_count": 9,
+    "column_count": 12,
+    "generated_by": "src.publication.table_factory",
+    "generated_at": "2026-10-02T16:15:46.553317",
+    "csv_hash": "453cccbc831cc1de4483db6eebf45532cb26be2bc96dfeaf82d1d784ca5c814d",
+    "tex_hash": "448b16f2f712d39cc3f4b1f5bd0faf523d441d73780e487e31428d011536c3a3"
+  }
+]

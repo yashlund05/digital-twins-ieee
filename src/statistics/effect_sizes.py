@@ -6,6 +6,7 @@ Implements Cohen's d (independent and paired formulations) and Cliff's delta
 """
 
 from typing import Any
+
 import numpy as np
 
 
@@ -37,7 +38,9 @@ def compute_cohens_d(
 
     if paired:
         if len(x_arr) != len(y_arr):
-            raise ValueError(f"Paired Cohen's d requires equal sample sizes: {len(x_arr)} vs {len(y_arr)}")
+            raise ValueError(
+                f"Paired Cohen's d requires equal sample sizes: {len(x_arr)} vs {len(y_arr)}"
+            )
         diff = x_arr - y_arr
         s_diff = np.std(diff, ddof=1)
         if s_diff < 1e-12:

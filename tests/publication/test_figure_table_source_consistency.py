@@ -1,7 +1,5 @@
 """tests/publication/test_figure_table_source_consistency.py — Tests for Figure & Table Source Linkage."""
 
-import pytest
-
 from src.audit.cross_phase_auditor import CrossPhaseScientificAuditor
 from src.publication.sources import FrozenSourceRegistry
 

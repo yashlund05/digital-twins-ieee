@@ -1,0 +1,109 @@
+{
+  "seed_validations": [
+    {
+      "seed": 42,
+      "conditions_expected": 24,
+      "conditions_found": 24,
+      "valid": true,
+      "staleness_levels": [
+        "0",
+        "1",
+        "5",
+        "15",
+        "60",
+        "300"
+      ],
+      "packet_drop_rates": [
+        0.0,
+        0.05,
+        0.1,
+        0.2
+      ],
+      "comparison_sha256": "43c4ef2ce7d4e78b996906a4becf9bf7fd115fa8c7e4bec199e2d0face368856"
+    },
+    {
+      "seed": 123,
+      "conditions_expected": 24,
+      "conditions_found": 24,
+      "valid": true,
+      "staleness_levels": [
+        "0",
+        "1",
+        "5",
+        "15",
+        "60",
+        "300"
+      ],
+      "packet_drop_rates": [
+        0.0,
+        0.05,
+        0.1,
+        0.2
+      ],
+      "comparison_sha256": "528f6add9f392899a6e93f2401fc6fafcb5e18c4f35653d43709bec2a8a28d23"
+    },
+    {
+      "seed": 456,
+      "conditions_expected": 24,
+      "conditions_found": 24,
+      "valid": true,
+      "staleness_levels": [
+        "0",
+        "1",
+        "5",
+        "15",
+        "60",
+        "300"
+      ],
+      "packet_drop_rates": [
+        0.0,
+        0.05,
+        0.1,
+        0.2
+      ],
+      "comparison_sha256": "2a48f22b9db6c43bafa3049985baf0ae82674c5320287bf574e9ae31f04be733"
+    },
+    {
+      "seed": 789,
+      "conditions_expected": 24,
+      "conditions_found": 24,
+      "valid": true,
+      "staleness_levels": [
+        "0",
+        "1",
+        "5",
+        "15",
+        "60",
+        "300"
+      ],
+      "packet_drop_rates": [
+        0.0,
+        0.05,
+        0.1,
+        0.2
+      ],
+      "comparison_sha256": "dcfdf3da3ed509ad3f55e7bcd9ab0b65f84154bb8e3902780c6a918d3499466f"
+    },
+    {
+      "seed": 101112,
+      "conditions_expected": 24,
+      "conditions_found": 24,
+      "valid": true,
+      "staleness_levels": [
+        "0",
+        "1",
+        "5",
+        "15",
+        "60",
+        "300"
+      ],
+      "packet_drop_rates": [
+        0.0,
+        0.05,
+        0.1,
+        0.2
+      ],
+      "comparison_sha256": "7fb4cfcd86b15838731ffc6c7ee70353aaf7f262091d6083dc397fb4254dcf6d"
+    }
+  ]
+}

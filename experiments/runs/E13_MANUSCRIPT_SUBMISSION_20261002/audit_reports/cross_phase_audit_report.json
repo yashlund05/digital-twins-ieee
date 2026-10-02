@@ -1,0 +1,79 @@
+{
+  "overall_status": "PASS",
+  "total_checks": 4,
+  "passed_checks": 4,
+  "failed_checks": 0,
+  "checks": {
+    "e4_e11_reproducibility": {
+      "status": "PASS",
+      "check": "e4_e11_reproducibility",
+      "details": {
+        "max_absolute_difference": 4.030131827148509e-07,
+        "tolerance": 0.0001,
+        "all_rows_matched": true,
+        "num_rows_checked": 4,
+        "passed": true
+      }
+    },
+    "e5_e10_seed_consistency": {
+      "status": "PASS",
+      "check": "e5_e10_seed_consistency",
+      "details": {
+        "e5_condition_count": 24,
+        "e10_s42_condition_count": 24,
+        "conditions_identical": true
+      }
+    },
+    "h3_consistency": {
+      "status": "PASS",
+      "check": "h3_single_vs_multiseed_consistency",
+      "details": {
+        "e10_seed42_delta_beta": -1.1147733792814478,
+        "e6_delta_beta": -1.1147733792814485,
+        "abs_diff": 6.661338147750939e-16,
+        "decision": "NOT_SUPPORTED",
+        "passed": true
+      }
+    },
+    "all_seeds_not_supported": {
+      "status": "PASS",
+      "check": "all_seeds_not_supported",
+      "details": {
+        "total_rows_checked": 6,
+        "all_consistent": true,
+        "seeds": {
+          "42": {
+            "decision": "NOT_SUPPORTED",
+            "delta_beta": -1.1147733792814478,
+            "consistent_with_h3_rejection": true
+          },
+          "123": {
+            "decision": "NOT_SUPPORTED",
+            "delta_beta": -1.343926604983076,
+            "consistent_with_h3_rejection": true
+          },
+          "456": {
+            "decision": "NOT_SUPPORTED",
+            "delta_beta": -1.424200016212372,
+            "consistent_with_h3_rejection": true
+          },
+          "789": {
+            "decision": "NOT_SUPPORTED",
+            "delta_beta": -1.102185317443275,
+            "consistent_with_h3_rejection": true
+          },
+          "101112": {
+            "decision": "NOT_SUPPORTED",
+            "delta_beta": -1.1331421900827336,
+            "consistent_with_h3_rejection": true
+          },
+          "Multi-seed": {
+            "decision": "NOT_SUPPORTED",
+            "delta_beta": -1.2236455016005805,
+            "consistent_with_h3_rejection": true
+          }
+        }
+      }
+    }
+  }
+}

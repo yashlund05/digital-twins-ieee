@@ -1,0 +1,85 @@
+{
+  "timestamp": "2026-10-02T15:48:29.660779",
+  "phase7_e4_status": "PASS",
+  "phase8_e5_status": "PASS",
+  "phase9_e6_status": "PASS",
+  "phase10_e10_status": "PASS",
+  "baseline_comparison": [
+    {
+      "model": "if_raw",
+      "metric": "f1",
+      "actual": 0.11764705882352941,
+      "expected": 0.117647,
+      "classification": "NUMERICALLY_EQUIVALENT",
+      "abs_diff": 5.882352940855817e-08
+    },
+    {
+      "model": "if_res",
+      "metric": "f1",
+      "actual": 0.08872727272727272,
+      "expected": 0.088727,
+      "classification": "NUMERICALLY_EQUIVALENT",
+      "abs_diff": 2.7272727272376063e-07
+    },
+    {
+      "model": "lstm_raw",
+      "metric": "f1",
+      "actual": 0.5386064030131827,
+      "expected": 0.538606,
+      "classification": "NUMERICALLY_EQUIVALENT",
+      "abs_diff": 4.0301318271485087e-07
+    },
+    {
+      "model": "lstm_res",
+      "metric": "f1",
+      "actual": 0.9779559118236473,
+      "expected": 0.977956,
+      "classification": "NUMERICALLY_EQUIVALENT",
+      "abs_diff": 8.817635277491576e-08
+    }
+  ],
+  "representative_conditions": [
+    {
+      "staleness_seconds": 0,
+      "packet_drop_rate": 0.0,
+      "residual_lstm_ae_f1": 0.9779559118236472,
+      "lstm_forecaster_mape": 8.95040488214452,
+      "status": "VALID"
+    },
+    {
+      "staleness_seconds": 1,
+      "packet_drop_rate": 0.0,
+      "residual_lstm_ae_f1": 0.9779559118236472,
+      "lstm_forecaster_mape": 8.95040488214452,
+      "status": "VALID"
+    },
+    {
+      "staleness_seconds": 5,
+      "packet_drop_rate": 0.0,
+      "residual_lstm_ae_f1": 0.1085167889704247,
+      "lstm_forecaster_mape": 15.260972937471529,
+      "status": "VALID"
+    },
+    {
+      "staleness_seconds": 60,
+      "packet_drop_rate": 0.1,
+      "residual_lstm_ae_f1": 0.0900701365817644,
+      "lstm_forecaster_mape": 58.62408928672285,
+      "status": "VALID"
+    },
+    {
+      "staleness_seconds": 300,
+      "packet_drop_rate": 0.2,
+      "residual_lstm_ae_f1": 0.0889861415025528,
+      "lstm_forecaster_mape": 59.52588344855144,
+      "status": "VALID"
+    }
+  ],
+  "statistical_reproducibility": {
+    "phase9_h3_decision": "NOT_SUPPORTED",
+    "phase9_delta_beta": -0.861994353021731,
+    "phase10_sign_consistency_pct": 100.0,
+    "phase10_all_not_supported": true
+  },
+  "overall_status": "PASS"
+}

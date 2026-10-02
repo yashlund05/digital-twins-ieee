@@ -8,8 +8,8 @@ import hashlib
 import json
 from pathlib import Path
 from typing import Any
-import yaml
 
+import yaml
 from pydantic import BaseModel
 
 
@@ -54,7 +54,7 @@ def compute_config_hash(
     if isinstance(config, (str, Path)):
         p = Path(config)
         if p.is_file():
-            with open(p, "r", encoding="utf-8") as f:
+            with open(p, encoding="utf-8") as f:
                 raw_cfg = yaml.safe_load(f)
         else:
             raw_cfg = yaml.safe_load(str(config))

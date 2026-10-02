@@ -4,10 +4,8 @@ Validates frozen source artifacts, experimental completeness (24 E5, 120 E10, 88
 baseline numerical reconciliation, and audits publication text for non-overclaiming scientific language.
 """
 
-from pathlib import Path
 import re
 from typing import Any
-import pandas as pd
 
 from src.publication.sources import FrozenSourceRegistry
 from src.utils.logging import get_logger
@@ -46,11 +44,15 @@ def audit_scientific_language(text: str) -> dict[str, Any]:
     for phrase in PROHIBITED_PHRASES:
         matches = [m.start() for m in re.finditer(re.escape(phrase), text_lower)]
         if matches:
-            findings.append({
-                "phrase": phrase,
-                "occurrences": len(matches),
-                "suggested_replacement": LANGUAGE_REPLACEMENTS.get(phrase, "carefully bounded phrasing"),
-            })
+            findings.append(
+                {
+                    "phrase": phrase,
+                    "occurrences": len(matches),
+                    "suggested_replacement": LANGUAGE_REPLACEMENTS.get(
+                        phrase, "carefully bounded phrasing"
+                    ),
+                }
+            )
 
     return {
         "status": "PASS" if not findings else "FLAGGED",
@@ -118,7 +120,9 @@ def validate_publication_sources(registry: FrozenSourceRegistry) -> dict[str, An
         if e10_cond_seed_count == 120:
             report["completeness_e10_120"] = True
         else:
-            report["errors"].append(f"Expected 120 E10 seed-conditions, found {e10_cond_seed_count}")
+            report["errors"].append(
+                f"Expected 120 E10 seed-conditions, found {e10_cond_seed_count}"
+            )
     except Exception as e:
         report["errors"].append(f"Failed to inspect E10 seed results: {e}")
 
@@ -146,7 +150,9 @@ def validate_publication_sources(registry: FrozenSourceRegistry) -> dict[str, An
         if max_diff < 1e-4:
             report["baseline_reconciled"] = True
         else:
-            report["errors"].append(f"Baseline discrepancy exceeded tolerance: max diff = {max_diff}")
+            report["errors"].append(
+                f"Baseline discrepancy exceeded tolerance: max diff = {max_diff}"
+            )
     except Exception as e:
         report["errors"].append(f"Failed to verify baseline reconciliation: {e}")
 

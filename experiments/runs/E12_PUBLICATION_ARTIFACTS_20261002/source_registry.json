@@ -1,0 +1,79 @@
+{
+  "source_runs": {
+    "phase7_e4": {
+      "path": "experiments\\runs\\E4_RAW_VS_RESIDUAL_SEED42_20260930",
+      "exists": true
+    },
+    "phase8_e5": {
+      "path": "experiments\\runs\\E5_STALENESS_SWEEP_CORRECTED_SEED42_20260930",
+      "exists": true
+    },
+    "phase9_e6": {
+      "path": "experiments\\runs\\E6_JOINT_ANALYSIS_SEED42_20261002",
+      "exists": true
+    },
+    "phase10_e10": {
+      "path": "experiments\\runs\\E10_MULTI_SEED_ANALYSIS_20261002",
+      "exists": true
+    },
+    "phase11_e11": {
+      "path": "experiments\\runs\\E11_PHASE11_20261002",
+      "exists": true
+    }
+  },
+  "source_hashes": {
+    "phase7_e4/comparison.csv": "93466a64f2f4ad92f95de362a501604c8d0503e1fac4ad35ed4da48a09c741c5",
+    "phase7_e4/feature_config.json": "9b149b92f3c32e67b01eeb676083b3d8bee0ddf14b144ece3656233c3744de0c",
+    "phase7_e4/manifest.json": "97a3913f881b0227272a8eecb2640afc2b75ec6d8cfa71990cd5449c27eefabd",
+    "phase7_e4/metrics.json": "63e5b871d18830531d15e18e5a096587a32059790c17835cb538b32bc5659d5b",
+    "phase7_e4/predictions.parquet": "13f8b5caa26de3d64da66910336947c8c3f8a8ec1dabb481d08c668c5987cac6",
+    "phase7_e4/raw_residuals.parquet": "c5740eabeee4c2b6e0c78a638a769b2a7373960eda8a86f4e492f892964d8bbf",
+    "phase7_e4/residual_normalizer.json": "8e1ba235a07be36c88c3c8d09e6ce5e8add4012faeabc108c5dbd209f36aae9c",
+    "phase7_e4/summary.md": "3ae764fa7b3e6e8ae7821b753db105d26fa5e2264d413f4c90c70e53f6e7f20c",
+    "phase8_e5/aoi_statistics.json": "3a71c2f689d651f9905fb2bffba0578a17f9e1c61d74091af4b3926f9e78b9ae",
+    "phase8_e5/comparison.csv": "43c4ef2ce7d4e78b996906a4becf9bf7fd115fa8c7e4bec199e2d0face368856",
+    "phase8_e5/config_snapshot.yaml": "8da4ca303e0d5a4a8b5d3cdb81038f066f42b4e8ac1b234303041968cd52dc9d",
+    "phase8_e5/manifest.json": "06c3a78651fda4f83afb431e12eab8c134a6e9b2780c861695959e16275041b9",
+    "phase8_e5/metrics.json": "1b596aa8b94682cd573435dae24b065db060a3c277349f4ea3edc50a59fc005f",
+    "phase8_e5/predictions.parquet": "a3453de3ea70258e2dcdbc101cc82d86fb875f869405f70654e3b7f964d3cda6",
+    "phase8_e5/summary.md": "8dbad9356a4eaf9e6216e4f1dd959dcba9884f92b10dbf62af0ecd95e449b8ef",
+    "phase8_e5/synchronization_logs.parquet": "bc9ca466b62778844e7b7bcba95ca15f8a0e909f5f533469194f6d97c054ef8b",
+    "phase9_e6/bootstrap_results.csv": "62901a2c5bc9e830aa4a247f199d6a2f381b4dc367c46cc9e6b55da38414eea3",
+    "phase9_e6/degradation_metrics.csv": "f1cb8318aa897a3be899509bae781786fad2443e97359bf3dc0e82a189ee6821",
+    "phase9_e6/descriptive_statistics.csv": "259f74124d367da66c37a67673500aaedd7368ef52b0162d1ebd0017ecd70b46",
+    "phase9_e6/effect_sizes.csv": "930de75357c8b49fbbe09047af6ced6aab63a52c8e08edd92afa137cfb6b904b",
+    "phase9_e6/H3_summary.csv": "cb2678cb939a65642f8c273b6a867ed890411b358a3a7e2a7df4cd47ed38bcb3",
+    "phase9_e6/H3_summary.md": "1eb297b8ab6279f14427055c6c52e07a3df8fe9c8aff78817027ac5d1989ee0d",
+    "phase9_e6/manifest.json": "e36752d8f38ea611cf19ca891ecd3320ac5c4334d38dd37c97ee64de4a20782d",
+    "phase9_e6/phase9_input_validation.json": "b608b2647add34dfc128a58e86e19bc372b0e68c6e0bd8276f50a270f76fe4d4",
+    "phase9_e6/regression_results.csv": "e434f1a3c14c538afc8792d85376966685360e2426be066eb4e555ce9164b6cc",
+    "phase9_e6/statistical_tests.csv": "5dfb0c794b1b72d73977d00e331dfbf6a5fe9609a39cb535ea127f187042b6d9",
+    "phase9_e6/summary.md": "d98aa900f8d25e7b9e550d902c1615be99c5e4c9a7094951eb829ac0a6bf29dd",
+    "phase10_e10/aggregated_metrics.csv": "563c7e12ab02ecc8a96f972c9501957b53c38672a9af36072ed27c24fc8521e4",
+    "phase10_e10/baseline_reconciliation.json": "779c9bc35fc97a9a826080ab346ed5ac34415050b084e0b7c423af0b5263f714",
+    "phase10_e10/condition_statistics.csv": "86ecc62ec7bb7253999b5c6c4458b057fda7b314c7f687b81eeb5776ea8d0c33",
+    "phase10_e10/interaction_effects.csv": "b964e62fd1f097dda38ee89542fbd75d4c36af13aeab5aac6cd4f75b28034707",
+    "phase10_e10/manifest.json": "2d73ff74d4220a7f28024d81405668487289aae66cea1b6666cdf83777acf7a2",
+    "phase10_e10/multiseed_effect_sizes.csv": "6f604641f150c0ad2585d05ae2c74403fa94583f20c850287ef4db826004d796",
+    "phase10_e10/multiseed_h3_summary.csv": "23f9c80648f0207217a315dd940af12e3b3317f1cbf01d2147ec70f1bb0e3b97",
+    "phase10_e10/multiseed_hypothesis_tests.csv": "8d88bf068a4c6bd95403f57f43f809b1083337651da62f2c643a0ffe02ef839a",
+    "phase10_e10/multiseed_regression_results.csv": "7d3a42d62aa41d0bf1f81f769619e3acfa160826177307ffaf1c619f8e913c63",
+    "phase10_e10/robustness_summary.csv": "5db556dcbd69bd03ff968f862f87d1872e8ffa384a07c9c7e1fa49204f39a15c",
+    "phase10_e10/seed_results.csv": "321413460bd53b9e2333d08e80d63b2caf8b0b8c5115678d071f589edec3f800",
+    "phase10_e10/seed_validation.json": "7347682be14ad75a7b45ffacc37d985ed8d197b0fe78f31524a897201b755739",
+    "phase10_e10/sensitivity_analysis.csv": "e2fe85190d59661cda8d02c4d6cd0cdef2f363664ec9cca344e57733d714af44",
+    "phase10_e10/summary.md": "75639cb5a671f2a2b7f5191ec4763972bcf594cc0225a8fe555f2f3112bf24c0",
+    "phase10_e10/uncertainty_intervals.csv": "950e4d78718f83eaa8b3954141294877766bf61f4e22cd07313092d8517946c2",
+    "phase10_e10/variance_decomposition.csv": "3e33564948ef2e2a11ff0a0d37875326c2bdc12fdf1045b9609642e26c4e4346",
+    "phase11_e11/config_snapshot.yaml": "8d4c840743417abb48c001077917effa2022f6392727c5f50646f2863aeaeca3",
+    "phase11_e11/integrity_report.json": "6a9372c62252e429bf40e8518e8044242a059a729844cbdf7bee06f582afa530",
+    "phase11_e11/manifest.json": "51cc316c4cc816c499bbca62b7510f3cc25f8528916a7947f8e3ddf2974fc25e",
+    "phase11_e11/reproducibility_report.json": "a49bacc63a9be31a12a95f320bac344446ec85f97fafc0a11a911277ad290100",
+    "phase11_e11/summary.md": "521d5fcb1b604eaf6b0fd2ecb22c2da78c58044b4a79cdadf048ecb8c093af00",
+    "phase11_e11/table_01_reproducibility.csv": "1a97f2c0116271f52de4352fc4e8e3cf29c696266e5caa30b904373ccf3f7332",
+    "phase11_e11/table_02_ablation_results.csv": "7463169168018e7c409a1251f1e2765a7ff682d79e9a9391c16614b8ce79a394",
+    "phase11_e11/table_03_transient_statistics.csv": "dd4c27fd9a82b194a55537546556764601fae3e6d1b436e1038416150080570e",
+    "phase11_e11/table_04_change_point_analysis.csv": "81cf0b7537d3b45d026b2ed2de36ed92d6ea9c3c335339a1daa240cc8351cedc",
+    "phase11_e11/table_05_seed_variability.csv": "a34e15b9b3001efc76f5958e468f9d16cb2527f8bf05e53df50b720eccec8f1d"
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "experiment": {
+    "id": "E5",
+    "name": "staleness_sweep",
+    "description": "Systematically evaluates the effect of Digital Twin synchronization staleness (Delta t) and stochastic packet drops (P_drop) on joint short-term load estimation (Persistence, XGBoost, LSTM) and unsupervised anomaly detection (Isolation Forest, LSTM Autoencoder on Raw and Residual representations).\n",
+    "seed": 42,
+    "version": "1.0.0"
+  },
+  "synchronization": {
+    "intervals_seconds": [
+      0,
+      1,
+      5,
+      15,
+      60,
+      300
+    ],
+    "packet_drop_rates": [
+      0.0,
+      0.05,
+      0.1,
+      0.2
+    ],
+    "missed_update_policy": "hold_last_state",
+    "aoi": {
+      "definition": "time_since_last_update",
+      "max_aoi_seconds": null
+    }
+  },
+  "forecasting": {
+    "models": [
+      "persistence",
+      "xgboost",
+      "lstm"
+    ],
+    "target_name": "total_load_p_kw",
+    "lookback_steps": 24,
+    "metrics": {
+      "primary": [
+        "mae",
+        "rmse",
+        "mape"
+      ],
+      "secondary": [
+        "r2"
+      ]
+    }
+  },
+  "anomaly_detection": {
+    "detectors": [
+      "isolation_forest",
+      "lstm_autoencoder"
+    ],
+    "input_representations": [
+      "raw",
+      "residual"
+    ],
+    "threshold_percentile": 95.0,
+    "metrics": {
+      "primary": [
+        "precision",
+        "recall",
+        "f1",
+        "pr_auc"
+      ],
+      "secondary": [
+        "roc_auc",
+        "false_positive_rate",
+        "detection_latency"
+      ]
+    }
+  },
+  "reproducibility": {
+    "seed": 42,
+    "output_base_dir": "experiments/runs"
+  }
+}

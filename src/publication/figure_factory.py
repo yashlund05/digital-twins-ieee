@@ -5,8 +5,9 @@ exact source CSV files in source_data/ per Section 5.
 """
 
 from pathlib import Path
-from typing import Any
+
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.patches as patches
 import matplotlib.pyplot as plt
@@ -22,22 +23,24 @@ logger = get_logger("publication.figure_factory")
 def set_ieee_style() -> None:
     """Configure Matplotlib to adhere to IEEE Transactions typography standards."""
     plt.rcdefaults()
-    plt.rcParams.update({
-        "font.family": "serif",
-        "font.size": 9,
-        "axes.labelsize": 9,
-        "axes.titlesize": 10,
-        "xtick.labelsize": 8,
-        "ytick.labelsize": 8,
-        "legend.fontsize": 8,
-        "figure.titlesize": 11,
-        "grid.alpha": 0.5,
-        "grid.linestyle": ":",
-        "lines.linewidth": 1.4,
-        "lines.markersize": 5,
-        "savefig.dpi": 300,
-        "savefig.bbox": "tight",
-    })
+    plt.rcParams.update(
+        {
+            "font.family": "serif",
+            "font.size": 9,
+            "axes.labelsize": 9,
+            "axes.titlesize": 10,
+            "xtick.labelsize": 8,
+            "ytick.labelsize": 8,
+            "legend.fontsize": 8,
+            "figure.titlesize": 11,
+            "grid.alpha": 0.5,
+            "grid.linestyle": ":",
+            "lines.linewidth": 1.4,
+            "lines.markersize": 5,
+            "savefig.dpi": 300,
+            "savefig.bbox": "tight",
+        }
+    )
 
 
 # =============================================================================
@@ -50,43 +53,130 @@ def generate_figure_01_architecture(output_dir: Path, source_data_dir: Path) -> 
     ax.axis("off")
 
     def draw_box(x, y, w, h, text, color="#e6f2ff", ec="#004080", title=None):
-        box = patches.FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.04", fc=color, ec=ec, lw=1.2)
+        box = patches.FancyBboxPatch(
+            (x, y), w, h, boxstyle="round,pad=0.04", fc=color, ec=ec, lw=1.2
+        )
         ax.add_patch(box)
         if title:
-            ax.text(x + w / 2, y + h - 0.12, title, ha="center", va="top", fontweight="bold", fontsize=8.5, color=ec)
-            ax.text(x + w / 2, y + (h - 0.12) / 2, text, ha="center", va="center", fontsize=7.5, color="#222222")
+            ax.text(
+                x + w / 2,
+                y + h - 0.12,
+                title,
+                ha="center",
+                va="top",
+                fontweight="bold",
+                fontsize=8.5,
+                color=ec,
+            )
+            ax.text(
+                x + w / 2,
+                y + (h - 0.12) / 2,
+                text,
+                ha="center",
+                va="center",
+                fontsize=7.5,
+                color="#222222",
+            )
         else:
-            ax.text(x + w / 2, y + h / 2, text, ha="center", va="center", fontsize=8, color="#222222")
+            ax.text(
+                x + w / 2, y + h / 2, text, ha="center", va="center", fontsize=8, color="#222222"
+            )
 
     def draw_arrow(x1, y1, x2, y2, label=None):
-        ax.annotate("", xy=(x2, y2), xytext=(x1, y1),
-                    arrowprops=dict(arrowstyle="-|>", lw=1.2, color="#333333", mutation_scale=12))
+        ax.annotate(
+            "",
+            xy=(x2, y2),
+            xytext=(x1, y1),
+            arrowprops=dict(arrowstyle="-|>", lw=1.2, color="#333333", mutation_scale=12),
+        )
         if label:
-            ax.text((x1 + x2) / 2, (y1 + y2) / 2 + 0.04, label, ha="center", va="bottom", fontsize=7, color="#555555")
+            ax.text(
+                (x1 + x2) / 2,
+                (y1 + y2) / 2 + 0.04,
+                label,
+                ha="center",
+                va="bottom",
+                fontsize=7,
+                color="#555555",
+            )
 
     # Physical Feeder Domain
-    draw_box(0.04, 0.70, 0.22, 0.22, "15-min Pecan Street\nSmart Meter Load Data", color="#e8f5e9", ec="#2e7d32", title="Real-World Data")
+    draw_box(
+        0.04,
+        0.70,
+        0.22,
+        0.22,
+        "15-min Pecan Street\nSmart Meter Load Data",
+        color="#e8f5e9",
+        ec="#2e7d32",
+        title="Real-World Data",
+    )
     draw_arrow(0.26, 0.81, 0.35, 0.81)
 
-    draw_box(0.35, 0.70, 0.26, 0.22, "12.66 kV Radial Grid\n32 Branches, 3.7 MW Load\nAC Power Flow Equations", color="#e8f5e9", ec="#2e7d32", title="Physical Feeder (OpenDSS)")
+    draw_box(
+        0.35,
+        0.70,
+        0.26,
+        0.22,
+        "12.66 kV Radial Grid\n32 Branches, 3.7 MW Load\nAC Power Flow Equations",
+        color="#e8f5e9",
+        ec="#2e7d32",
+        title="Physical Feeder (OpenDSS)",
+    )
     draw_arrow(0.61, 0.81, 0.70, 0.81, label="True Telemetry $y(t)$")
 
     # Synchronization Engine
-    draw_box(0.70, 0.58, 0.26, 0.34, "Controlled Latency:\n$\\Delta t \\in \\{0, 1, 5, 15, 60, 300\\}$ s\nStochastic Loss:\n$P_{\\text{drop}} \\in \\{0, 5, 10, 20\\}\\%$\nRealized AoI Tracking", color="#fff3e0", ec="#e65100", title="Synchronization Engine")
+    draw_box(
+        0.70,
+        0.58,
+        0.26,
+        0.34,
+        "Controlled Latency:\n$\\Delta t \\in \\{0, 1, 5, 15, 60, 300\\}$ s\nStochastic Loss:\n$P_{\\text{drop}} \\in \\{0, 5, 10, 20\\}\\%$\nRealized AoI Tracking",
+        color="#fff3e0",
+        ec="#e65100",
+        title="Synchronization Engine",
+    )
 
     # Digital Twin Model
     draw_arrow(0.83, 0.58, 0.83, 0.44)
-    draw_box(0.70, 0.22, 0.26, 0.22, "Zero-Order Hold Extrapolation\n$\\hat{y}^{\\text{DT}}(t) = \\text{OpenDSS}(u_{\\tau(t)})$", color="#f3e5f5", ec="#6a1b9a", title="Digital Twin Virtual State")
+    draw_box(
+        0.70,
+        0.22,
+        0.26,
+        0.22,
+        "Zero-Order Hold Extrapolation\n$\\hat{y}^{\\text{DT}}(t) = \\text{OpenDSS}(u_{\\tau(t)})$",
+        color="#f3e5f5",
+        ec="#6a1b9a",
+        title="Digital Twin Virtual State",
+    )
 
     # Downstream Applications
     draw_arrow(0.70, 0.33, 0.56, 0.33)
-    draw_box(0.34, 0.22, 0.22, 0.22, "Persistence Baseline\nXGBoost Ensemble\nDeep Recurrent LSTM", color="#ede7f6", ec="#4527a0", title="Load Estimation")
+    draw_box(
+        0.34,
+        0.22,
+        0.22,
+        0.22,
+        "Persistence Baseline\nXGBoost Ensemble\nDeep Recurrent LSTM",
+        color="#ede7f6",
+        ec="#4527a0",
+        title="Load Estimation",
+    )
 
     draw_arrow(0.83, 0.22, 0.83, 0.12)
     draw_arrow(0.15, 0.70, 0.15, 0.08)
     draw_arrow(0.15, 0.08, 0.34, 0.08)
 
-    draw_box(0.34, 0.02, 0.52, 0.12, "Residual Engine: $r(t) = y(t) - \\hat{y}^{\\text{DT}}(t)$  $\\longrightarrow$  Isolation Forest / LSTM-AE  $\\longrightarrow$  $F_1$-Score", color="#ffebee", ec="#c62828", title="Cyber-Physical Anomaly Detection")
+    draw_box(
+        0.34,
+        0.02,
+        0.52,
+        0.12,
+        "Residual Engine: $r(t) = y(t) - \\hat{y}^{\\text{DT}}(t)$  $\\longrightarrow$  Isolation Forest / LSTM-AE  $\\longrightarrow$  $F_1$-Score",
+        color="#ffebee",
+        ec="#c62828",
+        title="Cyber-Physical Anomaly Detection",
+    )
 
     ax.set_xlim(0, 1.0)
     ax.set_ylim(0, 1.0)
@@ -99,14 +189,40 @@ def generate_figure_01_architecture(output_dir: Path, source_data_dir: Path) -> 
     plt.close()
 
     # Source CSV
-    source_df = pd.DataFrame([
-        {"subsystem": "Data Layer", "component": "Pecan Street Telemetry", "role": "15-minute smart meter active/reactive consumption"},
-        {"subsystem": "Physical Layer", "component": "IEEE 33-Bus Feeder", "role": "AC distribution power flow simulation in OpenDSS"},
-        {"subsystem": "Network Layer", "component": "Synchronization Engine", "role": "Factorial sweep: 6 staleness levels × 4 drop rates"},
-        {"subsystem": "Virtual Layer", "component": "Digital Twin State", "role": "Hold-last-state physics solver tracking realized AoI"},
-        {"subsystem": "Analytics Layer", "component": "Short-Term Forecaster", "role": "Persistence, XGBoost, LSTM load prediction"},
-        {"subsystem": "Analytics Layer", "component": "Anomaly Detection", "role": "Raw telemetry vs physics residuals evaluated via F1"},
-    ])
+    source_df = pd.DataFrame(
+        [
+            {
+                "subsystem": "Data Layer",
+                "component": "Pecan Street Telemetry",
+                "role": "15-minute smart meter active/reactive consumption",
+            },
+            {
+                "subsystem": "Physical Layer",
+                "component": "IEEE 33-Bus Feeder",
+                "role": "AC distribution power flow simulation in OpenDSS",
+            },
+            {
+                "subsystem": "Network Layer",
+                "component": "Synchronization Engine",
+                "role": "Factorial sweep: 6 staleness levels × 4 drop rates",
+            },
+            {
+                "subsystem": "Virtual Layer",
+                "component": "Digital Twin State",
+                "role": "Hold-last-state physics solver tracking realized AoI",
+            },
+            {
+                "subsystem": "Analytics Layer",
+                "component": "Short-Term Forecaster",
+                "role": "Persistence, XGBoost, LSTM load prediction",
+            },
+            {
+                "subsystem": "Analytics Layer",
+                "component": "Anomaly Detection",
+                "role": "Raw telemetry vs physics residuals evaluated via F1",
+            },
+        ]
+    )
     src_csv = source_data_dir / "fig_01_source.csv"
     source_df.to_csv(src_csv, index=False)
 
@@ -116,7 +232,9 @@ def generate_figure_01_architecture(output_dir: Path, source_data_dir: Path) -> 
 # =============================================================================
 # Figure 02: Baseline Reconciliation
 # =============================================================================
-def generate_figure_02_baseline_reconciliation(registry: FrozenSourceRegistry, output_dir: Path, source_data_dir: Path) -> dict[str, str]:
+def generate_figure_02_baseline_reconciliation(
+    registry: FrozenSourceRegistry, output_dir: Path, source_data_dir: Path
+) -> dict[str, str]:
     """Figure 2: Historical Baseline Reconciliation (Phase 7 E4 vs Phase 11 E11)."""
     set_ieee_style()
     df = registry.load_phase11_reproducibility()
@@ -133,12 +251,35 @@ def generate_figure_02_baseline_reconciliation(registry: FrozenSourceRegistry, o
     x = np.arange(len(df))
     w = 0.35
 
-    ax.bar(x - w / 2, df["expected"], width=w, label="Phase 7 Target (E4)", color="#2b5c8f", edgecolor="black", linewidth=0.8)
-    ax.bar(x + w / 2, df["actual"], width=w, label="Phase 11 Reconciled (E11)", color="#46a049", edgecolor="black", linewidth=0.8)
+    ax.bar(
+        x - w / 2,
+        df["expected"],
+        width=w,
+        label="Phase 7 Target (E4)",
+        color="#2b5c8f",
+        edgecolor="black",
+        linewidth=0.8,
+    )
+    ax.bar(
+        x + w / 2,
+        df["actual"],
+        width=w,
+        label="Phase 11 Reconciled (E11)",
+        color="#46a049",
+        edgecolor="black",
+        linewidth=0.8,
+    )
 
     for i, r in df.iterrows():
-        diff_val = float(r["abs_diff"])
-        ax.text(i, max(r["expected"], r["actual"]) + 0.04, f"$\\Delta < 10^{{-6}}$", ha="center", fontsize=7.5, color="#333333")
+        float(r["abs_diff"])
+        ax.text(
+            i,
+            max(r["expected"], r["actual"]) + 0.04,
+            "$\\Delta < 10^{-6}$",
+            ha="center",
+            fontsize=7.5,
+            color="#333333",
+        )
 
     ax.set_xticks(x)
     ax.set_xticklabels(df["display_model"], rotation=12, ha="right")
@@ -156,14 +297,18 @@ def generate_figure_02_baseline_reconciliation(registry: FrozenSourceRegistry, o
     plt.close()
 
     src_csv = source_data_dir / "fig_02_source.csv"
-    df[["model", "display_model", "expected", "actual", "abs_diff", "classification"]].to_csv(src_csv, index=False)
+    df[["model", "display_model", "expected", "actual", "abs_diff", "classification"]].to_csv(
+        src_csv, index=False
+    )
     return {"png": str(png_path), "pdf": str(pdf_path), "csv": str(src_csv)}
 
 
 # =============================================================================
 # Figure 03: Anomaly Detection vs Staleness
 # =============================================================================
-def generate_figure_03_anomaly_staleness(registry: FrozenSourceRegistry, output_dir: Path, source_data_dir: Path) -> dict[str, str]:
+def generate_figure_03_anomaly_staleness(
+    registry: FrozenSourceRegistry, output_dir: Path, source_data_dir: Path
+) -> dict[str, str]:
     """Figure 3: Anomaly Detection F1-Score Degradation Across Latency and Packet Drop."""
     set_ieee_style()
     comp_df = registry.load_phase8_e5_comparison()
@@ -174,7 +319,7 @@ def generate_figure_03_anomaly_staleness(registry: FrozenSourceRegistry, output_
 
     # Left: LSTM Autoencoder
     ax_lstm = axes[0]
-    for pd_val, color in zip(pdrops, pdrop_colors):
+    for pd_val, color in zip(pdrops, pdrop_colors, strict=False):
         sub_res = comp_df[
             (comp_df["task"] == "anomaly_detection")
             & (comp_df["detector"] == "lstm_autoencoder")
@@ -192,9 +337,22 @@ def generate_figure_03_anomaly_staleness(registry: FrozenSourceRegistry, output_
         ].sort_values("staleness_seconds")
 
         if not sub_res.empty:
-            ax_lstm.plot(sub_res["staleness_seconds"], sub_res["value"], marker="o", color=color, label=f"Res ($P_{{drop}}={int(pd_val*100)}\\%$)")
+            ax_lstm.plot(
+                sub_res["staleness_seconds"],
+                sub_res["value"],
+                marker="o",
+                color=color,
+                label=f"Res ($P_{{drop}}={int(pd_val * 100)}\\%$)",
+            )
         if not sub_raw.empty and pd_val == 0.0:
-            ax_lstm.plot(sub_raw["staleness_seconds"], sub_raw["value"], linestyle="--", marker="s", color="#555555", label="Raw ($P_{{drop}}=0\\%$)")
+            ax_lstm.plot(
+                sub_raw["staleness_seconds"],
+                sub_raw["value"],
+                linestyle="--",
+                marker="s",
+                color="#555555",
+                label="Raw ($P_{{drop}}=0\\%$)",
+            )
 
     ax_lstm.axvspan(3.5, 7.5, color="#ffecb3", alpha=0.5, label="Transition Region")
     ax_lstm.set_xscale("symlog", linthresh=1)
@@ -207,7 +365,7 @@ def generate_figure_03_anomaly_staleness(registry: FrozenSourceRegistry, output_
 
     # Right: Isolation Forest
     ax_if = axes[1]
-    for pd_val, color in zip(pdrops, pdrop_colors):
+    for pd_val, color in zip(pdrops, pdrop_colors, strict=False):
         sub_res = comp_df[
             (comp_df["task"] == "anomaly_detection")
             & (comp_df["detector"] == "isolation_forest")
@@ -225,9 +383,22 @@ def generate_figure_03_anomaly_staleness(registry: FrozenSourceRegistry, output_
         ].sort_values("staleness_seconds")
 
         if not sub_res.empty:
-            ax_if.plot(sub_res["staleness_seconds"], sub_res["value"], marker="^", color=color, label=f"Res ($P_{{drop}}={int(pd_val*100)}\\%$)")
+            ax_if.plot(
+                sub_res["staleness_seconds"],
+                sub_res["value"],
+                marker="^",
+                color=color,
+                label=f"Res ($P_{{drop}}={int(pd_val * 100)}\\%$)",
+            )
         if not sub_raw.empty and pd_val == 0.0:
-            ax_if.plot(sub_raw["staleness_seconds"], sub_raw["value"], linestyle="--", marker="d", color="#555555", label="Raw ($P_{{drop}}=0\\%$)")
+            ax_if.plot(
+                sub_raw["staleness_seconds"],
+                sub_raw["value"],
+                linestyle="--",
+                marker="d",
+                color="#555555",
+                label="Raw ($P_{{drop}}=0\\%$)",
+            )
 
     ax_if.set_xscale("symlog", linthresh=1)
     ax_if.set_xlabel("Synchronization Staleness $\\Delta t$ (s)")
@@ -243,9 +414,16 @@ def generate_figure_03_anomaly_staleness(registry: FrozenSourceRegistry, output_
     plt.close()
 
     # Source data CSV
-    ad_source = comp_df[
-        (comp_df["task"] == "anomaly_detection") & (comp_df["metric"] == "f1")
-    ][["condition_id", "staleness_seconds", "packet_drop_rate", "detector", "representation", "value"]].copy()
+    ad_source = comp_df[(comp_df["task"] == "anomaly_detection") & (comp_df["metric"] == "f1")][
+        [
+            "condition_id",
+            "staleness_seconds",
+            "packet_drop_rate",
+            "detector",
+            "representation",
+            "value",
+        ]
+    ].copy()
     src_csv = source_data_dir / "fig_03_source.csv"
     ad_source.to_csv(src_csv, index=False)
 
@@ -255,7 +433,9 @@ def generate_figure_03_anomaly_staleness(registry: FrozenSourceRegistry, output_
 # =============================================================================
 # Figure 04: Load Estimation vs Staleness
 # =============================================================================
-def generate_figure_04_load_estimation(registry: FrozenSourceRegistry, output_dir: Path, source_data_dir: Path) -> dict[str, str]:
+def generate_figure_04_load_estimation(
+    registry: FrozenSourceRegistry, output_dir: Path, source_data_dir: Path
+) -> dict[str, str]:
     """Figure 4: Short-Term Load Forecasting MAPE Scaling with Staleness."""
     set_ieee_style()
     comp_df = registry.load_phase8_e5_comparison()
@@ -283,26 +463,43 @@ def generate_figure_04_load_estimation(registry: FrozenSourceRegistry, output_di
             & (comp_df["model"] == mod)
             & (comp_df["metric"] == "mape")
         ]
-        grp = sub_all.groupby("staleness_seconds")["value"].agg(["min", "max", "mean"]).reset_index()
+        grp = (
+            sub_all.groupby("staleness_seconds")["value"].agg(["min", "max", "mean"]).reset_index()
+        )
 
         if not sub_p0.empty:
-            ax.plot(sub_p0["staleness_seconds"], sub_p0["value"], color=col, marker=mkr, linestyle=ls, label=label)
+            ax.plot(
+                sub_p0["staleness_seconds"],
+                sub_p0["value"],
+                color=col,
+                marker=mkr,
+                linestyle=ls,
+                label=label,
+            )
             ax.fill_between(grp["staleness_seconds"], grp["min"], grp["max"], color=col, alpha=0.15)
             for _, r in grp.iterrows():
-                src_rows.append({
-                    "model": mod,
-                    "staleness_seconds": r["staleness_seconds"],
-                    "mape_mean": r["mean"],
-                    "mape_min": r["min"],
-                    "mape_max": r["max"],
-                })
+                src_rows.append(
+                    {
+                        "model": mod,
+                        "staleness_seconds": r["staleness_seconds"],
+                        "mape_mean": r["mean"],
+                        "mape_min": r["min"],
+                        "mape_max": r["max"],
+                    }
+                )
 
     ax.set_xscale("symlog", linthresh=1)
     ax.set_xlabel("Synchronization Staleness $\\Delta t$ (s)")
     ax.set_ylabel("Forecasting Error (MAPE \\%)")
     ax.set_title("Short-Term Load Estimation Degradation vs. Staleness")
-    ax.text(0.04, 0.92, "Lower Error = Better Estimation", transform=ax.transAxes, fontsize=8,
-            bbox=dict(boxstyle="round,pad=0.2", facecolor="#ffffff", edgecolor="#888888", alpha=0.9))
+    ax.text(
+        0.04,
+        0.92,
+        "Lower Error = Better Estimation",
+        transform=ax.transAxes,
+        fontsize=8,
+        bbox=dict(boxstyle="round,pad=0.2", facecolor="#ffffff", edgecolor="#888888", alpha=0.9),
+    )
     ax.legend(loc="lower right", frameon=True)
     ax.grid(True)
 
@@ -323,7 +520,9 @@ def generate_figure_04_load_estimation(registry: FrozenSourceRegistry, output_di
 # =============================================================================
 # Figure 05: Raw vs Residual Representation Transition
 # =============================================================================
-def generate_figure_05_representation_transition(registry: FrozenSourceRegistry, output_dir: Path, source_data_dir: Path) -> dict[str, str]:
+def generate_figure_05_representation_transition(
+    registry: FrozenSourceRegistry, output_dir: Path, source_data_dir: Path
+) -> dict[str, str]:
     """Figure 5: Inversion of Physics Residual Advantage under Stale Synchronization."""
     set_ieee_style()
     comp_df = registry.load_phase8_e5_comparison()
@@ -345,14 +544,35 @@ def generate_figure_05_representation_transition(registry: FrozenSourceRegistry,
     ].sort_values("staleness_seconds")
 
     fig, ax = plt.subplots(figsize=(5.4, 3.4))
-    ax.plot(sub_res["staleness_seconds"], sub_res["value"], marker="o", color="#d95f02", lw=1.8, label="Residual LSTM-AE")
-    ax.plot(sub_raw["staleness_seconds"], sub_raw["value"], marker="s", linestyle="--", color="#1f78b4", lw=1.8, label="Raw Telemetry LSTM-AE")
+    ax.plot(
+        sub_res["staleness_seconds"],
+        sub_res["value"],
+        marker="o",
+        color="#d95f02",
+        lw=1.8,
+        label="Residual LSTM-AE",
+    )
+    ax.plot(
+        sub_raw["staleness_seconds"],
+        sub_raw["value"],
+        marker="s",
+        linestyle="--",
+        color="#1f78b4",
+        lw=1.8,
+        label="Raw Telemetry LSTM-AE",
+    )
 
     # Transition Band
     ax.axvspan(3.5, 7.5, color="#ffeb3b", alpha=0.35, label="Empirical transition region")
-    ax.annotate("Representation\nInversion", xy=(5.0, 0.32), xytext=(12.0, 0.65),
-                arrowprops=dict(facecolor="black", shrink=0.08, width=1, headwidth=5),
-                fontsize=8, fontweight="bold", ha="left")
+    ax.annotate(
+        "Representation\nInversion",
+        xy=(5.0, 0.32),
+        xytext=(12.0, 0.65),
+        arrowprops=dict(facecolor="black", shrink=0.08, width=1, headwidth=5),
+        fontsize=8,
+        fontweight="bold",
+        ha="left",
+    )
 
     ax.set_xscale("symlog", linthresh=1)
     ax.set_xlabel("Synchronization Staleness $\\Delta t$ (s)")
@@ -373,7 +593,7 @@ def generate_figure_05_representation_transition(registry: FrozenSourceRegistry,
     m_df = pd.merge(
         sub_res[["staleness_seconds", "value"]].rename(columns={"value": "residual_f1"}),
         sub_raw[["staleness_seconds", "value"]].rename(columns={"value": "raw_f1"}),
-        on="staleness_seconds"
+        on="staleness_seconds",
     )
     m_df["advantage_residual_minus_raw"] = m_df["residual_f1"] - m_df["raw_f1"]
     src_csv = source_data_dir / "fig_05_source.csv"
@@ -385,7 +605,9 @@ def generate_figure_05_representation_transition(registry: FrozenSourceRegistry,
 # =============================================================================
 # Figure 06: Multi-Seed Uncertainty
 # =============================================================================
-def generate_figure_06_multiseed_uncertainty(registry: FrozenSourceRegistry, output_dir: Path, source_data_dir: Path) -> dict[str, str]:
+def generate_figure_06_multiseed_uncertainty(
+    registry: FrozenSourceRegistry, output_dir: Path, source_data_dir: Path
+) -> dict[str, str]:
     """Figure 6: Multi-Seed Uncertainty Trajectories Across 5 Independent Random Seeds."""
     set_ieee_style()
     seeds_df = registry.load_phase10_e10_seed_results()
@@ -403,9 +625,17 @@ def generate_figure_06_multiseed_uncertainty(registry: FrozenSourceRegistry, out
     seeds = sorted(sub["seed"].unique())
 
     seed_colors = ["#8dd3c7", "#ffffb3", "#bebada", "#fb8072", "#80b1d3"]
-    for s, c in zip(seeds, seed_colors):
+    for s, _c in zip(seeds, seed_colors, strict=False):
         s_data = sub[sub["seed"] == s].sort_values("staleness_seconds")
-        ax.plot(s_data["staleness_seconds"], s_data["value"], color="#777777", lw=0.9, alpha=0.7, linestyle="--", label=f"Seed {s}")
+        ax.plot(
+            s_data["staleness_seconds"],
+            s_data["value"],
+            color="#777777",
+            lw=0.9,
+            alpha=0.7,
+            linestyle="--",
+            label=f"Seed {s}",
+        )
 
     # Aggregate mean and 95% CI
     agg = sub.groupby("staleness_seconds")["value"].agg(["mean", "std", "count"]).reset_index()
@@ -413,7 +643,14 @@ def generate_figure_06_multiseed_uncertainty(registry: FrozenSourceRegistry, out
     agg["ci"] = agg["ci"].fillna(0.0)
 
     ax.plot(agg["staleness_seconds"], agg["mean"], color="#d95f02", lw=2.2, label="Multi-Seed Mean")
-    ax.fill_between(agg["staleness_seconds"], agg["mean"] - agg["ci"], agg["mean"] + agg["ci"], color="#d95f02", alpha=0.25, label="95% Confidence Band")
+    ax.fill_between(
+        agg["staleness_seconds"],
+        agg["mean"] - agg["ci"],
+        agg["mean"] + agg["ci"],
+        color="#d95f02",
+        alpha=0.25,
+        label="95% Confidence Band",
+    )
 
     ax.set_xscale("symlog", linthresh=1)
     ax.set_xlabel("Synchronization Staleness $\\Delta t$ (s)")
@@ -439,7 +676,9 @@ def generate_figure_06_multiseed_uncertainty(registry: FrozenSourceRegistry, out
 # =============================================================================
 # Figure 07: AoI -> Residual Transient
 # =============================================================================
-def generate_figure_07_aoi_transient(registry: FrozenSourceRegistry, output_dir: Path, source_data_dir: Path) -> dict[str, str]:
+def generate_figure_07_aoi_transient(
+    registry: FrozenSourceRegistry, output_dir: Path, source_data_dir: Path
+) -> dict[str, str]:
     """Figure 7: Intra-Epoch Residual Drift Norm Expansion vs. Realized AoI."""
     set_ieee_style()
     trans_df = registry.load_phase11_transient_stats()
@@ -448,7 +687,14 @@ def generate_figure_07_aoi_transient(registry: FrozenSourceRegistry, output_dir:
     x_idx = np.arange(len(trans_df))
 
     color1 = "#d95f02"
-    ax1.plot(x_idx, trans_df["mean_residual_norm"], color=color1, marker="o", lw=1.8, label="Mean Residual Norm $\\|r_t\\|_2$")
+    ax1.plot(
+        x_idx,
+        trans_df["mean_residual_norm"],
+        color=color1,
+        marker="o",
+        lw=1.8,
+        label="Mean Residual Norm $\\|r_t\\|_2$",
+    )
     ax1.set_xlabel("Realized Age of Information (AoI) Interval")
     ax1.set_ylabel("Physics Residual Drift $\\|r_t\\|_2$ (pu)", color=color1)
     ax1.tick_params(axis="y", labelcolor=color1)
@@ -458,14 +704,29 @@ def generate_figure_07_aoi_transient(registry: FrozenSourceRegistry, output_dir:
     # Secondary axis: Anomaly Detection F1 in bin
     ax2 = ax1.twinx()
     color2 = "#2b5c8f"
-    ax2.plot(x_idx, trans_df["bin_f1_score"], color=color2, marker="s", linestyle="--", lw=1.6, label="Bin $F_1$-Score")
+    ax2.plot(
+        x_idx,
+        trans_df["bin_f1_score"],
+        color=color2,
+        marker="s",
+        linestyle="--",
+        lw=1.6,
+        label="Bin $F_1$-Score",
+    )
     ax2.set_ylabel("In-Bin Anomaly $F_1$-Score", color=color2)
     ax2.tick_params(axis="y", labelcolor=color2)
     ax2.set_ylim(-0.02, 0.75)
 
     # Transition line at AoI ~ 5s (bin 1 to 2)
     ax1.axvline(x=1.2, color="#e65100", linestyle=":", lw=1.5)
-    ax1.text(1.25, 0.28, "Estimated empirical\ntransition region\n($\\text{AoI}^* \\approx 5.0\\,$s)", fontsize=7.5, color="#e65100", bbox=dict(boxstyle="round,pad=0.2", facecolor="#ffffff", alpha=0.8))
+    ax1.text(
+        1.25,
+        0.28,
+        "Estimated empirical\ntransition region\n($\\text{AoI}^* \\approx 5.0\\,$s)",
+        fontsize=7.5,
+        color="#e65100",
+        bbox=dict(boxstyle="round,pad=0.2", facecolor="#ffffff", alpha=0.8),
+    )
 
     ax1.set_title("Intra-Epoch Residual Drift and Anomaly Detection vs. AoI")
     ax1.grid(True)
@@ -486,7 +747,9 @@ def generate_figure_07_aoi_transient(registry: FrozenSourceRegistry, output_dir:
 # =============================================================================
 # Figure 08: H3 Multi-Seed Forest Plot
 # =============================================================================
-def generate_figure_08_h3_forest(registry: FrozenSourceRegistry, output_dir: Path, source_data_dir: Path) -> dict[str, str]:
+def generate_figure_08_h3_forest(
+    registry: FrozenSourceRegistry, output_dir: Path, source_data_dir: Path
+) -> dict[str, str]:
     """Figure 8: Forest Plot of Degradation Contrast Δβ Across Seeds Supporting H3 Refutation."""
     set_ieee_style()
     h3_df = registry.load_phase10_e10_h3_summary()
@@ -506,20 +769,53 @@ def generate_figure_08_h3_forest(registry: FrozenSourceRegistry, output_dir: Pat
         ms = 7 if is_multi else 5
         lw = 2.2 if is_multi else 1.4
 
-        ax.errorbar(d_b, idx, xerr=[[d_b - ci_l], [ci_u - d_b]], fmt=marker, color=color,
-                    markersize=ms, elinewidth=lw, capsize=4, capthick=lw)
+        ax.errorbar(
+            d_b,
+            idx,
+            xerr=[[d_b - ci_l], [ci_u - d_b]],
+            fmt=marker,
+            color=color,
+            markersize=ms,
+            elinewidth=lw,
+            capsize=4,
+            capthick=lw,
+        )
 
-    ax.axvline(0.0, color="black", linestyle="--", lw=1.2, label="Null Effect Line ($\\Delta\\beta = 0$)")
+    ax.axvline(
+        0.0, color="black", linestyle="--", lw=1.2, label="Null Effect Line ($\\Delta\\beta = 0$)"
+    )
 
     # Annotations
-    ax.text(-0.05, len(h3_df) - 0.5, "Observed direction:\n$\\Delta\\beta < 0$ (5/5 Seeds)", ha="right", va="center", fontsize=7.5, color="#b2182b", fontweight="bold")
-    ax.text(0.05, len(h3_df) - 0.5, "Pre-specified $H_3$:\n$\\Delta\\beta > 0$ (Not Supported)", ha="left", va="center", fontsize=7.5, color="#555555")
+    ax.text(
+        -0.05,
+        len(h3_df) - 0.5,
+        "Observed direction:\n$\\Delta\\beta < 0$ (5/5 Seeds)",
+        ha="right",
+        va="center",
+        fontsize=7.5,
+        color="#b2182b",
+        fontweight="bold",
+    )
+    ax.text(
+        0.05,
+        len(h3_df) - 0.5,
+        "Pre-specified $H_3$:\n$\\Delta\\beta > 0$ (Not Supported)",
+        ha="left",
+        va="center",
+        fontsize=7.5,
+        color="#555555",
+    )
 
-    y_labels = [f"Seed {r['seed']}" if r["seed"] != "Multi-seed" else "Multi-Seed Aggregate" for _, r in h3_df.iterrows()]
+    y_labels = [
+        f"Seed {r['seed']}" if r["seed"] != "Multi-seed" else "Multi-Seed Aggregate"
+        for _, r in h3_df.iterrows()
+    ]
     ax.set_yticks(y_pos)
     ax.set_yticklabels(y_labels)
     ax.invert_yaxis()  # top to bottom
-    ax.set_xlabel("Degradation Contrast $\\Delta\\beta = \\beta_{\\text{AD}} - \\beta_{\\text{LE}}$ (Log-Linear Normalized)")
+    ax.set_xlabel(
+        "Degradation Contrast $\\Delta\\beta = \\beta_{\\text{AD}} - \\beta_{\\text{LE}}$ (Log-Linear Normalized)"
+    )
     ax.set_title("Formal Hypothesis Test $H_3$: Degradation Contrast Across Seeds")
     ax.grid(True, axis="x")
     ax.legend(loc="lower left", frameon=True, fontsize=7.8)
@@ -532,12 +828,25 @@ def generate_figure_08_h3_forest(registry: FrozenSourceRegistry, output_dir: Pat
     plt.close()
 
     src_csv = source_data_dir / "fig_08_source.csv"
-    h3_df[["seed", "beta_ad", "beta_le", "delta_beta", "ci_lower", "ci_upper", "p_value_slope", "decision"]].to_csv(src_csv, index=False)
+    h3_df[
+        [
+            "seed",
+            "beta_ad",
+            "beta_le",
+            "delta_beta",
+            "ci_lower",
+            "ci_upper",
+            "p_value_slope",
+            "decision",
+        ]
+    ].to_csv(src_csv, index=False)
 
     return {"png": str(png_path), "pdf": str(pdf_path), "csv": str(src_csv)}
 
 
-def build_all_figures(registry: FrozenSourceRegistry, output_dir: Path) -> dict[str, dict[str, str]]:
+def build_all_figures(
+    registry: FrozenSourceRegistry, output_dir: Path
+) -> dict[str, dict[str, str]]:
     """Build all 8 publication figures in PNG (300 DPI) and vector PDF with source CSVs."""
     fig_dir = output_dir / "figures"
     fig_dir.mkdir(parents=True, exist_ok=True)

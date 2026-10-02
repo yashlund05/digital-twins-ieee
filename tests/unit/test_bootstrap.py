@@ -3,7 +3,6 @@ tests/unit/test_bootstrap.py — Unit tests for deterministic bootstrap resampli
 """
 
 import numpy as np
-import pytest
 
 from src.statistics.bootstrap import (
     bootstrap_ci,

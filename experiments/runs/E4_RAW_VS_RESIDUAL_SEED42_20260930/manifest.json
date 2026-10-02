@@ -1,0 +1,67 @@
+{
+  "experiment_id": "E4",
+  "run_id": "E4_RAW_VS_RESIDUAL_SEED42_20260930",
+  "timestamp": "2026-09-30T15:42:33.107428",
+  "status": "COMPLETED",
+  "reproducibility": {
+    "git_commit": "a92b4cababc072fc17e8e47e8f7fa7665e8fe4ca",
+    "git_branch": "main",
+    "git_clean": false,
+    "configuration_file": "configs/anomaly_detection.yaml",
+    "configuration_version": "1.0.0",
+    "dataset_version": "v1.0",
+    "random_seed": 42
+  },
+  "model": {
+    "type": "isolation_forest_and_lstm_autoencoder",
+    "version": "1.0.0"
+  },
+  "synchronization": {
+    "interval_seconds": 0,
+    "missed_update_policy": "hold_last_state"
+  },
+  "experiment_design": {
+    "input_representation": "raw_vs_residual_factorial",
+    "model_type": "isolation_forest_and_lstm_autoencoder"
+  },
+  "environment": {
+    "timestamp": "2026-09-30T15:42:33.347536",
+    "python_version": "3.14.6",
+    "os": "Windows 11",
+    "architecture": "AMD64",
+    "packages": {
+      "numpy": "2.4.6",
+      "pandas": "2.3.3",
+      "scipy": "1.18.0",
+      "scikit-learn": "1.9.0",
+      "xgboost": "3.4.1",
+      "opendssdirect.py": "0.9.4",
+      "pydantic": "2.13.4",
+      "pyyaml": "6.0.3",
+      "matplotlib": "3.11.0",
+      "click": "8.4.2",
+      "pytest": "9.1.1",
+      "torch": "2.13.0"
+    }
+  },
+  "e4_metadata": {
+    "conditions": [
+      "E4-1",
+      "E4-2",
+      "E4-3",
+      "E4-4"
+    ],
+    "normalization_method": "z_score",
+    "feature_config": {
+      "include_raw": true,
+      "include_absolute": false,
+      "include_squared": false,
+      "include_l2_norm": false,
+      "include_mean_absolute": false,
+      "include_max_absolute": false,
+      "lags": []
+    },
+    "ideal_sync": true,
+    "staleness_interval_seconds": 0
+  }
+}

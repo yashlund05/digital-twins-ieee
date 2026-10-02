@@ -1,0 +1,16 @@
+{
+  "phase": "Phase 10 E10 Multi-Seed Uncertainty Analysis",
+  "run_dir": "experiments\\runs\\E10_MULTI_SEED_ANALYSIS_20261002",
+  "status": "PASS",
+  "total_seed_conditions": 120,
+  "seeds_evaluated": [
+    42,
+    123,
+    456,
+    789,
+    101112
+  ],
+  "multiseed_decision": "NOT_SUPPORTED",
+  "all_seeds_not_supported": true,
+  "pairwise_tests_count": 9
+}

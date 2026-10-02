@@ -1,8 +1,9 @@
 """tests/unit/test_ablations.py — Unit tests for controlled ablations engine."""
 
 from pathlib import Path
-import pytest
+
 import pandas as pd
+import pytest
 
 from src.experiments.ablations import run_controlled_ablations
 

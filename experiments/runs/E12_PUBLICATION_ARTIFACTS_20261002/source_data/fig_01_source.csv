@@ -1,0 +1,7 @@
+subsystem,component,role
+Data Layer,Pecan Street Telemetry,15-minute smart meter active/reactive consumption
+Physical Layer,IEEE 33-Bus Feeder,AC distribution power flow simulation in OpenDSS
+Network Layer,Synchronization Engine,Factorial sweep: 6 staleness levels × 4 drop rates
+Virtual Layer,Digital Twin State,Hold-last-state physics solver tracking realized AoI
+Analytics Layer,Short-Term Forecaster,"Persistence, XGBoost, LSTM load prediction"
+Analytics Layer,Anomaly Detection,Raw telemetry vs physics residuals evaluated via F1

@@ -1,8 +1,5 @@
 """tests/unit/test_reproducibility_manifest.py — Unit tests for reproducibility manifest generation."""
 
-from pathlib import Path
-import pytest
-
 from src.reproducibility.run_manifest import create_reproducibility_manifest
 from src.utils.io import load_json
 

@@ -1,7 +1,6 @@
 """tests/publication/test_aoi_change_point_consistency.py — Tests for Objective C AoI Investigation."""
 
 from pathlib import Path
-import pytest
 
 from src.audit.aoi_investigator import C13AoIInvestigator
 

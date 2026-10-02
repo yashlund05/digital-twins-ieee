@@ -1,0 +1,10 @@
+{
+  "phase": "Phase 9 E6 Joint Analysis & H3 Testing",
+  "run_dir": "experiments\\runs\\E6_JOINT_ANALYSIS_SEED42_20261002",
+  "status": "PASS",
+  "h3_comparisons_count": 9,
+  "primary_delta_beta": -1.1147733792814485,
+  "primary_decision": "NOT_SUPPORTED",
+  "bootstrap_rows": 44,
+  "regression_rows": 44
+}

@@ -1,8 +1,5 @@
 """tests/unit/test_publication_sources.py — Unit tests for Phase 12 frozen source loader and registry."""
 
-from pathlib import Path
-import pytest
-
 from src.publication.sources import FrozenSourceRegistry, load_phase12_sources_config
 from src.publication.validation import validate_publication_sources
 

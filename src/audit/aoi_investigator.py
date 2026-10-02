@@ -7,10 +7,10 @@ Determines whether Case A, Case B, or Case C applies per Phase 14 specifications
 
 from pathlib import Path
 from typing import Any
+
 import pandas as pd
 
 from src.reproducibility.hashing import hash_file
-from src.utils.io import save_json
 from src.utils.logging import get_logger
 
 logger = get_logger("audit.aoi_investigator")
@@ -47,7 +47,9 @@ class C13AoIInvestigator:
             df_t4 = pd.read_csv(t4_path)
             if not df_t4.empty:
                 row = df_t4.iloc[0]
-                findings["canonical_stored_value"] = float(row.get("estimated_transition_aoi_seconds", -1.0))
+                findings["canonical_stored_value"] = float(
+                    row.get("estimated_transition_aoi_seconds", -1.0)
+                )
                 findings["canonical_ci"] = [
                     float(row.get("ci_lower_seconds", -1.0)),
                     float(row.get("ci_upper_seconds", -1.0)),
@@ -62,9 +64,15 @@ class C13AoIInvestigator:
             df_t3 = pd.read_csv(t3_path)
             findings["binned_transient_evidence"] = {
                 "bins": df_t3["aoi_bin"].tolist() if "aoi_bin" in df_t3.columns else [],
-                "observations": df_t3["observations"].tolist() if "observations" in df_t3.columns else [],
-                "f1_scores": df_t3["bin_f1_score"].tolist() if "bin_f1_score" in df_t3.columns else [],
-                "mean_residuals": df_t3["mean_residual_norm"].tolist() if "mean_residual_norm" in df_t3.columns else [],
+                "observations": df_t3["observations"].tolist()
+                if "observations" in df_t3.columns
+                else [],
+                "f1_scores": df_t3["bin_f1_score"].tolist()
+                if "bin_f1_score" in df_t3.columns
+                else [],
+                "mean_residuals": df_t3["mean_residual_norm"].tolist()
+                if "mean_residual_norm" in df_t3.columns
+                else [],
             }
 
         # 3. Inspect summary.md in E11
@@ -72,7 +80,9 @@ class C13AoIInvestigator:
         if summary_path.is_file():
             summary_text = summary_path.read_text(encoding="utf-8")
             findings["macro_cliff_evidence"]["summary_mentions_5s"] = "5.0" in summary_text
-            findings["macro_cliff_evidence"]["summary_mentions_ci"] = "[3.5" in summary_text and "7.5" in summary_text
+            findings["macro_cliff_evidence"]["summary_mentions_ci"] = (
+                "[3.5" in summary_text and "7.5" in summary_text
+            )
 
         # 4. Formulate Case Verdict
         # Case A: E11 artifact actually contains 5.0 s (False)
@@ -111,10 +121,10 @@ class C13AoIInvestigator:
         md = f"""# C13 Age-of-Information (AoI) Change Point Discrepancy Investigation
 
 ## Executive Summary & Case Verdict
-- **Verdict**: **{findings['case_verdict']}**
-- **Canonical Stored Value (table_04)**: `{findings['canonical_stored_value']} s` (CI: `{findings['canonical_ci']}`)
-- **Detection Method**: `{findings['canonical_method']}`
-- **Status**: `{findings['canonical_status']}`
+- **Verdict**: **{findings["case_verdict"]}**
+- **Canonical Stored Value (table_04)**: `{findings["canonical_stored_value"]} s` (CI: `{findings["canonical_ci"]}`)
+- **Detection Method**: `{findings["canonical_method"]}`
+- **Status**: `{findings["canonical_status"]}`
 - **Resolution**: Both micro-divergence and macro-cliff observations are preserved with explicit methodological demarcation.
 
 ---
@@ -139,7 +149,7 @@ target,estimated_transition_aoi_seconds,ci_lower_seconds,ci_upper_seconds,method
 residual_inflation_transition,0.0,0.0,2.5,residual_divergence_ratio_threshold,DETECTED,Residual drift exceeds baseline noise floor at AoI ~ 0.0 s
 ```
 - **Source File**: `experiments/runs/E11_PHASE11_20261002/table_04_change_point_analysis.csv`
-- **SHA-256 Hash**: `{findings.get('canonical_artifact_hash', 'N/A')}`
+- **SHA-256 Hash**: `{findings.get("canonical_artifact_hash", "N/A")}`
 - **Algorithmic Logic** (`src/experiments/missed_update_transient.py` lines 148–155):
   The algorithm sorts instantaneous timesteps by `realized_aoi` ascending. Because natural load fluctuations and anomalies produce individual timesteps where `residual_norm > 2.0 * fresh_norm` even at `realized_aoi = 0.0 s`, the instantaneous departure threshold triggers at the first stale timestep: `0.0 s`.
 

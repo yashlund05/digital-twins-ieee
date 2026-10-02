@@ -1,6 +1,7 @@
 """tests/integration/test_phase11_reproducibility.py — Integration test for historical benchmark verification."""
 
 from pathlib import Path
+
 import pytest
 
 from src.reproducibility.verifier import verify_historical_benchmarks

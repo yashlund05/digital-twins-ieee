@@ -12,10 +12,9 @@ Orchestrates the complete Phase 13 workflow:
 9. Outputs to experiments/runs/E13_MANUSCRIPT_SUBMISSION_20261002/
 """
 
-from datetime import datetime
 import shutil
+from datetime import datetime
 from pathlib import Path
-from typing import Any
 
 from src.publication.claim_audit import audit_manuscript_claims
 from src.publication.cross_phase_audit import CrossPhaseConsistencyAudit
@@ -30,7 +29,7 @@ from src.publication.manuscript_generator import (
 from src.publication.numerical_audit import NumericalConsistencyAudit
 from src.publication.source_registry import Phase13SourceRegistry
 from src.publication.sources import FrozenSourceRegistry
-from src.reproducibility.hashing import hash_directory, hash_file
+from src.reproducibility.hashing import hash_directory
 from src.utils.io import ensure_dir, save_json
 from src.utils.logging import get_logger
 
@@ -72,7 +71,11 @@ def run_phase13_submission_pipeline(
     out_root = (
         Path(output_dir_override)
         if output_dir_override
-        else Path(source_reg.config.get("output", {}).get("root", "experiments/runs/E13_MANUSCRIPT_SUBMISSION_20261002"))
+        else Path(
+            source_reg.config.get("output", {}).get(
+                "root", "experiments/runs/E13_MANUSCRIPT_SUBMISSION_20261002"
+            )
+        )
     )
 
     # 2. Verify all canonical claims
@@ -145,7 +148,9 @@ def run_phase13_submission_pipeline(
 
         logger.info("Phase 12 assets copied and sanitized successfully.")
     else:
-        logger.warning("Phase 12 directory not found at %s. Figures and tables not copied.", phase12_dir)
+        logger.warning(
+            "Phase 12 directory not found at %s. Figures and tables not copied.", phase12_dir
+        )
 
     # 7. Generate manuscript
     logger.info("Step 5: Generating IEEE TSG manuscript...")
@@ -164,7 +169,9 @@ def run_phase13_submission_pipeline(
     )
 
     if strict and lang_report.total_errors > 0:
-        raise RuntimeError(f"Manuscript contains {lang_report.total_errors} prohibited language violations.")
+        raise RuntimeError(
+            f"Manuscript contains {lang_report.total_errors} prohibited language violations."
+        )
 
     # 9. Run claim-to-evidence audit on the manuscript text
     logger.info("Step 7: Auditing manuscript claims against evidence...")
@@ -176,7 +183,9 @@ def run_phase13_submission_pipeline(
     source_reg.export_registry(out_root / "audit_reports" / "canonical_claims_registry.json")
     num_audit.export_report(out_root / "audit_reports" / "numerical_audit_report.json")
     cross_audit.export_report(out_root / "audit_reports" / "cross_phase_audit_report.json")
-    export_language_audit_report(lang_report, out_root / "audit_reports" / "language_audit_report.json")
+    export_language_audit_report(
+        lang_report, out_root / "audit_reports" / "language_audit_report.json"
+    )
     save_json(claim_audit_res, out_root / "audit_reports" / "claim_audit_report.json")
     save_json(manuscript_summary, out_root / "manuscript_summary.json")
 

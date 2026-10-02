@@ -1,0 +1,17 @@
+% =============================================================================
+% Mathematical Notation & Symbols
+% =============================================================================
+
+\section*{Nomenclature and Mathematical Notation}
+\begin{description}
+    \item[$y(t) \in \mathbb{R}^d$] Physical distribution feeder telemetry state vector at continuous timestep $t$.
+    \item[$\hat{y}^{\text{DT}}(t) \in \mathbb{R}^d$] Digital Twin virtual state estimate computed via OpenDSS AC power flow.
+    \item[$r(t) = y(t) - \hat{y}^{\text{DT}}(t)$] Physics-based residual vector.
+    \item[$\Delta t \in \mathbb{R}_+$] Nominal Digital Twin telemetry synchronization latency interval (seconds).
+    \item[$P_{\text{drop}} \in [0, 1)$] Stochastic Bernoulli packet transmission drop probability.
+    \item[$\text{AoI}(t) = t - \tau(t)$] Realized Age of Information representing time elapsed since most recent telemetry arrival $\tau(t)$.
+    \item[$F_1 \in [0, 1]$] Harmonic mean of anomaly detection precision and recall on the test partition.
+    \item[$\text{MAPE} \in \mathbb{R}_+$] Mean Absolute Percentage Error of active power load estimation.
+    \item[$\beta_{\text{AD}}, \beta_{\text{LE}}$] Normalized log-linear degradation slopes for anomaly detection and load estimation.
+    \item[$\Delta\beta = \beta_{\text{AD}} - \beta_{\text{LE}}$] Degradation contrast testing research hypothesis $H_3$.
+\end{description}

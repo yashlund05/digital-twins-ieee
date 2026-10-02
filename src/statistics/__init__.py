@@ -2,6 +2,7 @@
 src/statistics — Joint statistical analysis, degradation modeling, and hypothesis testing.
 """
 
+from src.statistics.analysis_runner import run_phase9_analysis
 from src.statistics.bootstrap import (
     bootstrap_ci,
     bootstrap_difference_ci,
@@ -24,13 +25,12 @@ from src.statistics.hypothesis import (
     paired_wilcoxon_test,
     test_differential_degradation_h3,
 )
+from src.statistics.multiseed import run_multiseed_analysis
 from src.statistics.regression import (
     fit_linear_regression,
     fit_log_linear_regression,
     fit_two_way_factorial_regression,
 )
-from src.statistics.analysis_runner import run_phase9_analysis
-from src.statistics.multiseed import run_multiseed_analysis
 
 __all__ = [
     "METRIC_DIRECTION",
@@ -53,4 +53,3 @@ __all__ = [
     "run_phase9_analysis",
     "run_multiseed_analysis",
 ]
-

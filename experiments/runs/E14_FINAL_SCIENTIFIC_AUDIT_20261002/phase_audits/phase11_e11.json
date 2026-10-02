@@ -1,0 +1,11 @@
+{
+  "phase": "Phase 11 E11 Reproducibility & Transient Analysis",
+  "run_dir": "experiments\\runs\\E11_PHASE11_20261002",
+  "status": "PASS",
+  "reproducibility_max_diff": 4.030131827148509e-07,
+  "reproducibility_passed": true,
+  "unique_ablation_ids": 8,
+  "total_ablation_evaluations": 88,
+  "change_point_stored_aoi": 0.0,
+  "transient_bins_count": 7
+}

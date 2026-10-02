@@ -5,8 +5,8 @@ Classifies comparison results into distinct scientific equivalence categories pe
 """
 
 from typing import Any
+
 import numpy as np
-import pandas as pd
 
 
 def compare_arrays(
@@ -52,7 +52,9 @@ def compare_arrays(
         classification = "BITWISE_IDENTICAL"
     elif max_abs_diff <= abs_tol or max_rel_diff <= rel_tol:
         classification = "NUMERICALLY_EQUIVALENT"
-    elif np.isclose(np.mean(a), np.mean(r), atol=0.01) and np.isclose(np.std(a), np.std(r), atol=0.01):
+    elif np.isclose(np.mean(a), np.mean(r), atol=0.01) and np.isclose(
+        np.std(a), np.std(r), atol=0.01
+    ):
         classification = "STATISTICALLY_EQUIVALENT"
     else:
         classification = "DIFFERENT"

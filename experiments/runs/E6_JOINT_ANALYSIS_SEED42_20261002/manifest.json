@@ -1,0 +1,65 @@
+{
+  "experiment_id": "E6",
+  "run_id": "E6_JOINT_ANALYSIS_SEED42_20261002",
+  "timestamp": "2026-10-02T11:26:06.421873",
+  "status": "COMPLETED",
+  "reproducibility": {
+    "git_commit": "78edbfcfab06a243bfe265d159c9b56c221e97d5",
+    "git_branch": "main",
+    "git_clean": false,
+    "configuration_file": "configs/experiments/e5_staleness_sweep.yaml",
+    "configuration_version": "1.0.0",
+    "dataset_version": "v1.0",
+    "random_seed": 42
+  },
+  "model": {
+    "type": "joint_statistical_suite",
+    "version": "1.0.0"
+  },
+  "synchronization": {
+    "interval_seconds": 0,
+    "missed_update_policy": "hold_last_state"
+  },
+  "experiment_design": {
+    "input_representation": "raw_and_residual",
+    "model_type": "joint_statistical_suite"
+  },
+  "environment": {
+    "timestamp": "2026-10-02T11:26:06.593780",
+    "python_version": "3.14.6",
+    "os": "Windows 11",
+    "architecture": "AMD64",
+    "packages": {
+      "numpy": "2.4.6",
+      "pandas": "2.3.3",
+      "scipy": "1.18.0",
+      "scikit-learn": "1.9.0",
+      "xgboost": "3.4.1",
+      "opendssdirect.py": "0.9.4",
+      "pydantic": "2.13.4",
+      "pyyaml": "6.0.3",
+      "matplotlib": "3.11.0",
+      "click": "8.4.2",
+      "pytest": "9.1.1",
+      "torch": "2.13.0"
+    }
+  },
+  "input_e5_dir": "experiments\\runs\\E5_STALENESS_SWEEP_CORRECTED_SEED42_20260930",
+  "n_boot": 1000,
+  "ci_level": 0.95,
+  "h3_conclusion": "NOT_SUPPORTED",
+  "h3_delta_beta": -1.1147733792814483,
+  "output_files": [
+    "manifest.json",
+    "phase9_input_validation.json",
+    "degradation_metrics.csv",
+    "regression_results.csv",
+    "effect_sizes.csv",
+    "statistical_tests.csv",
+    "bootstrap_results.csv",
+    "descriptive_statistics.csv",
+    "H3_summary.csv",
+    "H3_summary.md",
+    "summary.md"
+  ]
+}

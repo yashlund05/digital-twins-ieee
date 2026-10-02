@@ -1,0 +1,35 @@
+{
+  "status": "PASS",
+  "total_files_scanned": 9,
+  "total_errors": 0,
+  "total_warnings": 2,
+  "files_scanned": [
+    "experiments\\runs\\E13_MANUSCRIPT_SUBMISSION_20261002\\manuscript\\figures.tex",
+    "experiments\\runs\\E13_MANUSCRIPT_SUBMISSION_20261002\\manuscript\\main.tex",
+    "experiments\\runs\\E13_MANUSCRIPT_SUBMISSION_20261002\\manuscript\\tables\\table_01_experimental_configuration.tex",
+    "experiments\\runs\\E13_MANUSCRIPT_SUBMISSION_20261002\\manuscript\\tables\\table_02_baseline_reconciliation.tex",
+    "experiments\\runs\\E13_MANUSCRIPT_SUBMISSION_20261002\\manuscript\\tables\\table_03_e5_condition_summary.tex",
+    "experiments\\runs\\E13_MANUSCRIPT_SUBMISSION_20261002\\manuscript\\tables\\table_04_multiseed_results.tex",
+    "experiments\\runs\\E13_MANUSCRIPT_SUBMISSION_20261002\\manuscript\\tables\\table_05_ablation_summary.tex",
+    "experiments\\runs\\E13_MANUSCRIPT_SUBMISSION_20261002\\manuscript\\tables\\table_06_h3_statistics.tex",
+    "experiments\\runs\\E13_MANUSCRIPT_SUBMISSION_20261002\\manuscript\\references.bib"
+  ],
+  "findings": [
+    {
+      "phrase": "failure",
+      "severity": "WARNING",
+      "line_number": 270,
+      "file": "experiments\\runs\\E13_MANUSCRIPT_SUBMISSION_20261002\\manuscript\\main.tex",
+      "context": "\\subsection{Interpretation of H3 Non-Support} ... The non-support of H3 is an empirical finding, not a failure. It indicates ... that, under the pre-specified normalized log-linear degradation model w",
+      "suggested_replacement": "Use 'failure' with qualification (e.g., 'statistically significant', 'empirically optimal')"
+    },
+    {
+      "phrase": "significant",
+      "severity": "WARNING",
+      "line_number": 16,
+      "file": "experiments\\runs\\E13_MANUSCRIPT_SUBMISSION_20261002\\manuscript\\tables\\table_05_ablation_summary.tex",
+      "context": "\\hline ... A4: Factorial Interaction & $\\Delta t$ \u00d7 $P_{\\text{drop}}$ coupling & R\u00b2 increases from 0.8841 to 0.9328 (p < 0.05) & Interaction terms are statistically significant, confirming non-linear ",
+      "suggested_replacement": "Use 'significant' with qualification (e.g., 'statistically significant', 'empirically optimal')"
+    }
+  ]
+}

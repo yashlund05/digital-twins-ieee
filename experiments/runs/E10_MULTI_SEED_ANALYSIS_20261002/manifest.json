@@ -1,0 +1,49 @@
+{
+  "experiment_id": "E10",
+  "run_id": "E10_MULTI_SEED_ANALYSIS_20261002",
+  "timestamp": "2026-10-02T12:39:22.402204",
+  "protocol_version": "1.0.0",
+  "seeds": [
+    42,
+    123,
+    456,
+    789,
+    101112
+  ],
+  "conditions_count": 5280,
+  "environment": {
+    "python_version": "3.14.6 (tags/v3.14.6:c63aec6, Jun 10 2026, 10:26:10) [MSC v.1944 64 bit (AMD64)]",
+    "os": "Windows-11-10.0.26200-SP0",
+    "architecture": "AMD64"
+  },
+  "references": {
+    "phase7_baseline": "experiments/runs/E4_RAW_VS_RESIDUAL_SEED42_20260930",
+    "phase8_reference": "experiments/runs/E5_STALENESS_SWEEP_CORRECTED_SEED42_20260930",
+    "phase9_reference": "experiments/runs/E6_JOINT_ANALYSIS_SEED42_20261002"
+  },
+  "input_artifact_hashes": {
+    "42": "43c4ef2ce7d4e78b996906a4becf9bf7fd115fa8c7e4bec199e2d0face368856",
+    "123": "528f6add9f392899a6e93f2401fc6fafcb5e18c4f35653d43709bec2a8a28d23",
+    "456": "2a48f22b9db6c43bafa3049985baf0ae82674c5320287bf574e9ae31f04be733",
+    "789": "dcfdf3da3ed509ad3f55e7bcd9ab0b65f84154bb8e3902780c6a918d3499466f",
+    "101112": "7fb4cfcd86b15838731ffc6c7ee70353aaf7f262091d6083dc397fb4254dcf6d"
+  },
+  "output_files": [
+    "manifest.json",
+    "seed_validation.json",
+    "baseline_reconciliation.json",
+    "seed_results.csv",
+    "aggregated_metrics.csv",
+    "condition_statistics.csv",
+    "uncertainty_intervals.csv",
+    "multiseed_h3_summary.csv",
+    "multiseed_hypothesis_tests.csv",
+    "multiseed_regression_results.csv",
+    "multiseed_effect_sizes.csv",
+    "sensitivity_analysis.csv",
+    "interaction_effects.csv",
+    "variance_decomposition.csv",
+    "robustness_summary.csv",
+    "summary.md"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "sources_exist": true,
+  "completeness_e5_24": true,
+  "completeness_e10_120": true,
+  "completeness_e11_88": true,
+  "baseline_reconciled": true,
+  "overall_status": "PASS",
+  "errors": [],
+  "warnings": [],
+  "counts": {
+    "e5_conditions": 24,
+    "e10_seed_conditions": 120,
+    "e11_ablation_rows": 88,
+    "max_baseline_repro_diff": 4.030131827148509e-07
+  }
+}

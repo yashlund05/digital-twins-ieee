@@ -4,7 +4,6 @@ Provides scientific and publication-standard number formatting, confidence inter
 p-values, and LaTeX math representations without modifying or recomputing raw numerical values.
 """
 
-from typing import Any
 import numpy as np
 
 
@@ -43,7 +42,7 @@ def format_scientific(val: float, precision: int = 2) -> str:
     if abs(val) < 1e-12:
         return "0.0"
     exp = int(np.floor(np.log10(abs(val))))
-    coeff = val / (10 ** exp)
+    coeff = val / (10**exp)
     return f"{coeff:.{precision}f} \\times 10^{{{exp}}}"
 
 

@@ -4,14 +4,13 @@ Captures system specifications, Python runtime, pip dependencies, Git metadata,
 SHA-256 hash manifests, and deterministic command execution steps per Section 17 & 18.
 """
 
-import os
-from pathlib import Path
 import platform
 import subprocess
 import sys
+from pathlib import Path
 from typing import Any
 
-from src.reproducibility.hashing import hash_directory, hash_file
+from src.reproducibility.hashing import hash_directory
 from src.utils.io import save_json
 from src.utils.logging import get_logger
 

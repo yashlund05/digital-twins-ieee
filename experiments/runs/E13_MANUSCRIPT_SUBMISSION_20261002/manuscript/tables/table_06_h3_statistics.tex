@@ -1,0 +1,20 @@
+\begin{table*}[htbp]
+\centering
+\caption{Pairwise Statistical Hypothesis Testing for $H_3$ Across All Nine Model Combinations}
+\label{tab:h3_statistics}
+\begin{tabular}{lcccccccl}
+\hline
+\textbf{Task Comparison Pair} & $\beta_{\text{AD}}$ & $\beta_{\text{LE}}$ & $\Delta\beta$ & \textbf{Bootstrap 95\% CI} & \textbf{Wilcoxon $W$} & \textbf{Raw $p$} & \textbf{FDR-Adj. $p$} & \textbf{Decision} \\
+\hline
+AD(Residual LSTM-AE F1) vs LE(persistence MAPE) & 0.0201 & 1.0230 & -1.0029 & [-1.0612, -0.9292] & 295.0 & 1.0000 & 1.0000 & \texttt{NOT_SUPPORTED} \\
+AD(Residual LSTM-AE F1) vs LE(persistence RMSE) & 0.0201 & 0.8982 & -0.8781 & [-0.9273, -0.8106] & 249.0 & 1.0000 & 1.0000 & \texttt{NOT_SUPPORTED} \\
+AD(Residual LSTM-AE F1) vs LE(persistence MAE) & 0.0201 & 0.9671 & -0.9471 & [-0.9965, -0.8814] & 196.0 & 1.0000 & 1.0000 & \texttt{NOT_SUPPORTED} \\
+AD(Residual LSTM-AE F1) vs LE(xgboost MAPE) & 0.0201 & 1.2804 & -1.2603 & [-1.2898, -1.2076] & 295.0 & 1.0000 & 1.0000 & \texttt{NOT_SUPPORTED} \\
+AD(Residual LSTM-AE F1) vs LE(xgboost RMSE) & 0.0201 & 1.0727 & -1.0526 & [-1.0865, -0.9955] & 295.0 & 1.0000 & 1.0000 & \texttt{NOT_SUPPORTED} \\
+AD(Residual LSTM-AE F1) vs LE(xgboost MAE) & 0.0201 & 1.2697 & -1.2496 & [-1.2800, -1.1958] & 210.0 & 1.0000 & 1.0000 & \texttt{NOT_SUPPORTED} \\
+AD(Residual LSTM-AE F1) vs LE(lstm MAPE) & 0.0201 & 1.2437 & -1.2236 & [-1.3463, -1.1134] & 295.0 & 1.0000 & 1.0000 & \texttt{NOT_SUPPORTED} \\
+AD(Residual LSTM-AE F1) vs LE(lstm RMSE) & 0.0201 & 0.9542 & -0.9341 & [-0.9815, -0.8817] & 309.0 & 1.0000 & 1.0000 & \texttt{NOT_SUPPORTED} \\
+AD(Residual LSTM-AE F1) vs LE(lstm MAE) & 0.0201 & 1.1945 & -1.1744 & [-1.2310, -1.1210] & 189.0 & 1.0000 & 1.0000 & \texttt{NOT_SUPPORTED} \\
+\hline
+\end{tabular}
+\end{table*}

@@ -1,7 +1,6 @@
 """tests/publication/test_phase13_language_audit.py — Tests for Phase 13 scientific language audit."""
 
 from pathlib import Path
-import pytest
 
 from src.publication.language_audit import (
     audit_manuscript_directory,

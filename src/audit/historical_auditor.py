@@ -6,10 +6,8 @@ Generates structured audit reports for each historical phase per Objective A.
 
 from pathlib import Path
 from typing import Any
-import pandas as pd
 
 from src.publication.sources import FrozenSourceRegistry
-from src.reproducibility.hashing import hash_directory, hash_file
 from src.utils.io import load_json, save_json
 from src.utils.logging import get_logger
 
@@ -154,9 +152,17 @@ class HistoricalReproducibilityAuditor:
         """Audit Phase 12 Publication Artifacts."""
         logger.info("Auditing Phase 12 E12...")
         e12_dir = Path("experiments/runs/E12_PUBLICATION_ARTIFACTS_20261002")
-        fig_count = len(list((e12_dir / "figures").glob("*.pdf"))) if (e12_dir / "figures").is_dir() else 0
-        tab_count = len(list((e12_dir / "tables").glob("*.csv"))) if (e12_dir / "tables").is_dir() else 0
-        source_csvs = len(list((e12_dir / "source_data").glob("*.csv"))) if (e12_dir / "source_data").is_dir() else 0
+        fig_count = (
+            len(list((e12_dir / "figures").glob("*.pdf"))) if (e12_dir / "figures").is_dir() else 0
+        )
+        tab_count = (
+            len(list((e12_dir / "tables").glob("*.csv"))) if (e12_dir / "tables").is_dir() else 0
+        )
+        source_csvs = (
+            len(list((e12_dir / "source_data").glob("*.csv")))
+            if (e12_dir / "source_data").is_dir()
+            else 0
+        )
 
         rep = {
             "phase": "Phase 12 Publication Artifacts",
@@ -179,7 +185,11 @@ class HistoricalReproducibilityAuditor:
         has_bib = (e13_dir / "manuscript" / "references.bib").is_file()
         has_claims = (e13_dir / "audit_reports" / "canonical_claims_registry.json").is_file()
 
-        claims_data = load_json(e13_dir / "audit_reports" / "canonical_claims_registry.json") if has_claims else {}
+        claims_data = (
+            load_json(e13_dir / "audit_reports" / "canonical_claims_registry.json")
+            if has_claims
+            else {}
+        )
         verified_count = sum(1 for c in claims_data.values() if c.get("verified", False))
 
         rep = {

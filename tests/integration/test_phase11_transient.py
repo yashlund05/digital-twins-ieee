@@ -1,8 +1,8 @@
 """tests/integration/test_phase11_transient.py — Integration test for missed-update transient dynamics."""
 
 from pathlib import Path
+
 import pytest
-import pandas as pd
 
 from src.experiments.missed_update_transient import run_missed_update_transient_analysis
 

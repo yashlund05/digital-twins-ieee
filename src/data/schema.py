@@ -5,7 +5,7 @@ Defines schemas for raw data ingestion, feeder bus mappings, temporal splits,
 anomaly annotations, and overall data pipeline manifests.
 """
 
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any
 
 from pydantic import BaseModel, Field, field_validator
@@ -120,7 +120,9 @@ class DataPipelineManifest(BaseModel):
     """Complete manifest generated after running the Phase 2 data pipeline."""
 
     pipeline_version: str = Field(default="0.2.0")
-    created_at: str = Field(default_factory=lambda: datetime.utcnow().isoformat() + "Z")
+    created_at: str = Field(
+        default_factory=lambda: datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+    )
     raw_source: str = Field(..., description="Path or description of raw source dataset")
     total_timesteps: int = Field(..., gt=0, description="Total number of 15-minute intervals")
     resolution_minutes: int = Field(default=15, description="Sampling interval in minutes")

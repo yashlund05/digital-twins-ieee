@@ -5,8 +5,6 @@ phase12_artifacts.tex without manual hardcoding.
 """
 
 from pathlib import Path
-from typing import Any
-import pandas as pd
 
 from src.utils.logging import get_logger
 

@@ -4,14 +4,15 @@ Provides machine-readable tracking of every quantitative claim, mapping each to 
 frozen source artifact with cryptographic verification per Phase 13 requirements.
 """
 
-from dataclasses import asdict, dataclass, field
 import math
+from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Any, Union
+from typing import Any
+
 import yaml
 
 from src.publication.sources import FrozenSourceRegistry
-from src.utils.io import load_json, save_json
+from src.utils.io import save_json
 from src.utils.logging import get_logger
 
 logger = get_logger("publication.source_registry")
@@ -23,13 +24,13 @@ class CanonicalClaim:
 
     claim_id: str
     description: str
-    value: Union[float, str]
+    value: float | str
     source_phase: str
     source_file: str
     source_field: str
     tolerance: float = 1e-4
     verified: bool = False
-    actual_value: Union[float, str, None] = None
+    actual_value: float | str | None = None
 
 
 class Phase13SourceRegistry:
@@ -37,7 +38,7 @@ class Phase13SourceRegistry:
 
     def __init__(
         self,
-        config_path: Union[str, Path] = "configs/publication/phase13_publication.yaml",
+        config_path: str | Path = "configs/publication/phase13_publication.yaml",
     ) -> None:
         self.config_path = Path(config_path)
         self.config = self._load_config()
@@ -48,7 +49,7 @@ class Phase13SourceRegistry:
         """Load the YAML configuration."""
         if not self.config_path.is_file():
             raise FileNotFoundError(f"Config not found: {self.config_path}")
-        with open(self.config_path, "r", encoding="utf-8") as f:
+        with open(self.config_path, encoding="utf-8") as f:
             data = yaml.safe_load(f)
         return data.get("phase13", data)
 
@@ -134,7 +135,7 @@ class Phase13SourceRegistry:
         self,
         claim: CanonicalClaim,
         **data: Any,
-    ) -> Union[float, str, None]:
+    ) -> float | str | None:
         """Resolve actual value from pre-loaded data."""
         # E4 baseline metrics
         if claim.source_phase == "phase7_e4":

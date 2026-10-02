@@ -4,9 +4,9 @@ Performs static syntax, citation, figure/table input path, and scientific langua
 on the IEEE TSG manuscript package per Section 14–16.
 """
 
-from pathlib import Path
 import re
 import shutil
+from pathlib import Path
 from typing import Any
 
 from src.publication.language_audit import audit_manuscript_language
@@ -19,7 +19,11 @@ logger = get_logger("audit.manuscript_auditor")
 class ManuscriptPackageAuditor:
     """Auditor for LaTeX source, citations, labels, and scientific language in the manuscript."""
 
-    def __init__(self, manuscript_dir: Path | str = "experiments/runs/E13_MANUSCRIPT_SUBMISSION_20261002/manuscript") -> None:
+    def __init__(
+        self,
+        manuscript_dir: Path
+        | str = "experiments/runs/E13_MANUSCRIPT_SUBMISSION_20261002/manuscript",
+    ) -> None:
         self.manuscript_dir = Path(manuscript_dir)
 
     def audit_latex_structure(self) -> dict[str, Any]:
@@ -35,8 +39,6 @@ class ManuscriptPackageAuditor:
         has_begin_doc = r"\begin{document}" in content
         has_end_doc = r"\end{document}" in content
         has_abstract = r"\begin{abstract}" in content
-        has_bib_style = r"\bibliographystyle" in content
-        has_bib = r"\bibliography" in content
 
         # 2. Check input statements
         input_patterns = re.findall(r"\\input\{([^}]+)\}", content)
@@ -119,7 +121,9 @@ class ManuscriptPackageAuditor:
             "total_errors": total_errs,
             "total_warnings": total_warns,
             "main_tex_findings": [f for f in rep.findings if f["severity"] == "ERROR"],
-            "table_findings": [f for r in table_reports for f in r.findings if f["severity"] == "ERROR"],
+            "table_findings": [
+                f for r in table_reports for f in r.findings if f["severity"] == "ERROR"
+            ],
         }
 
     def copy_and_manifest_manuscript(self, dest_dir: Path) -> dict[str, Any]:

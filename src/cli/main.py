@@ -7,6 +7,7 @@ Usage:
 """
 
 from pathlib import Path
+
 import click
 
 
@@ -178,7 +179,9 @@ def run_e4(config: str, seed: int, norm: str) -> None:
     help="Path to E5 experiment YAML configuration",
 )
 @click.option("--seed", default=42, type=int, help="Random seed for reproducibility")
-@click.option("--baseline-only", is_flag=True, help="Execute only baseline condition (Delta t = 0, Pdrop = 0)")
+@click.option(
+    "--baseline-only", is_flag=True, help="Execute only baseline condition (Delta t = 0, Pdrop = 0)"
+)
 @click.option("--run-id", default=None, help="Custom run directory identifier")
 def run_e5(config: str, seed: int, baseline_only: bool, run_id: str | None) -> None:
     """Run Experiment E5: Controlled Synchronization Staleness Sweep.
@@ -209,9 +212,13 @@ def run_e5(config: str, seed: int, baseline_only: bool, run_id: str | None) -> N
     default="experiments/runs/E5_STALENESS_SWEEP_CORRECTED_SEED42_20260930",
     help="Path to validated E5 run directory",
 )
-@click.option("--bootstrap-iterations", default=1000, type=int, help="Number of bootstrap iterations")
+@click.option(
+    "--bootstrap-iterations", default=1000, type=int, help="Number of bootstrap iterations"
+)
 @click.option("--confidence-level", default=0.95, type=float, help="Confidence level for CIs")
-def run_e6(seed: int, input_e5_dir: str, bootstrap_iterations: int, confidence_level: float) -> None:
+def run_e6(
+    seed: int, input_e5_dir: str, bootstrap_iterations: int, confidence_level: float
+) -> None:
     """Run Experiment E6: Joint Statistical Analysis and Hypothesis Testing (Phase 9).
 
     Conducts degradation regressions, effect size calculations, non-parametric
@@ -262,7 +269,9 @@ def generate_figures(run_id: str) -> None:
     default="configs/experiments/e10_multiseed.yaml",
     help="Path to Phase 10 configuration YAML",
 )
-@click.option("--bootstrap-iterations", default=2000, type=int, help="Bootstrap resampling iterations")
+@click.option(
+    "--bootstrap-iterations", default=2000, type=int, help="Bootstrap resampling iterations"
+)
 @click.option("--confidence-level", default=0.95, type=float, help="Confidence level for intervals")
 def run_e10(
     seed: int | None,
@@ -273,6 +282,7 @@ def run_e10(
 ) -> None:
     """Run Phase 10: Multi-Seed Uncertainty Quantification and Analysis (Experiment E10)."""
     from datetime import datetime
+
     from src.experiments.staleness_sweep import run_staleness_sweep
     from src.statistics.multiseed import run_multiseed_analysis
     from src.utils.config import load_e10_config
@@ -313,7 +323,7 @@ def run_e10(
                 click.echo(f"[SUCCESS] Completed E5 sweep for seed {s} -> {s_dir}")
             except Exception as e:
                 click.echo(f"[ERROR] Failed execution for seed {s}: {e}", err=True)
-                raise click.ClickException(f"Seed {s} execution failed: {e}")
+                raise click.ClickException(f"Seed {s} execution failed: {e}") from e
 
     if all_seeds:
         click.echo("All 5 seeds available. Executing Phase 10 multi-seed aggregation...")
@@ -332,7 +342,9 @@ def run_e10(
     default="configs/experiments/e10_multiseed.yaml",
     help="Path to Phase 10 configuration YAML",
 )
-@click.option("--bootstrap-iterations", default=2000, type=int, help="Bootstrap resampling iterations")
+@click.option(
+    "--bootstrap-iterations", default=2000, type=int, help="Bootstrap resampling iterations"
+)
 @click.option("--confidence-level", default=0.95, type=float, help="Confidence level for intervals")
 def analyze_multiseed(config: str, bootstrap_iterations: int, confidence_level: float) -> None:
     """Analyze completed multi-seed E5 runs and generate Phase 10 deliverables."""
@@ -419,10 +431,12 @@ def run_e11(
 def verify_reproducibility(config: str, output_dir: str | None) -> None:
     """Verify historical benchmarks (Phase 7 E4, Phase 8 E5, Phase 9 E6, Phase 10 E10)."""
     from datetime import datetime
+
     import yaml
+
     from src.reproducibility.verifier import verify_historical_benchmarks
 
-    with open(config, "r", encoding="utf-8") as f:
+    with open(config, encoding="utf-8") as f:
         cfg = yaml.safe_load(f)
 
     if output_dir is None:
@@ -434,10 +448,18 @@ def verify_reproducibility(config: str, output_dir: str | None) -> None:
     benchmarks = cfg.get("reproducibility", {}).get("benchmarks", {})
     report = verify_historical_benchmarks(
         output_dir=out,
-        phase7_e4_dir=benchmarks.get("phase7_e4", "experiments/runs/E4_RAW_VS_RESIDUAL_SEED42_20260930"),
-        phase8_e5_dir=benchmarks.get("phase8_e5", "experiments/runs/E5_STALENESS_SWEEP_CORRECTED_SEED42_20260930"),
-        phase9_e6_dir=benchmarks.get("phase9_e6", "experiments/runs/E6_JOINT_ANALYSIS_SEED42_20261002"),
-        phase10_e10_dir=benchmarks.get("phase10_e10", "experiments/runs/E10_MULTI_SEED_ANALYSIS_20261002"),
+        phase7_e4_dir=benchmarks.get(
+            "phase7_e4", "experiments/runs/E4_RAW_VS_RESIDUAL_SEED42_20260930"
+        ),
+        phase8_e5_dir=benchmarks.get(
+            "phase8_e5", "experiments/runs/E5_STALENESS_SWEEP_CORRECTED_SEED42_20260930"
+        ),
+        phase9_e6_dir=benchmarks.get(
+            "phase9_e6", "experiments/runs/E6_JOINT_ANALYSIS_SEED42_20261002"
+        ),
+        phase10_e10_dir=benchmarks.get(
+            "phase10_e10", "experiments/runs/E10_MULTI_SEED_ANALYSIS_20261002"
+        ),
     )
     click.echo(f"Verification Overall Status: {report['overall_status']}")
     click.echo(f"  Phase 7 E4 Baseline : {report['phase7_e4_status']}")
@@ -612,7 +634,3 @@ def run_final_audit(
 
 if __name__ == "__main__":
     cli()
-
-
-
-

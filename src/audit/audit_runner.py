@@ -14,7 +14,6 @@ Executes the complete Phase 14 audit pipeline:
 
 from datetime import datetime
 from pathlib import Path
-from typing import Any
 
 from src.audit.aoi_investigator import C13AoIInvestigator
 from src.audit.cross_phase_auditor import CrossPhaseScientificAuditor
@@ -54,7 +53,9 @@ def run_phase14_final_audit(
         Path to the generated Phase 14 audit run directory.
     """
     logger.info("================================================================================")
-    logger.info("Starting Phase 14 Final Independent Scientific Audit & Publication Release Pipeline")
+    logger.info(
+        "Starting Phase 14 Final Independent Scientific Audit & Publication Release Pipeline"
+    )
     logger.info("================================================================================")
 
     # 1. Initialize Registries and Output Root
@@ -64,7 +65,11 @@ def run_phase14_final_audit(
     out_root = (
         Path(output_dir_override)
         if output_dir_override
-        else Path(claims_reg.config.get("output", {}).get("root", "experiments/runs/E14_FINAL_SCIENTIFIC_AUDIT_20261002"))
+        else Path(
+            claims_reg.config.get("output", {}).get(
+                "root", "experiments/runs/E14_FINAL_SCIENTIFIC_AUDIT_20261002"
+            )
+        )
     )
     ensure_dir(out_root)
     ensure_dir(out_root / "claims")
@@ -125,10 +130,10 @@ def run_phase14_final_audit(
     res_log_md = f"""# Discrepancy Resolution Log — Phase 14 Audit
 
 ## Summary of Tracked Discrepancies
-- Total Tracked: {disc_summary['total_discrepancies']}
-- Resolved: {disc_summary['by_status'].get('RESOLVED', 0)}
-- Accepted Differences: {disc_summary['by_status'].get('ACCEPTED_DIFFERENCE', 0)}
-- Critical Unresolved: {disc_summary['critical_unresolved']}
+- Total Tracked: {disc_summary["total_discrepancies"]}
+- Resolved: {disc_summary["by_status"].get("RESOLVED", 0)}
+- Accepted Differences: {disc_summary["by_status"].get("ACCEPTED_DIFFERENCE", 0)}
+- Critical Unresolved: {disc_summary["critical_unresolved"]}
 
 ## Detailed Resolutions
 1. **DISC-001-C13-AOI (Case B)**:
@@ -147,7 +152,7 @@ def run_phase14_final_audit(
     # 8. Reproducibility Environment Snapshot and Command Manifest
     logger.info("Step 7: Capturing Reproducibility Environment and Command Manifest...")
     env_auditor = EnvironmentSnapshotAuditor()
-    env_summary = env_auditor.generate_reproducibility_package(out_root)
+    env_auditor.generate_reproducibility_package(out_root)
 
     # 9. Publication Safety Gate Evaluation
     logger.info("Step 8: Evaluating Publication Safety Gate...")
@@ -161,7 +166,7 @@ def run_phase14_final_audit(
         provenance_errors=0 if cross_summary["figure_table_traceability"] == "PASS" else 1,
     )
 
-    release_summary = evaluator.generate_release_package(
+    evaluator.generate_release_package(
         output_dir=out_root,
         gate_status=gate_status,
         summary_stats={
@@ -181,7 +186,9 @@ def run_phase14_final_audit(
         "publication_target": "IEEE Transactions on Smart Grid",
         "safety_gate": {
             "is_publication_ready": gate_status.is_publication_ready,
-            "verdict": "READY FOR SUBMISSION REVIEW" if gate_status.is_publication_ready else "NOT READY",
+            "verdict": "READY FOR SUBMISSION REVIEW"
+            if gate_status.is_publication_ready
+            else "NOT READY",
         },
         "historical_reproducibility": hist_summary,
         "c13_aoi_investigation": {
@@ -226,7 +233,9 @@ def run_phase14_final_audit(
 
     logger.info("================================================================================")
     logger.info(f"Phase 14 Final Scientific Audit Completed Successfully: {out_root}")
-    logger.info(f"Safety Gate: {'READY FOR SUBMISSION REVIEW' if gate_status.is_publication_ready else 'NOT READY'}")
+    logger.info(
+        f"Safety Gate: {'READY FOR SUBMISSION REVIEW' if gate_status.is_publication_ready else 'NOT READY'}"
+    )
     logger.info("================================================================================")
 
     if strict and not gate_status.is_publication_ready:

@@ -1,6 +1,7 @@
 """tests/unit/test_multiseed.py — Unit tests for Phase 10 multi-seed engine and statistics."""
 
 from pathlib import Path
+
 import numpy as np
 import pandas as pd
 import pytest
@@ -14,7 +15,6 @@ from src.statistics.multiseed import (
     compute_condition_statistics,
     compute_multiseed_h3_analysis,
     compute_uncertainty_intervals,
-    compute_variance_decomposition,
     reconcile_seed_baseline,
     validate_seed_dataset,
 )
@@ -38,17 +38,19 @@ def test_02_every_seed_condition_count_validation(tmp_path):
     # Create dummy comparison.csv with only 10 conditions
     records = []
     for i in range(10):
-        records.append({
-            "condition_id": f"C_{i}",
-            "staleness_seconds": 0,
-            "packet_drop_rate": 0.0,
-            "task": "anomaly_detection",
-            "model": "lstm_autoencoder",
-            "representation": "residual",
-            "metric": "f1",
-            "value": 0.9,
-            "baseline_value": 0.9,
-        })
+        records.append(
+            {
+                "condition_id": f"C_{i}",
+                "staleness_seconds": 0,
+                "packet_drop_rate": 0.0,
+                "task": "anomaly_detection",
+                "model": "lstm_autoencoder",
+                "representation": "residual",
+                "metric": "f1",
+                "value": 0.9,
+                "baseline_value": 0.9,
+            }
+        )
     pd.DataFrame(records).to_csv(fake_dir / "comparison.csv", index=False)
     (fake_dir / "metrics.json").write_text("{}", encoding="utf-8")
     (fake_dir / "aoi_statistics.json").write_text("{}", encoding="utf-8")
@@ -118,18 +120,20 @@ def test_08_mean_std_calculations_are_deterministic():
     data = []
     for s in [42, 123, 456]:
         for dt in [0, 5]:
-            data.append({
-                "staleness_seconds": dt,
-                "packet_drop_rate": 0.0,
-                "task": "anomaly_detection",
-                "model": "lstm_autoencoder",
-                "representation": "residual",
-                "metric": "f1",
-                "value": 0.8 if dt == 0 else 0.2,
-                "normalized_degradation": 0.0 if dt == 0 else 0.75,
-                "absolute_degradation": 0.0 if dt == 0 else 0.6,
-                "seed": s,
-            })
+            data.append(
+                {
+                    "staleness_seconds": dt,
+                    "packet_drop_rate": 0.0,
+                    "task": "anomaly_detection",
+                    "model": "lstm_autoencoder",
+                    "representation": "residual",
+                    "metric": "f1",
+                    "value": 0.8 if dt == 0 else 0.2,
+                    "normalized_degradation": 0.0 if dt == 0 else 0.75,
+                    "absolute_degradation": 0.0 if dt == 0 else 0.6,
+                    "seed": s,
+                }
+            )
     df = pd.DataFrame(data)
     stats1 = compute_condition_statistics(df)
     stats2 = compute_condition_statistics(df)
@@ -138,26 +142,29 @@ def test_08_mean_std_calculations_are_deterministic():
     assert np.isclose(stats1.loc[stats1["staleness_seconds"] == 5, "value_mean"].values[0], 0.2)
 
 
-
 def test_09_bootstrap_seed_determinism():
     """Test 9: Bootstrap analysis produces identical results under fixed random seed."""
     data = []
     for s in [42, 123]:
         for dt in [0, 1, 5, 15, 60, 300]:
-            for task, mod, rep, met, base_v in [
+            for task, mod, rep, met, _base_v in [
                 ("anomaly_detection", "lstm_autoencoder", "residual", "f1", 0.9),
                 ("load_estimation", "lstm", "raw", "mape", 10.0),
             ]:
-                data.append({
-                    "staleness_seconds": dt,
-                    "packet_drop_rate": 0.0,
-                    "task": task,
-                    "model": mod,
-                    "representation": rep,
-                    "metric": met,
-                    "normalized_degradation": float(np.log1p(dt) * (0.2 if task == "anomaly_detection" else 1.0)),
-                    "seed": s,
-                })
+                data.append(
+                    {
+                        "staleness_seconds": dt,
+                        "packet_drop_rate": 0.0,
+                        "task": task,
+                        "model": mod,
+                        "representation": rep,
+                        "metric": met,
+                        "normalized_degradation": float(
+                            np.log1p(dt) * (0.2 if task == "anomaly_detection" else 1.0)
+                        ),
+                        "seed": s,
+                    }
+                )
     df = pd.DataFrame(data)
     h3_1, _ = compute_multiseed_h3_analysis(df, seeds=[42, 123], n_boot=200, seed=42)
     h3_2, _ = compute_multiseed_h3_analysis(df, seeds=[42, 123], n_boot=200, seed=42)
@@ -172,18 +179,22 @@ def test_10_missing_conditions_raise_error(tmp_path):
     records = []
     for dt in [0, 1, 5, 15, 60]:
         for drop in [0.0, 0.05, 0.10, 0.20]:
-            records.append({
-                "condition_id": f"DT{dt}_PD{int(drop*100)}",
-                "staleness_seconds": dt,
-                "packet_drop_rate": drop,
-            })
+            records.append(
+                {
+                    "condition_id": f"DT{dt}_PD{int(drop * 100)}",
+                    "staleness_seconds": dt,
+                    "packet_drop_rate": drop,
+                }
+            )
     # Add 3 for dt=300 to make 23
     for drop in [0.0, 0.05, 0.10]:
-        records.append({
-            "condition_id": f"DT300_PD{int(drop*100)}",
-            "staleness_seconds": 300,
-            "packet_drop_rate": drop,
-        })
+        records.append(
+            {
+                "condition_id": f"DT300_PD{int(drop * 100)}",
+                "staleness_seconds": 300,
+                "packet_drop_rate": drop,
+            }
+        )
 
     pd.DataFrame(records).to_csv(fake_dir / "comparison.csv", index=False)
     (fake_dir / "metrics.json").write_text("{}", encoding="utf-8")
@@ -200,19 +211,23 @@ def test_11_no_duplicate_seed_condition_combinations():
     for s in [42, 123]:
         for dt in [0, 1]:
             for p in [0.0, 0.05]:
-                records.append({
-                    "seed": s,
-                    "condition_id": f"C_DT{dt}_P{p}_S{s}",
-                    "staleness_seconds": dt,
-                    "packet_drop_rate": p,
-                    "task": "anomaly_detection",
-                    "model": "lstm_autoencoder",
-                    "representation": "residual",
-                    "metric": "f1",
-                    "value": 0.9,
-                })
+                records.append(
+                    {
+                        "seed": s,
+                        "condition_id": f"C_DT{dt}_P{p}_S{s}",
+                        "staleness_seconds": dt,
+                        "packet_drop_rate": p,
+                        "task": "anomaly_detection",
+                        "model": "lstm_autoencoder",
+                        "representation": "residual",
+                        "metric": "f1",
+                        "value": 0.9,
+                    }
+                )
     df = pd.DataFrame(records)
-    dups = df.duplicated(subset=["seed", "condition_id", "task", "model", "representation", "metric"])
+    dups = df.duplicated(
+        subset=["seed", "condition_id", "task", "model", "representation", "metric"]
+    )
     assert not dups.any()
 
 
@@ -222,45 +237,53 @@ def test_12_h3_sign_calculation_logic():
     # Seed 1: AD steeper (beta_ad = 2.0, beta_le = 0.5 -> delta_beta > 0)
     # Seed 2: LE steeper (beta_ad = 0.2, beta_le = 1.5 -> delta_beta < 0)
     for dt in [0, 1, 5, 15, 60, 300]:
-        data.append({
-            "staleness_seconds": dt,
-            "packet_drop_rate": 0.0,
-            "task": "anomaly_detection",
-            "model": "lstm_autoencoder",
-            "representation": "residual",
-            "metric": "f1",
-            "normalized_degradation": 2.0 * np.log1p(dt),
-            "seed": 1,
-        })
-        data.append({
-            "staleness_seconds": dt,
-            "packet_drop_rate": 0.0,
-            "task": "load_estimation",
-            "model": "lstm",
-            "metric": "mape",
-            "normalized_degradation": 0.5 * np.log1p(dt),
-            "seed": 1,
-        })
+        data.append(
+            {
+                "staleness_seconds": dt,
+                "packet_drop_rate": 0.0,
+                "task": "anomaly_detection",
+                "model": "lstm_autoencoder",
+                "representation": "residual",
+                "metric": "f1",
+                "normalized_degradation": 2.0 * np.log1p(dt),
+                "seed": 1,
+            }
+        )
+        data.append(
+            {
+                "staleness_seconds": dt,
+                "packet_drop_rate": 0.0,
+                "task": "load_estimation",
+                "model": "lstm",
+                "metric": "mape",
+                "normalized_degradation": 0.5 * np.log1p(dt),
+                "seed": 1,
+            }
+        )
 
-        data.append({
-            "staleness_seconds": dt,
-            "packet_drop_rate": 0.0,
-            "task": "anomaly_detection",
-            "model": "lstm_autoencoder",
-            "representation": "residual",
-            "metric": "f1",
-            "normalized_degradation": 0.2 * np.log1p(dt),
-            "seed": 2,
-        })
-        data.append({
-            "staleness_seconds": dt,
-            "packet_drop_rate": 0.0,
-            "task": "load_estimation",
-            "model": "lstm",
-            "metric": "mape",
-            "normalized_degradation": 1.5 * np.log1p(dt),
-            "seed": 2,
-        })
+        data.append(
+            {
+                "staleness_seconds": dt,
+                "packet_drop_rate": 0.0,
+                "task": "anomaly_detection",
+                "model": "lstm_autoencoder",
+                "representation": "residual",
+                "metric": "f1",
+                "normalized_degradation": 0.2 * np.log1p(dt),
+                "seed": 2,
+            }
+        )
+        data.append(
+            {
+                "staleness_seconds": dt,
+                "packet_drop_rate": 0.0,
+                "task": "load_estimation",
+                "model": "lstm",
+                "metric": "mape",
+                "normalized_degradation": 1.5 * np.log1p(dt),
+                "seed": 2,
+            }
+        )
 
     df = pd.DataFrame(data)
     h3_res, sign_res = compute_multiseed_h3_analysis(df, seeds=[1, 2], n_boot=100, seed=42)
@@ -284,17 +307,19 @@ def test_14_confidence_interval_calculation_deterministic():
     """Test 14: Uncertainty confidence interval function is deterministic."""
     data = []
     for s in [42, 123, 456, 789, 101112]:
-        data.append({
-            "staleness_seconds": 15,
-            "packet_drop_rate": 0.05,
-            "task": "load_estimation",
-            "model": "lstm",
-            "representation": "raw",
-            "metric": "mape",
-            "value": 15.0 + s * 0.001,
-            "normalized_degradation": 0.5,
-            "seed": s,
-        })
+        data.append(
+            {
+                "staleness_seconds": 15,
+                "packet_drop_rate": 0.05,
+                "task": "load_estimation",
+                "model": "lstm",
+                "representation": "raw",
+                "metric": "mape",
+                "value": 15.0 + s * 0.001,
+                "normalized_degradation": 0.5,
+                "seed": s,
+            }
+        )
     df = pd.DataFrame(data)
     ci1 = compute_uncertainty_intervals(df, ci_level=0.95)
     ci2 = compute_uncertainty_intervals(df, ci_level=0.95)
@@ -308,16 +333,18 @@ def test_15_no_future_data_leakage():
     for s in [42, 123]:
         for dt in STALENESS_GRID:
             for p in PACKET_DROP_GRID:
-                data.append({
-                    "staleness_seconds": dt,
-                    "packet_drop_rate": p,
-                    "task": "load_estimation",
-                    "model": "lstm",
-                    "representation": "raw",
-                    "metric": "mape",
-                    "value": 10.0,
-                    "seed": s,
-                })
+                data.append(
+                    {
+                        "staleness_seconds": dt,
+                        "packet_drop_rate": p,
+                        "task": "load_estimation",
+                        "model": "lstm",
+                        "representation": "raw",
+                        "metric": "mape",
+                        "value": 10.0,
+                        "seed": s,
+                    }
+                )
     df = pd.DataFrame(data)
     assert (df["staleness_seconds"] >= 0).all()
     assert (df["packet_drop_rate"] >= 0.0).all()

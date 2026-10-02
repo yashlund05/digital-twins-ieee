@@ -1,0 +1,53 @@
+{
+  "overall_cross_phase_status": "PASS",
+  "checks": {
+    "experimental_conditions": {
+      "check": "experimental_conditions_coherence",
+      "status": "PASS",
+      "details": {
+        "e5_unique_conditions": 24,
+        "e10_seed42_conditions": 24,
+        "seed42_conditions_identical": true,
+        "total_seed_conditions": 120,
+        "seeds_evaluated": [
+          42,
+          123,
+          456,
+          789,
+          101112
+        ],
+        "expected_seeds": [
+          42,
+          123,
+          456,
+          789,
+          101112
+        ],
+        "seeds_matched": true
+      }
+    },
+    "baseline_reproducibility": {
+      "check": "baseline_reproducibility_coherence",
+      "status": "PASS",
+      "details": {
+        "e4_residual_lstm_f1": 0.9779559118236473,
+        "e11_max_reproduction_difference": 4.030131827148509e-07,
+        "tolerance": 0.0001,
+        "passed": true
+      }
+    },
+    "h3_statistics": {
+      "check": "h3_statistics_coherence",
+      "status": "PASS",
+      "details": {
+        "e6_primary_delta_beta": -1.1147733792814485,
+        "e10_seed42_delta_beta": -1.1147733792814478,
+        "e10_multiseed_delta_beta": -1.2236455016005805,
+        "all_seeds_delta_beta_negative": true,
+        "all_seeds_decision_not_supported": true,
+        "passed": "True"
+      }
+    }
+  },
+  "figure_table_traceability": "PASS"
+}
