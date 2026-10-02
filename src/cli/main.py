@@ -201,11 +201,45 @@ def run_e5(config: str, seed: int, baseline_only: bool, run_id: str | None) -> N
 
 
 @cli.command()
-@click.option("--run-id", required=True, help="Experiment run ID to evaluate")
+@click.option("--seed", default=42, type=int, help="Random seed for reproducibility")
+@click.option(
+    "--input",
+    "input_e5_dir",
+    default="experiments/runs/E5_STALENESS_SWEEP_CORRECTED_SEED42_20260930",
+    help="Path to validated E5 run directory",
+)
+@click.option("--bootstrap-iterations", default=1000, type=int, help="Number of bootstrap iterations")
+@click.option("--confidence-level", default=0.95, type=float, help="Confidence level for CIs")
+def run_e6(seed: int, input_e5_dir: str, bootstrap_iterations: int, confidence_level: float) -> None:
+    """Run Experiment E6: Joint Statistical Analysis and Hypothesis Testing (Phase 9).
+
+    Conducts degradation regressions, effect size calculations, non-parametric
+    paired tests, Benjamini-Hochberg FDR adjustments, and pre-specified H3 testing.
+    """
+    from src.statistics.analysis_runner import run_phase9_analysis
+
+    click.echo(
+        f"Starting Experiment E6: Joint Analysis & Hypothesis Testing (seed={seed}, input={input_e5_dir})..."
+    )
+    run_dir = run_phase9_analysis(
+        input_e5_dir=input_e5_dir,
+        seed=seed,
+        n_boot=bootstrap_iterations,
+        ci_level=confidence_level,
+    )
+    click.echo(f"[SUCCESS] Experiment E6 complete. All artifacts and figures saved to: {run_dir}")
+
+
+@cli.command()
+@click.option("--run-id", required=True, help="Experiment run ID or directory to evaluate")
 def evaluate(run_id: str) -> None:
     """Evaluate the results of a completed experiment run."""
-    click.echo(f"[PLACEHOLDER] evaluate (run_id={run_id}) — implement in Phase 9")
-    raise click.ClickException("Not yet implemented (Phase 9)")
+    from src.statistics.analysis_runner import run_phase9_analysis
+
+    input_dir = Path("experiments/runs") / run_id if not Path(run_id).exists() else Path(run_id)
+    click.echo(f"Evaluating experiment run: {input_dir}...")
+    out_dir = run_phase9_analysis(input_e5_dir=input_dir)
+    click.echo(f"[SUCCESS] Evaluation complete. Results saved to: {out_dir}")
 
 
 @cli.command()
