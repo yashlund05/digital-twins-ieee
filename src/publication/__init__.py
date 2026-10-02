@@ -1,5 +1,15 @@
-"""src/publication — Phase 12 Paper-Ready Artifacts and IEEE Publication Package."""
+"""src/publication — Phase 12 & Phase 13 Publication Infrastructure.
 
+Provides paper-ready artifacts, IEEE manuscript generation, and scientific audit capabilities:
+- FrozenSourceRegistry: Read-only access to historical experiment runs (E4–E11)
+- Phase13SourceRegistry: Canonical claim-to-evidence registry
+- NumericalConsistencyAudit: Numerical verification across phases
+- CrossPhaseConsistencyAudit: Cross-phase mathematical consistency
+- Language audit: Prohibited overclaim detection
+- Manuscript assembly: IEEE TSG-style LaTeX generation
+"""
+
+# Phase 12 exports
 from src.publication.figure_factory import build_all_figures
 from src.publication.latex import build_all_latex
 from src.publication.provenance import (
@@ -31,7 +41,32 @@ from src.publication.validation import (
     validate_publication_sources,
 )
 
+# Phase 13 exports
+from src.publication.claim_audit import (
+    audit_manuscript_claims,
+    extract_numerical_claims,
+    map_claim_to_source,
+)
+from src.publication.cross_phase_audit import CrossPhaseConsistencyAudit
+from src.publication.language_audit import (
+    LanguageAuditFinding,
+    LanguageAuditReport,
+    audit_manuscript_directory,
+    audit_manuscript_language,
+    export_language_audit_report,
+)
+from src.publication.manuscript_generator import (
+    generate_full_manuscript,
+    generate_manuscript_summary,
+)
+from src.publication.numerical_audit import NumericalConsistencyAudit
+from src.publication.source_registry import (
+    CanonicalClaim,
+    Phase13SourceRegistry,
+)
+
 __all__ = [
+    # Phase 12
     "FrozenSourceRegistry",
     "load_phase12_sources_config",
     "validate_publication_sources",
@@ -55,4 +90,19 @@ __all__ = [
     "format_p_value",
     "format_scientific",
     "sanitize_latex",
+    # Phase 13
+    "CanonicalClaim",
+    "Phase13SourceRegistry",
+    "NumericalConsistencyAudit",
+    "CrossPhaseConsistencyAudit",
+    "LanguageAuditFinding",
+    "LanguageAuditReport",
+    "audit_manuscript_language",
+    "audit_manuscript_directory",
+    "export_language_audit_report",
+    "audit_manuscript_claims",
+    "extract_numerical_claims",
+    "map_claim_to_source",
+    "generate_full_manuscript",
+    "generate_manuscript_summary",
 ]

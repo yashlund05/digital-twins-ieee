@@ -533,7 +533,52 @@ def build_publication_artifacts(
         click.echo(f"[SUCCESS] Phase 12 publication artifacts successfully built: {res_dir}")
 
 
+@cli.command()
+@click.option(
+    "--config",
+    default="configs/publication/phase13_publication.yaml",
+    help="Path to Phase 13 publication configuration YAML",
+)
+@click.option(
+    "--output-dir",
+    default=None,
+    help="Optional output directory override",
+)
+@click.option(
+    "--verify-only",
+    is_flag=True,
+    default=False,
+    help="Run all audits without writing manuscript files",
+)
+@click.option(
+    "--strict/--no-strict",
+    default=True,
+    help="Enforce strict validation failure on audit discrepancies",
+)
+def assemble_manuscript(
+    config: str,
+    output_dir: str | None,
+    verify_only: bool,
+    strict: bool,
+) -> None:
+    """Assemble IEEE TSG manuscript and run Phase 13 scientific audits."""
+    from src.publication.submission_runner import run_phase13_submission_pipeline
+
+    click.echo(f"Executing Phase 13 Manuscript Assembly & Audit Pipeline (config={config})...")
+    res_dir = run_phase13_submission_pipeline(
+        config_path=config,
+        output_dir_override=output_dir,
+        verify_only=verify_only,
+        strict=strict,
+    )
+    if verify_only:
+        click.echo("[SUCCESS] All Phase 13 scientific audits PASSED.")
+    else:
+        click.echo(f"[SUCCESS] Phase 13 manuscript package successfully assembled: {res_dir}")
+
+
 if __name__ == "__main__":
     cli()
+
 
 
