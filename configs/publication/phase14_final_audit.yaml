@@ -1,0 +1,233 @@
+# Phase 14 — Final Independent Scientific Audit & Publication Release Configuration
+# All source runs are treated as immutable, read-only references.
+
+phase14:
+  # ─── Frozen Immutable Source Runs (read-only) ─────────────────────────
+  source_runs:
+    phase7_e4:
+      path: "experiments/runs/E4_RAW_VS_RESIDUAL_SEED42_20260930"
+      frozen: true
+      description: "Phase 7 E4 Canonical Baseline Experiment (Ideal sync Δt=0s, Pdrop=0%, Seed=42)"
+
+    phase8_e5:
+      path: "experiments/runs/E5_STALENESS_SWEEP_CORRECTED_SEED42_20260930"
+      frozen: true
+      description: "Phase 8 E5 Corrected Factorial Staleness Sweep (24 conditions, Seed=42)"
+
+    phase9_e6:
+      path: "experiments/runs/E6_JOINT_ANALYSIS_SEED42_20261002"
+      frozen: true
+      description: "Phase 9 E6 Single-Seed Joint Statistical Degradation Analysis and H3 Hypothesis Testing"
+
+    phase10_e10:
+      path: "experiments/runs/E10_MULTI_SEED_ANALYSIS_20261002"
+      frozen: true
+      description: "Phase 10 E10 Multi-Seed Uncertainty Quantification across 5 seeds (120 seed-conditions)"
+
+    phase11_e11:
+      path: "experiments/runs/E11_PHASE11_20261002"
+      frozen: true
+      description: "Phase 11 E11 Reproducibility Verification, Controlled Ablations A1-A8, and Missed-Update Transient Dynamics"
+
+    phase12_e12:
+      path: "experiments/runs/E12_PUBLICATION_ARTIFACTS_20261002"
+      frozen: true
+      description: "Phase 12 Publication Artifacts (Figures 01-08, Tables 01-06, Provenance, Source CSVs)"
+
+    phase13_e13:
+      path: "experiments/runs/E13_MANUSCRIPT_SUBMISSION_20261002"
+      frozen: true
+      description: "Phase 13 IEEE TSG Manuscript Package, Language Audit, and Claims Verification"
+
+  # ─── Output Directory ──────────────────────────────────────────────────
+  output:
+    root: "experiments/runs/E14_FINAL_SCIENTIFIC_AUDIT_20261002"
+
+  # ─── Publication Metadata ──────────────────────────────────────────────
+  publication:
+    target: "IEEE Transactions on Smart Grid"
+    feeder: "IEEE 33-Bus Radial Benchmark Feeder"
+    dataset: "Pecan Street Dataport (15-Minute Resolution Synced to 1-Second Grid Operations)"
+    seeds: [42, 123, 456, 789, 101112]
+    staleness_seconds: [0, 1, 5, 15, 60, 300]
+    packet_drop_rates: [0.00, 0.05, 0.10, 0.20]
+    conditions_per_seed: 24
+    total_seed_conditions: 120
+    detectors: ["isolation_forest", "lstm_autoencoder"]
+    representations: ["raw", "residual"]
+    forecasters: ["persistence", "xgboost", "lstm"]
+
+  # ─── Tolerances ────────────────────────────────────────────────────────
+  tolerances:
+    numerical_tolerance: 1.0e-4
+    reproducibility_tolerance: 1.0e-4
+    mape_tolerance: 0.05
+
+  # ─── Final Scientific Claim Registry Specifications ───────────────────
+  canonical_claims:
+    # Baseline Anomaly Detection (E4, seed=42, Δt=0s, Pdrop=0%)
+    - id: "C01"
+      metric: "f1_score"
+      description: "Baseline Residual + LSTM-AE test F1 score under ideal synchronization"
+      expected_value: 0.977956
+      source_phase: "phase7_e4"
+      source_artifact: "metrics.json"
+      source_field: "E4-4.test.f1"
+      tolerance: 1.0e-4
+
+    - id: "C02"
+      metric: "f1_score"
+      description: "Baseline Raw + LSTM-AE test F1 score under ideal synchronization"
+      expected_value: 0.538606
+      source_phase: "phase7_e4"
+      source_artifact: "metrics.json"
+      source_field: "E4-3.test.f1"
+      tolerance: 1.0e-4
+
+    - id: "C03"
+      metric: "f1_score"
+      description: "Baseline Raw + Isolation Forest test F1 score under ideal synchronization"
+      expected_value: 0.117647
+      source_phase: "phase7_e4"
+      source_artifact: "metrics.json"
+      source_field: "E4-1.test.f1"
+      tolerance: 1.0e-4
+
+    - id: "C04"
+      metric: "f1_score"
+      description: "Baseline Residual + Isolation Forest test F1 score under ideal synchronization"
+      expected_value: 0.088727
+      source_phase: "phase7_e4"
+      source_artifact: "metrics.json"
+      source_field: "E4-2.test.f1"
+      tolerance: 1.0e-4
+
+    # H3 Hypothesis Testing Statistics (E10, multi-seed aggregate)
+    - id: "C05"
+      metric: "slope_difference_delta_beta"
+      description: "H3 multi-seed aggregate normalized log-linear slope difference Δβ"
+      expected_value: -1.2236455016005805
+      source_phase: "phase10_e10"
+      source_artifact: "multiseed_h3_summary.csv"
+      source_field: "Multi-seed.delta_beta"
+      tolerance: 1.0e-4
+
+    - id: "C06"
+      metric: "confidence_interval_lower"
+      description: "H3 multi-seed aggregate 95% bootstrap confidence interval lower bound"
+      expected_value: -1.3462600065803283
+      source_phase: "phase10_e10"
+      source_artifact: "multiseed_h3_summary.csv"
+      source_field: "Multi-seed.ci_lower"
+      tolerance: 1.0e-4
+
+    - id: "C07"
+      metric: "confidence_interval_upper"
+      description: "H3 multi-seed aggregate 95% bootstrap confidence interval upper bound"
+      expected_value: -1.1134119167064354
+      source_phase: "phase10_e10"
+      source_artifact: "multiseed_h3_summary.csv"
+      source_field: "Multi-seed.ci_upper"
+      tolerance: 1.0e-4
+
+    - id: "C08"
+      metric: "p_value"
+      description: "H3 multi-seed aggregate slope hypothesis test p-value"
+      expected_value: 1.0
+      source_phase: "phase10_e10"
+      source_artifact: "multiseed_h3_summary.csv"
+      source_field: "Multi-seed.p_value_slope"
+      tolerance: 1.0e-4
+
+    - id: "C09"
+      metric: "hypothesis_decision"
+      description: "H3 hypothesis testing formal decision across all 5 seeds and multi-seed aggregate"
+      expected_value: "NOT_SUPPORTED"
+      source_phase: "phase10_e10"
+      source_artifact: "multiseed_h3_summary.csv"
+      source_field: "Multi-seed.decision"
+      tolerance: 0.0
+
+    # Experimental Grid Coverage and Sample Completeness
+    - id: "C10"
+      metric: "condition_count"
+      description: "Phase 8 E5 factorial synchronization conditions count (6 staleness × 4 drop rates)"
+      expected_value: 24
+      source_phase: "phase8_e5"
+      source_artifact: "comparison.csv"
+      source_field: "condition_id.nunique"
+      tolerance: 0.0
+
+    - id: "C11"
+      metric: "seed_condition_count"
+      description: "Phase 10 E10 total evaluated seed-condition pairs (5 seeds × 24 conditions)"
+      expected_value: 120
+      source_phase: "phase10_e10"
+      source_artifact: "seed_results.csv"
+      source_field: "seed_condition.nunique"
+      tolerance: 0.0
+
+    - id: "C12"
+      metric: "ablation_evaluation_count"
+      description: "Phase 11 E11 controlled ablation evaluations count across A1-A8"
+      expected_value: 88
+      source_phase: "phase11_e11"
+      source_artifact: "table_02_ablation_results.csv"
+      source_field: "row_count"
+      tolerance: 0.0
+
+    # Objective C: Dual AoI Transition Characterization
+    - id: "C13"
+      metric: "instantaneous_divergence_aoi_seconds"
+      description: "Micro instantaneous residual-divergence change point AoI (first departure from noise floor)"
+      expected_value: 0.0
+      source_phase: "phase11_e11"
+      source_artifact: "table_04_change_point_analysis.csv"
+      source_field: "estimated_transition_aoi_seconds"
+      tolerance: 1.0e-4
+
+    - id: "C14"
+      metric: "empirical_cliff_aoi_seconds"
+      description: "Macro empirical transition cliff AoI* (in-bin detection collapse and steep discrete drop)"
+      expected_value: 5.0
+      source_phase: "phase11_e11"
+      source_artifact: "summary.md"
+      source_field: "critical_transition_cliff.center"
+      tolerance: 0.1
+
+    # Baseline Load Forecasting MAPEs (E5, seed=42, Δt=0s, Pdrop=0%)
+    - id: "C15"
+      metric: "mape_percentage"
+      description: "Baseline LSTM load estimation test MAPE under ideal synchronization"
+      expected_value: 8.950405
+      source_phase: "phase8_e5"
+      source_artifact: "comparison.csv"
+      source_field: "E5_DT0_PD00_SEED42.lstm.mape"
+      tolerance: 1.0e-3
+
+    - id: "C16"
+      metric: "mape_percentage"
+      description: "Baseline XGBoost load estimation test MAPE under ideal synchronization"
+      expected_value: 9.063485
+      source_phase: "phase8_e5"
+      source_artifact: "comparison.csv"
+      source_field: "E5_DT0_PD00_SEED42.xgboost.mape"
+      tolerance: 1.0e-3
+
+    - id: "C17"
+      metric: "mape_percentage"
+      description: "Baseline Persistence load estimation test MAPE under ideal synchronization"
+      expected_value: 14.732101
+      source_phase: "phase8_e5"
+      source_artifact: "comparison.csv"
+      source_field: "E5_DT0_PD00_SEED42.persistence.mape"
+      tolerance: 1.0e-3
+
+    - id: "C18"
+      metric: "timesteps_count"
+      description: "Total audited transient timesteps across active staleness epochs in Phase 11"
+      expected_value: 73584
+      source_phase: "phase11_e11"
+      source_artifact: "summary.md"
+      source_field: "transient_analysis_timesteps"
+      tolerance: 0.0

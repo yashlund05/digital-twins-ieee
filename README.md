@@ -2,10 +2,26 @@
 
 > **Quantifying the Effect of Digital Twin Synchronization Staleness on Joint Short-Term Load Estimation and Unsupervised Anomaly Detection in a Distribution-Feeder Digital Twin**
 
-[![Status](https://img.shields.io/badge/Status-Research%20Infrastructure%20Initialization-yellow)]()
+[![Status](https://img.shields.io/badge/Status-Submission--Ready%20(Phase%2014)-brightgreen)]()
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue)]()
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
-[![Reproducibility](https://img.shields.io/badge/Reproducibility-Configuration--Driven-brightgreen)]()
+[![Reproducibility](https://img.shields.io/badge/Reproducibility-Cryptographically--Verified-brightgreen)]()
+
+---
+
+## Research Status
+
+| Milestone | Status | Description |
+|:---|:---:|:---|
+| **Phase 0–6** | `COMPLETED` | Infrastructure, OpenDSS Digital Twin, synchronization engine, pipelines |
+| **Phase 7 (E4)** | `COMPLETED` | Canonical baseline: Residual LSTM-AE $F_1 = 0.978$ vs Raw $F_1 = 0.539$ |
+| **Phase 8 (E5)** | `COMPLETED` | 24-condition factorial sweep ($\Delta t \in \{0..300\}\,$s, $P_{\mathrm{drop}} \in \{0..0.20\}$) |
+| **Phase 9 (E6)** | `COMPLETED` | Joint degradation modeling; H3 NOT_SUPPORTED ($\Delta\beta = -1.115$) |
+| **Phase 10 (E10)** | `COMPLETED` | 5-seed uncertainty quantification; H3 NOT_SUPPORTED ($\Delta\beta = -1.224, p = 1.000$) |
+| **Phase 11 (E11)** | `COMPLETED` | Reproducibility verified; 8 ablations (88 runs); transient AoI dynamics |
+| **Phase 12 (E12)** | `COMPLETED` | Paper-ready publication package: 8 figures, 6 tables, cryptographic provenance |
+| **Phase 13 (E13)** | `COMPLETED` | IEEE TSG manuscript assembly (`main.tex`, `references.bib`, 13 verified claims) |
+| **Phase 14 (E14)** | `COMPLETED` | Final scientific audit, C13 Case B resolved, 18-claim registry, release safety gate certified |
 
 ---
 

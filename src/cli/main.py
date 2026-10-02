@@ -577,8 +577,42 @@ def assemble_manuscript(
         click.echo(f"[SUCCESS] Phase 13 manuscript package successfully assembled: {res_dir}")
 
 
+@cli.command()
+@click.option(
+    "--config",
+    default="configs/publication/phase14_final_audit.yaml",
+    help="Path to Phase 14 final audit configuration YAML",
+)
+@click.option(
+    "--output-dir",
+    default=None,
+    help="Optional output directory override",
+)
+@click.option(
+    "--strict/--no-strict",
+    default=True,
+    help="Enforce strict validation failure on publication safety gates",
+)
+def run_final_audit(
+    config: str,
+    output_dir: str | None,
+    strict: bool,
+) -> None:
+    """Execute Phase 14 final independent scientific audit and publication release pipeline."""
+    from src.audit.audit_runner import run_phase14_final_audit
+
+    click.echo(f"Executing Phase 14 Final Scientific Audit & Release Pipeline (config={config})...")
+    res_dir = run_phase14_final_audit(
+        config_path=config,
+        output_dir_override=output_dir,
+        strict=strict,
+    )
+    click.echo(f"[SUCCESS] Phase 14 final scientific audit completed: {res_dir}")
+
+
 if __name__ == "__main__":
     cli()
+
 
 
 
