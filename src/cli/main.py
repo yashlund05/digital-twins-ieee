@@ -6,6 +6,7 @@ Usage:
     dt-grid <command> [options]
 """
 
+from pathlib import Path
 import click
 
 
@@ -253,5 +254,114 @@ def generate_figures(run_id: str) -> None:
     raise click.ClickException("Not yet implemented (Phase 12)")
 
 
+@cli.command()
+@click.option("--seed", default=None, type=int, help="Execute/analyze a specific seed")
+@click.option("--all-seeds", is_flag=True, help="Execute/analyze all frozen seeds in Phase 10")
+@click.option(
+    "--config",
+    default="configs/experiments/e10_multiseed.yaml",
+    help="Path to Phase 10 configuration YAML",
+)
+@click.option("--bootstrap-iterations", default=2000, type=int, help="Bootstrap resampling iterations")
+@click.option("--confidence-level", default=0.95, type=float, help="Confidence level for intervals")
+def run_e10(
+    seed: int | None,
+    all_seeds: bool,
+    config: str,
+    bootstrap_iterations: int,
+    confidence_level: float,
+) -> None:
+    """Run Phase 10: Multi-Seed Uncertainty Quantification and Analysis (Experiment E10)."""
+    from datetime import datetime
+    from src.experiments.staleness_sweep import run_staleness_sweep
+    from src.statistics.multiseed import run_multiseed_analysis
+    from src.utils.config import load_e10_config
+
+    cfg = load_e10_config(config)
+    runs_dir = Path("experiments/runs")
+
+    if not all_seeds and seed is None:
+        raise click.UsageError("Must specify either --seed <int> or --all-seeds")
+
+    target_seeds = cfg.seeds if all_seeds else [seed]
+    click.echo(f"Starting Experiment E10 (seeds={target_seeds}, config={config})...")
+
+    # Locate or execute E5 runs for required seeds
+    seed_dirs: dict[int, Path] = {}
+
+    for s in target_seeds:
+        # Search for existing corrected E5 run
+        cand_dirs = list(runs_dir.glob(f"E5_STALENESS_SWEEP_CORRECTED_SEED{s}_*"))
+        if not cand_dirs and s == 42:
+            cand_dirs = [runs_dir / "E5_STALENESS_SWEEP_CORRECTED_SEED42_20260930"]
+
+        if cand_dirs and (cand_dirs[0] / "comparison.csv").exists():
+            s_dir = cand_dirs[0]
+            click.echo(f"Found existing E5 run for seed {s}: {s_dir}")
+            seed_dirs[s] = s_dir
+        else:
+            click.echo(f"Executing E5 staleness sweep for seed {s}...")
+            date_str = datetime.now().strftime("%Y%m%d")
+            s_run_id = f"E5_STALENESS_SWEEP_CORRECTED_SEED{s}_{date_str}"
+            try:
+                s_dir = run_staleness_sweep(
+                    config_path="configs/experiments/e5_staleness_sweep.yaml",
+                    seed=s,
+                    run_id=s_run_id,
+                )
+                seed_dirs[s] = s_dir
+                click.echo(f"[SUCCESS] Completed E5 sweep for seed {s} -> {s_dir}")
+            except Exception as e:
+                click.echo(f"[ERROR] Failed execution for seed {s}: {e}", err=True)
+                raise click.ClickException(f"Seed {s} execution failed: {e}")
+
+    if all_seeds:
+        click.echo("All 5 seeds available. Executing Phase 10 multi-seed aggregation...")
+        out_dir = run_multiseed_analysis(
+            seed_dirs=seed_dirs,
+            config_path=config,
+            n_boot=bootstrap_iterations,
+            ci_level=confidence_level,
+        )
+        click.echo(f"[SUCCESS] Phase 10 Multi-Seed Analysis complete! Outputs saved to: {out_dir}")
+
+
+@cli.command()
+@click.option(
+    "--config",
+    default="configs/experiments/e10_multiseed.yaml",
+    help="Path to Phase 10 configuration YAML",
+)
+@click.option("--bootstrap-iterations", default=2000, type=int, help="Bootstrap resampling iterations")
+@click.option("--confidence-level", default=0.95, type=float, help="Confidence level for intervals")
+def analyze_multiseed(config: str, bootstrap_iterations: int, confidence_level: float) -> None:
+    """Analyze completed multi-seed E5 runs and generate Phase 10 deliverables."""
+    from src.statistics.multiseed import run_multiseed_analysis
+    from src.utils.config import load_e10_config
+
+    cfg = load_e10_config(config)
+    runs_dir = Path("experiments/runs")
+    seed_dirs: dict[int, Path] = {}
+
+    for s in cfg.seeds:
+        cand_dirs = list(runs_dir.glob(f"E5_STALENESS_SWEEP_CORRECTED_SEED{s}_*"))
+        if not cand_dirs and s == 42:
+            cand_dirs = [runs_dir / "E5_STALENESS_SWEEP_CORRECTED_SEED42_20260930"]
+
+        if cand_dirs and (cand_dirs[0] / "comparison.csv").exists():
+            seed_dirs[s] = cand_dirs[0]
+        else:
+            raise click.ClickException(f"Missing completed E5 run for seed {s} in {runs_dir}")
+
+    out_dir = run_multiseed_analysis(
+        seed_dirs=seed_dirs,
+        config_path=config,
+        n_boot=bootstrap_iterations,
+        ci_level=confidence_level,
+    )
+    click.echo(f"[SUCCESS] Phase 10 Multi-Seed Analysis complete! Outputs saved to: {out_dir}")
+
+
 if __name__ == "__main__":
     cli()
+

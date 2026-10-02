@@ -521,3 +521,60 @@ def load_e5_config(
     raw = load_yaml(file_path)
     return E5ExperimentConfig(**raw)
 
+
+# =============================================================================
+# Phase 10 / Experiment E10 Multi-Seed Configuration
+# =============================================================================
+
+
+class E10ExperimentMetadata(BaseModel):
+    """Metadata for Phase 10 multi-seed experiment."""
+
+    id: str = "E10"
+    name: str = "multi_seed_uncertainty_analysis"
+    description: str = ""
+    version: str = "1.0.0"
+
+
+class E10StatisticalInferenceConfig(BaseModel):
+    """Statistical inference settings for Experiment E10."""
+
+    h3_primary_comparison: dict[str, str] = Field(
+        default_factory=lambda: {
+            "ad_model": "lstm_autoencoder",
+            "ad_representation": "residual",
+            "ad_metric": "f1",
+            "le_model": "lstm",
+            "le_metric": "mape",
+        }
+    )
+    bootstrap_samples: int = 2000
+    bootstrap_seed: int = 42
+    confidence_level: float = 0.95
+    fdr_alpha: float = 0.05
+
+
+class E10ExperimentConfig(BaseModel):
+    """Top-level configuration schema for Experiment E10."""
+
+    experiment: E10ExperimentMetadata = Field(default_factory=E10ExperimentMetadata)
+    seeds: list[int] = Field(default_factory=lambda: [42, 123, 456, 789, 101112])
+    staleness_seconds: list[int] = Field(default_factory=lambda: [0, 1, 5, 15, 60, 300])
+    packet_drop: list[float] = Field(default_factory=lambda: [0.0, 0.05, 0.10, 0.20])
+    synchronization: dict[str, Any] = Field(default_factory=dict)
+    forecasting: dict[str, Any] = Field(default_factory=dict)
+    anomaly_detection: dict[str, Any] = Field(default_factory=dict)
+    statistical_inference: E10StatisticalInferenceConfig = Field(
+        default_factory=E10StatisticalInferenceConfig
+    )
+    references: dict[str, str] = Field(default_factory=dict)
+
+
+def load_e10_config(
+    file_path: Path | str = "configs/experiments/e10_multiseed.yaml",
+) -> E10ExperimentConfig:
+    """Load and validate Experiment E10 configuration YAML."""
+    raw = load_yaml(file_path)
+    return E10ExperimentConfig(**raw)
+
+

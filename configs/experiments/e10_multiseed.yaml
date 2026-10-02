@@ -1,0 +1,76 @@
+# e10_multiseed.yaml — Configuration for Phase 10: Multi-Seed Uncertainty Quantification
+# Research project: Quantifying the Effect of Digital Twin Synchronization Staleness on
+# Joint Short-Term Load Estimation and Unsupervised Anomaly Detection
+
+experiment:
+  id: E10
+  name: multi_seed_uncertainty_analysis
+  description: >
+    Phase 10: Multi-Seed Uncertainty Quantification, Sensitivity Analysis,
+    and H3 Hypothesis Robustness Assessment across independent stochastic seeds.
+  version: "1.0.0"
+
+# Frozen multi-seed set (Section 3)
+seeds:
+  - 42
+  - 123
+  - 456
+  - 789
+  - 101112
+
+# Frozen experimental matrix Factor A: Staleness intervals (seconds)
+staleness_seconds:
+  - 0
+  - 1
+  - 5
+  - 15
+  - 60
+  - 300
+
+# Frozen experimental matrix Factor B: Packet drop probabilities
+packet_drop:
+  - 0.0
+  - 0.05
+  - 0.10
+  - 0.20
+
+synchronization:
+  missed_update_policy: hold_last_state
+
+forecasting:
+  models:
+    - persistence
+    - xgboost
+    - lstm
+  target_name: total_load_p_kw
+  lookback_steps: 24
+  metrics:
+    - mae
+    - rmse
+    - mape
+
+anomaly_detection:
+  detectors:
+    - isolation_forest
+    - lstm_autoencoder
+  representations:
+    - raw
+    - residual
+  threshold_policy: validation_p95_frozen
+
+statistical_inference:
+  h3_primary_comparison:
+    ad_model: lstm_autoencoder
+    ad_representation: residual
+    ad_metric: f1
+    le_model: lstm
+    le_metric: mape
+  bootstrap_samples: 2000
+  bootstrap_seed: 42
+  confidence_level: 0.95
+  fdr_alpha: 0.05
+
+references:
+  phase7_baseline: "experiments/runs/E4_RAW_VS_RESIDUAL_SEED42_20260930"
+  phase8_e5_reference: "experiments/runs/E5_STALENESS_SWEEP_CORRECTED_SEED42_20260930"
+  phase9_e6_reference: "experiments/runs/E6_JOINT_ANALYSIS_SEED42_20261002"

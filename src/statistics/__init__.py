@@ -30,6 +30,7 @@ from src.statistics.regression import (
     fit_two_way_factorial_regression,
 )
 from src.statistics.analysis_runner import run_phase9_analysis
+from src.statistics.multiseed import run_multiseed_analysis
 
 __all__ = [
     "METRIC_DIRECTION",
@@ -50,4 +51,6 @@ __all__ = [
     "paired_wilcoxon_test",
     "benjamini_hochberg_correction",
     "run_phase9_analysis",
+    "run_multiseed_analysis",
 ]
+
