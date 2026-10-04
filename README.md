@@ -239,7 +239,7 @@ If you utilize this framework, Digital Twin synchronization engine, or experimen
 
 ```bibtex
 @article{digital_twins_ieee_2026,
-  author    = {Yash Lund and Aryan Ayush and Contributors},
+  author    = {Yash Lund and Ayush and Contributors},
   title     = {Quantifying the Effect of Digital Twin Synchronization Staleness on
                Joint Short-Term Load Estimation and Unsupervised Anomaly Detection
                in a Distribution-Feeder Digital Twin},
