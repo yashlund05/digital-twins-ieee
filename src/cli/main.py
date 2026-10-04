@@ -632,5 +632,68 @@ def run_final_audit(
     click.echo(f"[SUCCESS] Phase 14 final scientific audit completed: {res_dir}")
 
 
+@cli.command()
+@click.option(
+    "--e5-dir",
+    default="experiments/runs/E5_STALENESS_SWEEP_CORRECTED_SEED42_20260930",
+    help="Path to Phase 8 E5 run directory",
+)
+@click.option(
+    "--output-dir",
+    default=None,
+    help="Optional output directory override",
+)
+@click.option(
+    "--aoi-threshold",
+    default=5.0,
+    type=float,
+    help="Critical AoI inversion switching threshold in seconds",
+)
+@click.option(
+    "--gamma",
+    default=0.08,
+    type=float,
+    help="AoI adaptive threshold expansion scaling parameter",
+)
+def evaluate_mitigation(
+    e5_dir: str,
+    output_dir: str | None,
+    aoi_threshold: float,
+    gamma: float,
+) -> None:
+    """Benchmark AoI-Adaptive Thresholding and Dual-Mode Representation Switching."""
+    from datetime import datetime, timezone
+
+    from src.experiments.mitigation import run_mitigation_benchmark
+
+    date_str = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+    out = (
+        Path(output_dir)
+        if output_dir
+        else Path("experiments/runs") / f"MITIGATION_BENCHMARK_{date_str}"
+    )
+
+    click.echo(
+        f"Evaluating Staleness Mitigation Strategies (e5_dir={e5_dir}, AoI*={aoi_threshold}s)..."
+    )
+    res = run_mitigation_benchmark(
+        output_dir=out,
+        e5_seed42_dir=e5_dir,
+        aoi_inversion_threshold=aoi_threshold,
+        gamma_adaptive=gamma,
+    )
+    summ = res["summary"]
+    click.echo("\n[MITIGATION BENCHMARK RESULTS]")
+    click.echo(f"  Conditions Evaluated : {summ['benchmark_conditions_count']}")
+    click.echo(f"  Nominal Fresh F1 (dt=0) : {summ['nominal_fresh_f1']:.4f}")
+    sev = summ["severe_staleness_comparison"]
+    click.echo(f"  Severe Staleness ({sev['condition']}):")
+    click.echo(f"    - Uncompensated Residual F1 : {sev['uncompensated_residual_f1']:.4f}")
+    click.echo(f"    - AoI-Adaptive Threshold F1 : {sev['aoi_adaptive_threshold_f1']:.4f}")
+    click.echo(f"    - Dual-Mode Compensator F1  : {sev['dual_mode_compensator_f1']:.4f}")
+    click.echo(f"    - Performance Recovery Gain : {sev['recovery_gain_dual_mode']:+.4f}")
+    click.echo(f"\nBenchmark outputs saved to: {out}")
+
+
 if __name__ == "__main__":
     cli()

@@ -10,6 +10,7 @@ Labels are used ONLY for validation and test metric evaluation.
 """
 
 from src.anomaly_detection.detector import BaseAnomalyDetector
+from src.anomaly_detection.dual_mode import DualModeInversionCompensator
 from src.anomaly_detection.experiment_e3 import run_experiment_e3
 from src.anomaly_detection.isolation_forest import IsolationForestDetector
 from src.anomaly_detection.lstm_autoencoder import (
@@ -17,6 +18,7 @@ from src.anomaly_detection.lstm_autoencoder import (
     PyTorchLSTMAutoencoderNetwork,
 )
 from src.anomaly_detection.thresholds import (
+    AoIAdaptiveThreshold,
     BaseThresholdSelector,
     FixedThreshold,
     OtsuThreshold,
@@ -31,8 +33,10 @@ from src.anomaly_detection.trainer import (
 __all__ = [
     "AnomalyDetectionTrainer",
     "AnomalyEvaluationResult",
+    "AoIAdaptiveThreshold",
     "BaseAnomalyDetector",
     "BaseThresholdSelector",
+    "DualModeInversionCompensator",
     "FixedThreshold",
     "IsolationForestDetector",
     "LSTMAutoencoderDetector",

@@ -139,6 +139,118 @@ class OtsuThreshold(BaseThresholdSelector):
         return self.fitted_threshold
 
 
+class AoIAdaptiveThreshold(BaseThresholdSelector):
+    """Dynamically adjusts decision threshold as a function of realized Age of Information (AoI).
+
+    Under synchronization staleness, virtual Digital Twin state drift inflates normal
+    residual norms. A static threshold calibrated at fresh state (AoI = 0) experiences severe
+    false alarm inflation. AoIAdaptiveThreshold dynamically scales the decision cutoff:
+
+        tau(AoI_t) = tau_0 + gamma * f(AoI_t)
+
+    where tau_0 is the nominal baseline threshold (e.g. 95th percentile under ideal synchronization),
+    gamma is the expansion rate, and f(AoI) models physical error diffusion (e.g. sqrt(AoI)).
+    """
+
+    def __init__(
+        self,
+        base_percentile: float = 95.0,
+        gamma: float = 0.05,
+        scaling_function: str = "sqrt",
+    ) -> None:
+        """Initialize AoI-adaptive threshold selector.
+
+        Args:
+            base_percentile: Baseline percentile cutoff for fresh state (default: 95.0).
+            gamma: Adaptation rate scaling factor (gamma >= 0).
+            scaling_function: Functional growth form ('sqrt', 'log', 'linear').
+        """
+        super().__init__(name="aoi_adaptive")
+        if not (0.0 <= base_percentile <= 100.0):
+            raise ValueError(f"base_percentile must be in [0, 100], got {base_percentile}")
+        if gamma < 0.0:
+            raise ValueError(f"gamma must be non-negative, got {gamma}")
+        if scaling_function not in ["sqrt", "log", "linear"]:
+            raise ValueError(
+                f"Unsupported scaling_function '{scaling_function}'. Choose from ['sqrt', 'log', 'linear']"
+            )
+
+        self.base_percentile = base_percentile
+        self.gamma = gamma
+        self.scaling_function = scaling_function
+        self.fitted_base_threshold: float | None = None
+
+    def fit(self, scores: np.ndarray, aoi_seconds: np.ndarray | None = None) -> float:
+        """Derive base fresh-state threshold tau_0 and optionally fit gamma.
+
+        Args:
+            scores: Continuous anomaly scores on validation data.
+            aoi_seconds: Optional realized AoI values. If provided and contains fresh states,
+                tau_0 is calibrated on fresh samples (AoI <= 1.0s).
+
+        Returns:
+            Scalar baseline threshold tau_0.
+        """
+        sc = np.asarray(scores, dtype=np.float64)
+        if aoi_seconds is not None:
+            aoi = np.asarray(aoi_seconds, dtype=np.float64)
+            fresh_mask = aoi <= 1.0
+            if np.sum(fresh_mask) >= 10:
+                sc_fresh = sc[fresh_mask]
+            else:
+                sc_fresh = sc
+        else:
+            sc_fresh = sc
+
+        self.fitted_base_threshold = float(np.percentile(sc_fresh, self.base_percentile))
+        self.fitted_threshold = self.fitted_base_threshold
+        logger.info(
+            f"AoIAdaptiveThreshold(base_pct={self.base_percentile}%, gamma={self.gamma}, fn={self.scaling_function}): "
+            f"calibrated base threshold tau_0 = {self.fitted_base_threshold:.6f}"
+        )
+        return self.fitted_base_threshold
+
+    def compute_dynamic_threshold(self, aoi_seconds: np.ndarray) -> np.ndarray:
+        """Compute point-wise decision threshold array for given AoI sequence.
+
+        Args:
+            aoi_seconds: Array of realized AoI in seconds.
+
+        Returns:
+            Array of scalar thresholds tau(AoI_t).
+        """
+        if self.fitted_base_threshold is None:
+            raise RuntimeError(
+                "AoIAdaptiveThreshold must be fitted before computing dynamic threshold."
+            )
+
+        aoi = np.asarray(aoi_seconds, dtype=np.float64)
+        aoi_clipped = np.maximum(aoi, 0.0)
+
+        if self.scaling_function == "sqrt":
+            drift_term = np.sqrt(aoi_clipped)
+        elif self.scaling_function == "log":
+            drift_term = np.log1p(aoi_clipped)
+        else:  # linear
+            drift_term = aoi_clipped
+
+        return self.fitted_base_threshold + self.gamma * drift_term
+
+    def apply_adaptive(self, scores: np.ndarray, aoi_seconds: np.ndarray) -> np.ndarray:
+        """Convert anomaly scores to binary predictions using dynamic AoI thresholds.
+
+        Args:
+            scores: Continuous anomaly scores.
+            aoi_seconds: Realized Age of Information for each sample.
+
+        Returns:
+            Binary numpy int32 array (1 = anomaly, 0 = normal).
+        """
+        sc = np.asarray(scores, dtype=np.float64)
+        dynamic_thresh = self.compute_dynamic_threshold(aoi_seconds)
+        return (sc >= dynamic_thresh).astype(np.int32)
+
+
 def get_threshold_selector(
     method: str = "percentile",
     **kwargs: Any,
@@ -146,7 +258,7 @@ def get_threshold_selector(
     """Factory function for instantiating threshold selectors.
 
     Args:
-        method: Name of strategy ('percentile', 'fixed', 'otsu').
+        method: Name of strategy ('percentile', 'fixed', 'otsu', 'aoi_adaptive').
         **kwargs: Method-specific hyperparameters.
 
     Returns:
@@ -161,7 +273,12 @@ def get_threshold_selector(
         return FixedThreshold(threshold=th)
     elif m == "otsu":
         return OtsuThreshold(n_bins=kwargs.get("n_bins", 256))
+    elif m in ["aoi_adaptive", "adaptive"]:
+        pct = kwargs.get("base_percentile", kwargs.get("percentile", 95.0))
+        gamma = kwargs.get("gamma", 0.05)
+        fn = kwargs.get("scaling_function", "sqrt")
+        return AoIAdaptiveThreshold(base_percentile=pct, gamma=gamma, scaling_function=fn)
     else:
         raise ValueError(
-            f"Unknown threshold method: '{method}'. Valid options: ['percentile', 'fixed', 'otsu']"
+            f"Unknown threshold method: '{method}'. Valid options: ['percentile', 'fixed', 'otsu', 'aoi_adaptive']"
         )
