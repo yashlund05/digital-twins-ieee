@@ -1,0 +1,62 @@
+[
+  {
+    "path": "experiments/runs/E4_RAW_VS_RESIDUAL_SEED42_20260930/metrics.json",
+    "sha256": "63e5b871d18830531d15e18e5a096587a32059790c17835cb538b32bc5659d5b",
+    "size_bytes": 2768,
+    "frozen_status": "FROZEN_DO_NOT_MODIFY"
+  },
+  {
+    "path": "experiments/runs/E5_STALENESS_SWEEP_CORRECTED_SEED42_20260930/metrics.json",
+    "sha256": "1b596aa8b94682cd573435dae24b065db060a3c277349f4ea3edc50a59fc005f",
+    "size_bytes": 67207,
+    "frozen_status": "FROZEN_DO_NOT_MODIFY"
+  },
+  {
+    "path": "experiments/runs/E6_JOINT_ANALYSIS_SEED42_20261002/H3_summary.csv",
+    "sha256": "cb2678cb939a65642f8c273b6a867ed890411b358a3a7e2a7df4cd47ed38bcb3",
+    "size_bytes": 1898,
+    "frozen_status": "FROZEN_DO_NOT_MODIFY"
+  },
+  {
+    "path": "experiments/runs/E10_MULTI_SEED_ANALYSIS_20261002/multiseed_h3_summary.csv",
+    "sha256": "23f9c80648f0207217a315dd940af12e3b3317f1cbf01d2147ec70f1bb0e3b97",
+    "size_bytes": 906,
+    "frozen_status": "FROZEN_DO_NOT_MODIFY"
+  },
+  {
+    "path": "experiments/runs/E11_PHASE11_20261002/table_01_reproducibility.csv",
+    "sha256": "1a97f2c0116271f52de4352fc4e8e3cf29c696266e5caa30b904373ccf3f7332",
+    "size_bytes": 398,
+    "frozen_status": "FROZEN_DO_NOT_MODIFY"
+  },
+  {
+    "path": "experiments/runs/E11_PHASE11_20261002/table_02_ablation_results.csv",
+    "sha256": "7463169168018e7c409a1251f1e2765a7ff682d79e9a9391c16614b8ce79a394",
+    "size_bytes": 14317,
+    "frozen_status": "FROZEN_DO_NOT_MODIFY"
+  },
+  {
+    "path": "experiments/runs/E12_PUBLICATION_ARTIFACTS_20261002/manifest.json",
+    "sha256": "6e6ddf180c04dc7ab9c0dd7b924537fa7d4aa103cbc0628a70bc39812520d248",
+    "size_bytes": 13169,
+    "frozen_status": "FROZEN_DO_NOT_MODIFY"
+  },
+  {
+    "path": "experiments/runs/E13_MANUSCRIPT_SUBMISSION_20261002/manifest.json",
+    "sha256": "f71b01725e4af34c3ea80b85be52c2c4946cc10272944834eab3ec4a48413f56",
+    "size_bytes": 5230,
+    "frozen_status": "FROZEN_DO_NOT_MODIFY"
+  },
+  {
+    "path": "experiments/runs/E14_FINAL_SCIENTIFIC_AUDIT_20261002/manifest.json",
+    "sha256": "ee78c919b9fe4f7bdc1565c6dff933a28cedf699ea35ea12432f63a06a98442d",
+    "size_bytes": 8611,
+    "frozen_status": "FROZEN_DO_NOT_MODIFY"
+  },
+  {
+    "path": "experiments/runs/E14_FINAL_SCIENTIFIC_AUDIT_20261002/claim_registry_final.json",
+    "sha256": "3da570eea6a79c9dff48507c181ab1c1278b26e88ee30d2a6850ea8d5a89f954",
+    "size_bytes": 10591,
+    "frozen_status": "FROZEN_DO_NOT_MODIFY"
+  }
+]

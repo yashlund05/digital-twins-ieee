@@ -1,0 +1,9 @@
+Category,Current_Level,Required_TSG_Level,Severity,Priority,Required_Action
+References,6 placeholders,100% verified,CRITICAL,P0,Populate real citations in references.bib
+Threshold_Portability,Fails on 4 seeds (FPR=1.0),Robust across seeds,CRITICAL,P0,Implement AoI-adaptive thresholding
+Telemetry_Noise,Clean simulation,1% sensor noise,HIGH,P1,Benchmark under 40dB Gaussian noise
+Cliff_Resolution,1s to 5s jump,Fine grid around cliff,HIGH,P1,Sweep dt in {1..5}s
+Seed_Count,N=5 seeds,N=10 seeds,MEDIUM,P1,Expand seed grid or freeze weights
+ML_Baselines,IF and LSTM-AE,OC-SVM and GRU,MEDIUM,P1,Add OC-SVM and GRU baselines
+Metric_Scale,Bounded vs Unbounded,Scale-invariant check,MEDIUM,P1,Add normalized RMSE vs PR-AUC analysis
+Feeder_Realism,Passive loads only,Active DER context,LOW-MED,P2,Discuss DER penetration impact

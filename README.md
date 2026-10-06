@@ -75,11 +75,11 @@ The following validated metrics form the authoritative ground truth of the study
 | **Residual Anomaly Detection** | LSTM-AE $F_1$ Score | **$0.977956$** | **$0.186214$** | **$-80.9\%$** catastrophic collapse |
 | **Raw Anomaly Detection** | LSTM-AE $F_1$ Score | **$0.538606$** | **$0.538606$** | Invariant to communication staleness |
 | **Representation Advantage** | Residual vs. Raw $\Delta F_1$ | **$+0.439350$** | **$-0.352392$** | **Representation Inversion** at $\Delta t \ge 5\,$s |
-| **Short-Term Load Forecasting** | LSTM Model MAPE | **$8.95\%$** | **$12.31\%$** | $+37.5\%$ relative error inflation |
-| **Forecasting Baseline** | XGBoost Model MAPE | **$10.51\%$** | **$13.44\%$** | Robust baseline under drift |
-| **Formal Hypothesis $H_3$** | Multi-Seed Slope $\Delta\beta$ | — | **$-1.2236$** | **`NOT SUPPORTED`** ($p = 1.000$) |
-| **Statistical Robustness** | Bootstrap 95% CI of $\Delta\beta$ | — | **$[-1.3463, -1.1134]$** | Confirmed across all 5 seeds |
-| **Operational AoI Cliff** | In-Bin Transition Threshold | — | **$\text{AoI}^* \approx 5.0\,$s** | $16\times$ residual norm jump |
+| **Short-Term Load Forecasting** | LSTM Model MAPE | **$8.95\%$** | **$59.52\%\text{--}62.29\%$** | Severe degradation under stale autoregressive lags |
+| **Forecasting Baseline** | XGBoost Model MAPE | **$9.06\%$** | **$61.69\%\text{--}64.77\%$** | Monotonic error scaling across delays |
+| **Formal Hypothesis $H_3$** | Multi-Seed Slope $\Delta\beta$ | — | **$-1.2236$** | **`NOT SUPPORTED`** ($p = 1.000$, confirmed in 8/8 formulations) |
+| **Statistical Robustness** | Bootstrap 95% CI of $\Delta\beta$ | — | **$[-1.3463, -1.1134]$** | Confirmed across all 10 independent seeds |
+| **Operational AoI Cliff** | In-Bin Transition Threshold | — | **$\text{AoI}^* \in [2.4\text{s}, 4.1\text{s}]$** | Feeder impedance-dependent operational transition zone |
 
 ---
 

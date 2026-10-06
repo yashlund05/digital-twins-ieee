@@ -1,0 +1,13 @@
+Environment Lock & Reproduction Specifications:
+Timestamp: 2026-10-06
+OS: Windows 11 (10.0.26200)
+Architecture: AMD64
+Python: 3.14.6 (tags/v3.14.6:c63aec6, Jun 10 2026, 10:26:10) [MSC v.1944 64 bit (AMD64)]
+PyTorch: 2.13.0+cpu
+Scikit-Learn: 1.9.0
+XGBoost: 3.4.1
+Pandas: 2.3.3
+NumPy: 2.4.6
+SciPy: 1.18.0
+Hardware: x86_64 Multi-Core CPU
+Deterministic Seed Control: random, numpy.random, torch.manual_seed, torch.cuda.manual_seed_all

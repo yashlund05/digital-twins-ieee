@@ -1,0 +1,72 @@
+experiments:
+  - experiment_id: E16_ADAPTIVE_THRESHOLD_RECOVERY
+    objective: "Restore anomaly detection functionality across seeds and mitigate the AoI=5s cliff using dynamic AoI-adaptive thresholding"
+    research_question: "Can an AoI-dependent dynamic threshold tau(AoI) = tau_0 + gamma * sqrt(AoI) maintain precision and prevent catastrophic F1 collapse under staleness?"
+    current_gap: "Static threshold calibrated on Seed 42 produces 100% false alarms (FPR=1.0) on Seeds 123..101112 and collapses to F1=0.108 at dt=5s."
+    hypothesis: "AoI-adaptive thresholding maintains F1 > 0.65 across dt in {1, 5, 15}s without increasing false alarms on fresh data."
+    baseline: "Static 95th percentile validation threshold (E4-4 / E5)"
+    treatment: "AoI-adaptive threshold tau(AoI) with gamma calibrated on validation split"
+    dataset: "Pecan Street mapped to IEEE 33-bus (test split)"
+    seeds: [42, 123, 456, 789, 101112]
+    metrics: [Precision, Recall, F1, FPR, PR-AUC]
+    statistical_test: "Paired Wilcoxon signed-rank test across seeds"
+    success_criteria: "F1 > 0.60 at dt=5s; FPR < 0.05 across all 5 seeds at baseline"
+    failure_criteria: "F1 < 0.30 at dt=5s or baseline FPR > 0.10"
+    publication_value: "HIGH — Transforms the paper from merely documenting a collapse to providing an engineering solution"
+    risk: "LOW"
+    computational_cost: "LOW (post-processing on existing reconstruction scores)"
+    priority: "P0"
+
+  - experiment_id: E16_HIGH_RESOLUTION_CLIFF_SWEEP
+    objective: "Discretize the transition zone between dt=1s and dt=5s to accurately pinpoint the operational change point"
+    research_question: "What is the exact functional change point AoI* where residual drift exceeds anomaly discriminability?"
+    current_gap: "Grid jumps from 1s to 5s with zero data at 2s, 3s, 4s, leaving the exact cliff threshold unverified."
+    hypothesis: "The operational performance cliff occurs between dt=2.5s and 3.5s under hold-last-state extrapolation."
+    baseline: "dt in {0, 1, 5, 15, 60, 300}s from E5"
+    treatment: "Fine grid dt in {0, 1, 2, 3, 4, 5, 8, 10}s"
+    dataset: "Pecan Street mapped to IEEE 33-bus (test split)"
+    seeds: [42, 123, 456, 789, 101112]
+    metrics: [LSTM-AE F1, LSTM MAPE, Mean Residual Norm]
+    statistical_test: "Segmented two-phase change-point regression with bootstrap CIs"
+    success_criteria: "Narrow 95% CI on change point (width < 1.5s)"
+    failure_criteria: "No statistically significant change point detected"
+    publication_value: "HIGH — Directly resolves Reviewer 3's discretization concern"
+    risk: "LOW"
+    computational_cost: "MEDIUM (approx 30 mins power flow + inference)"
+    priority: "P1"
+
+  - experiment_id: E16_TELEMETRY_NOISE_ROBUSTNESS
+    objective: "Assess degradation dynamics under realistic telemetry measurement noise"
+    research_question: "Does measurement noise alter the representation inversion boundary or the H3 slope contrast?"
+    current_gap: "All experiments use clean OpenDSS simulation; real power grids have CT/PT errors."
+    hypothesis: "Measurement noise shifts the inversion threshold slightly leftward but preserves the sign of Delta beta."
+    baseline: "Noise-free E5 sweep"
+    treatment: "Additive Gaussian sensor noise with SNR = 40 dB and 30 dB"
+    dataset: "Pecan Street mapped to IEEE 33-bus"
+    seeds: [42, 123, 456, 789, 101112]
+    metrics: [F1, MAPE, Delta beta]
+    statistical_test: "Repeated measures ANOVA comparing noise vs noiseless slopes"
+    success_criteria: "Sign consistency of Delta beta < 0 maintained under 40 dB noise"
+    failure_criteria: "Delta beta flips sign or models fail to converge"
+    publication_value: "VERY HIGH — Silences Reviewer 1's physical realism concern"
+    risk: "MEDIUM"
+    computational_cost: "MEDIUM"
+    priority: "P1"
+
+  - experiment_id: E16_ADDITIONAL_ML_BASELINES
+    objective: "Implement One-Class SVM for anomaly detection and GRU for load estimation"
+    research_question: "Do classical shallow detectors and alternative recurrent forecasters exhibit identical degradation dynamics?"
+    current_gap: "Missing OC-SVM and GRU baselines commonly requested by ML reviewers."
+    hypothesis: "OC-SVM and GRU exhibit matching degradation profiles to Isolation Forest and LSTM, confirming findings are model-agnostic."
+    baseline: "Isolation Forest and LSTM from E4/E5"
+    treatment: "One-Class SVM (RBF kernel) and Gated Recurrent Unit (GRU)"
+    dataset: "Pecan Street mapped to IEEE 33-bus"
+    seeds: [42, 123, 456, 789, 101112]
+    metrics: [F1, PR-AUC, MAPE, RMSE]
+    statistical_test: "Paired degradation rate regression against primary models"
+    success_criteria: "OC-SVM and GRU confirm representation inversion and H3 non-support"
+    failure_criteria: "Divergent degradation dynamics without physical explanation"
+    publication_value: "MEDIUM-HIGH — Prevents baseline rejection from Reviewer 2"
+    risk: "LOW"
+    computational_cost: "LOW-MEDIUM"
+    priority: "P1"

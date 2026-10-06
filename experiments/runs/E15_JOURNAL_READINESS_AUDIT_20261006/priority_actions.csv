@@ -1,0 +1,8 @@
+Priority,Action_ID,Task_Description,Expected_Impact,Estimated_Effort
+P0,ACT-01,Replace bibliography placeholders in references.bib with real papers,Eliminates instant desk-rejection risk,1-2 hours
+P0,ACT-02,Implement AoI-adaptive thresholding to fix FPR=1.0 on seeds 123..101112,Restores multi-seed AD generality,3-4 hours
+P1,ACT-03,Sweep dt in {1 2 3 4 5}s to pinpoint operational change point,Resolves transition resolution critique,2 hours
+P1,ACT-04,Evaluate degradation under 40dB telemetry Gaussian noise,Proves realism to power system reviewers,3 hours
+P1,ACT-05,Add One-Class SVM and GRU baselines,Pre-empts ML reviewer baseline objections,3 hours
+P2,ACT-06,Add scale-invariant bounded degradation comparison for H3,Strengthens mathematical defensibility,2 hours
+P2,ACT-07,Pin Python 3.10/3.11 environment in Dockerfile,Guarantees long-term execution stability,2 hours

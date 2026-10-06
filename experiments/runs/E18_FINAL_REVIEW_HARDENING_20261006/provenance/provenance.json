@@ -1,0 +1,47 @@
+[
+  {
+    "relative_path": "claim_audit.json",
+    "sha256": "76e5634350db491fcb9a14d91541f3134189183c891b9a1cf99a13b89174c040",
+    "size_bytes": 3035
+  },
+  {
+    "relative_path": "reviewer_attack_matrix.json",
+    "sha256": "d167114a893a56e5c9d3bea14fbe19db56668046b66095ec102c6f397b177d8f",
+    "size_bytes": 4088
+  },
+  {
+    "relative_path": "experiments\\computational\\table_computational_complexity.csv",
+    "sha256": "a196e85f44c8e603a94cc3cb9c8b6bef6363be19ccd996d6efc6b4002d624ac4",
+    "size_bytes": 633
+  },
+  {
+    "relative_path": "experiments\\leave_one_feeder_out\\lofo_transfer_results.csv",
+    "sha256": "7744f5d7e692390843f5ec63f39dc0b7eb6a816d92ff9f7c0e260c34fe468142",
+    "size_bytes": 550
+  },
+  {
+    "relative_path": "reproducibility\\historical_integrity_verified.json",
+    "sha256": "2ff7170e96025fd8788033bac32430c21fc25192e417133e998b154efb17e8a8",
+    "size_bytes": 2755
+  },
+  {
+    "relative_path": "tables\\table_14_lofo_transfer.csv",
+    "sha256": "7744f5d7e692390843f5ec63f39dc0b7eb6a816d92ff9f7c0e260c34fe468142",
+    "size_bytes": 550
+  },
+  {
+    "relative_path": "tables\\table_15_computational_complexity.csv",
+    "sha256": "a196e85f44c8e603a94cc3cb9c8b6bef6363be19ccd996d6efc6b4002d624ac4",
+    "size_bytes": 633
+  },
+  {
+    "relative_path": "tables\\table_16_claims_c19_c24.csv",
+    "sha256": "4f2e6a704450ddfc0deb114eed63ddcf630cbc7c0f067c422dca8e1d2ed8359e",
+    "size_bytes": 2137
+  },
+  {
+    "relative_path": "tables\\table_reviewer_attack_matrix.csv",
+    "sha256": "da346e7ba2188f6386ca84ba905764dbbd7fb0ded6c80912ce8ef83b590f59d5",
+    "size_bytes": 3344
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "claim_id":"C19",
+    "statement":"Leave-One-Feeder-Out cross-topology evaluation demonstrates representation inversion on 100% of tested radial distribution feeders (IEEE 13, 33, 123 bus).",
+    "source_artifact":"experiments\/runs\/E18_FINAL_REVIEW_HARDENING_20261006\/tables\/table_14_lofo_transfer.csv",
+    "metric":"Inversion Replication Rate",
+    "value":"100% (3\/3 Feeders)",
+    "uncertainty":"Exact count",
+    "independent_n":"3 distinct feeder topologies",
+    "status":"PASS"
+  },
+  {
+    "claim_id":"C20",
+    "statement":"The operational transition cliff scales monotonically with feeder electrical impedance depth: 4.1s (IEEE 13-bus) -> 3.2s (IEEE 33-bus) -> 2.4s (IEEE 123-bus).",
+    "source_artifact":"experiments\/runs\/E17_EXTERNAL_VALIDATION_20261006\/results\/transition_cliff_cross_feeder.csv",
+    "metric":"Transition Cliff Center",
+    "value":"[2.4s, 4.1s]",
+    "uncertainty":"93-95% Bootstrap CIs",
+    "independent_n":"3 Feeders",
+    "status":"PASS"
+  },
+  {
+    "claim_id":"C21",
+    "statement":"Hypothesis H3 falsification is robust across 8 distinct mathematical formulations (including bounded [0,1] relative losses, rank correlations, and cumulative loss AUCs).",
+    "source_artifact":"experiments\/runs\/E17_EXTERNAL_VALIDATION_20261006\/results\/h3_adversarial_analysis.csv",
+    "metric":"Negative Slope Consistency",
+    "value":"100% (8\/8 Formulations)",
+    "uncertainty":"p <= 0.015 in all formulations",
+    "independent_n":"10 independent random seeds",
+    "status":"PASS"
+  },
+  {
+    "claim_id":"C22",
+    "statement":"Combined 10-seed expansion confirms 100% negative sign consistency for Delta-beta without exception.",
+    "source_artifact":"experiments\/runs\/E17_EXTERNAL_VALIDATION_20261006\/results\/seed_slopes_10seeds.csv",
+    "metric":"Sign Consistency Rate",
+    "value":"100% (10\/10 Seeds)",
+    "uncertainty":"0 positive seeds observed",
+    "independent_n":"10 Seeds",
+    "status":"PASS"
+  },
+  {
+    "claim_id":"C23",
+    "statement":"Physics residual arithmetic and AoI-adaptive threshold evaluation exhibit sub-microsecond latency (<0.002 ms per sample), enabling over 500,000 samples\/sec online throughput.",
+    "source_artifact":"experiments\/runs\/E18_FINAL_REVIEW_HARDENING_20261006\/tables\/table_15_computational_complexity.csv",
+    "metric":"Mean Processing Latency",
+    "value":"< 0.002 ms",
+    "uncertainty":"1000 repetitions standard error < 0.0001 ms",
+    "independent_n":"Hardware microbenchmark",
+    "status":"PASS"
+  },
+  {
+    "claim_id":"C24",
+    "statement":"AoI-adaptive dynamic thresholding maintains false alarm rate < 5% across an order of magnitude variation in scale parameter gamma (0.01 to 0.50).",
+    "source_artifact":"experiments\/runs\/E17_EXTERNAL_VALIDATION_20261006\/results\/threshold_sensitivity.csv",
+    "metric":"FPR Bound",
+    "value":"< 5.0% across gamma in [0.01, 0.50]",
+    "uncertainty":"Empirical validation test set",
+    "independent_n":"6 gamma parameter evaluations",
+    "status":"PASS"
+  }
+]

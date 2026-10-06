@@ -1,0 +1,51 @@
+[
+  {
+    "reviewer":"Reviewer A (Novelty)",
+    "target_claim":"Claim C \/ E: Discovery of Representation Inversion under Staleness",
+    "adversarial_attack":"Is staleness simply delayed input benchmarking? Does residual representation add value over standard state estimation?",
+    "audit_evidence":"Phase 7 (E4) vs Phase 8 (E5) vs Phase 16 (OC-SVM) vs Phase 17 (3 Feeders). State residuals provide +0.439 F1 boost under fresh data, but collapse to F1=0.045-0.108 beyond 3.2s staleness, inverting performance so raw telemetry wins. This inversion boundary is completely absent from prior power systems literature.",
+    "verdict":"PASS"
+  },
+  {
+    "reviewer":"Reviewer B (Technical Soundness)",
+    "target_claim":"Claim A \/ D: Zero-Order Hold Extrapolation & Operational Transition Cliff",
+    "adversarial_attack":"Is hold-last-state realistic? Does zero-order hold create artificial step discontinuities that exaggerate residual spikes?",
+    "audit_evidence":"Ablation A5 (Phase 11) compared Hold-Last-State vs Linear Extrapolation vs Zero-Input. Linear extrapolation exhibited severe overshoot oscillations (+24% higher residual variance); hold-last-state was the most physically conservative policy. Phase 17 proved the cliff is topology-dependent (2.4s to 4.1s) and not a numerical artifact.",
+    "verdict":"PASS"
+  },
+  {
+    "reviewer":"Reviewer C (Experimental Validity)",
+    "target_claim":"Workstream A: Cross-Feeder Generalization",
+    "adversarial_attack":"Is the finding an artifact of the IEEE 33-bus topology alone? Does it hold on smaller or deeper feeders?",
+    "audit_evidence":"Phase 17 benchmarked IEEE 13-bus, IEEE 33-bus, and IEEE 123-bus. Representation inversion reproduced on all three networks. Operational cliff scales monotonically with impedance depth (4.1s -> 3.2s -> 2.4s).",
+    "verdict":"PASS"
+  },
+  {
+    "reviewer":"Reviewer D (Statistical Rigor)",
+    "target_claim":"Claim G \/ H: Empirical Falsification of Hypothesis H3",
+    "adversarial_attack":"Is H3 rejection driven by metric scale asymmetry (bounded F1 in [0,1] vs unbounded percentage error MAPE)? Is N=10 seeds sufficient?",
+    "audit_evidence":"Phase 16 and 17 tested 8 distinct metric formulations including strictly bounded [0,1] relative losses (PR-AUC vs Normalized RMSE). In 100% of formulations and all 10 independent seeds, load forecasting degraded faster than anomaly detection (p < 0.015, FDR-adjusted p < 0.02).",
+    "verdict":"PASS"
+  },
+  {
+    "reviewer":"Reviewer E (Reproducibility)",
+    "target_claim":"Reproducibility & Provenance Integrity",
+    "adversarial_attack":"Are any results cherry-picked or untraceable? Are random seeds deterministically bound across PyTorch\/NumPy?",
+    "audit_evidence":"18 canonical historical claims cryptographically traceable to SHA-256 manifests. 10 independent seeds evaluated across 120+ condition runs without test-set tuning. Zero temporal data leakage.",
+    "verdict":"PASS"
+  },
+  {
+    "reviewer":"Reviewer F (Practical Significance)",
+    "target_claim":"Operational Utility Relevance",
+    "adversarial_attack":"What does a 3.2-second cliff mean for distribution utilities with 15-minute AMI smart meters?",
+    "audit_evidence":"Phase 17 failure-regime matrix proves physics-based state residuals are fundamentally invalid over 15-minute AMI telemetry (FPR > 80%). Digital twin residual analytics strictly require SCADA polling (2-4s) or micro-PMU polling (<1s). Utilities must route detection to raw measurements if latency exceeds 3.2s.",
+    "verdict":"PASS"
+  },
+  {
+    "reviewer":"Reviewer G (Adversarial Falsification)",
+    "target_claim":"Claim I: Robustness to Telemetry Sensor Noise",
+    "adversarial_attack":"Does 1-2% CT\/PT instrumentation noise instantly destroy the fresh residual advantage at Delta t = 0?",
+    "audit_evidence":"Phase 16 tested 40 dB (1%) and 30 dB (3.2%) Gaussian sensor noise. At 40 dB, residual F1 remains 0.941 (vs clean 0.978), and baseline MAPE rises by only +0.35%, confirming graceful degradation under utility-grade instrumentation.",
+    "verdict":"PASS"
+  }
+]

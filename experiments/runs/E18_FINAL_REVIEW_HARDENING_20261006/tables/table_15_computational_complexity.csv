@@ -1,0 +1,6 @@
+component,task,parameters,mean_latency_ms,throughput_samples_per_sec,memory_overhead_kb,complexity_class
+Physics Residual Engine,State Telemetry Subtraction,0,0.00041,2460630,2.4,O(B) [B = number of buses]
+AoI-Adaptive Dynamic Threshold,Online Anomaly Boundary Expansion,2,0.00128,779787,1.2,O(B)
+XGBoost Load Forecaster,Short-Term Feeder Load Estimation,750,0.48,2084,450.0,O(T * D) [Trees * Depth]
+LSTM Autoencoder Detector,Temporal Sequence Reconstruction,68240,0.609,1641,1250.0,O(L * H^2) [Layers * Hidden^2]
+One-Class SVM Detector,Kernel Boundary Anomaly Classification,105,0.084,11900,180.0,O(S_v * B) [Support Vectors]

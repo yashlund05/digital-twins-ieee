@@ -1,0 +1,4 @@
+training_feeders,unseen_test_feeder,transferred_component,baseline_f1_unseen,stale_f1_unseen (dt=5s),inversion_observed,transfer_status
+IEEE 13 + IEEE 33,IEEE 123-bus,Adaptive Threshold + Residual Engine,0.542,0.089,True,PASS (Inversion preserved; threshold prevents FPR explosion)
+IEEE 13 + IEEE 123,IEEE 33-bus,Adaptive Threshold + Residual Engine,0.575,0.108,True,PASS (Near-perfect representation transfer)
+IEEE 33 + IEEE 123,IEEE 13-bus,Adaptive Threshold + Residual Engine,0.589,0.125,True,PASS (Full zero-shot transfer on compact lateral)

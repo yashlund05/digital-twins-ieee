@@ -1,0 +1,33 @@
+{
+  "venue": "IEEE Transactions on Smart Grid",
+  "verdict": "READY_WITH_MAJOR_REVISION",
+  "score": 68,
+  "scores": {
+    "novelty": 72,
+    "scientific_significance": 75,
+    "experimental_design": 75,
+    "dataset_quality": 62,
+    "digital_twin_validity": 55,
+    "ml_methodology": 65,
+    "anomaly_detection": 60,
+    "forecasting": 70,
+    "statistics": 68,
+    "generalization": 45,
+    "reproducibility": 92,
+    "figures": 80,
+    "tables": 78,
+    "manuscript": 70,
+    "ieee_compliance": 60
+  },
+  "p0_blockers": [
+    "Unverified citation placeholders in references.bib (6 out of 10 references have [VERIFY] tags)",
+    "Threshold portability defect causing 100% false alarms (FPR=1.0) on Seeds 123, 456, 789, 101112"
+  ],
+  "p1_gaps": [
+    "Absence of measurement noise and parameter mismatch in OpenDSS simulation",
+    "Resolution deficit around critical change-point transition (missing dt in {2, 3, 4}s)",
+    "Sample size limitation of N=5 seeds for ANOVA variance decomposition",
+    "Missing One-Class SVM and GRU baselines",
+    "Potential metric-scale artifact in H3 log-linear comparison"
+  ]
+}
