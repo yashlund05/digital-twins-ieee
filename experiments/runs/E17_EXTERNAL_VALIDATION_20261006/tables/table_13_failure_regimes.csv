@@ -1,0 +1,6 @@
+operational_regime,synchronization_bounds,physics_residual_status,raw_telemetry_status,load_forecasting_status,recommended_action
+Fresh Synchronized,"AoI < 1.0 s, P_drop = 0",HIGH FIDELITY (F1: 0.978),ACCEPTABLE (F1: 0.539),ACCURATE (MAPE: 8.95%),Rely 100% on Physics-Based State Residuals
+Low Staleness (Pre-Cliff),1.0 s <= AoI < 2.5 s,MODERATE DRIFT (F1: 0.84 - 0.58),ROBUST (F1: 0.539),MILD INFLATION (MAPE: 9.6 - 11.2%),Maintain Residuals; Activate AoI-Adaptive Thresholding
+Transition Cliff Zone,2.5 s <= AoI <= 4.0 s,RAPID CONTAMINATION (F1: 0.54 -> 0.12),OUTPERFORMS RESIDUALS (F1: 0.539),ACCELERATED DECAY (MAPE: 11.2 - 13.4%),TRIGGER DUAL-MODE SWITCHING: Route detection to Raw Telemetry
+Severe Staleness (SCADA Tier),AoI > 5.0 s (up to 300 s),"COMPLETE FAILURE (F1 < 0.10, FPR > 0.80)",ONLY VIABLE DETECTOR (F1: 0.539),SATURATED ERROR (MAPE ~ 62%),DISABLE Physics Residuals; Revert to Pure Data-Driven Analytics
+High Telemetry Noise,SNR < 30 dB (Sensor Error > 3%),NOISE FLOOR INFLATION (F1: 0.24 - 0.09),MODERATELY RESILIENT,BASE ERROR INCREASE (+1.1% to +1.4% MAPE),Apply Pre-Filtering & Expand Adaptive Threshold Bandwidth

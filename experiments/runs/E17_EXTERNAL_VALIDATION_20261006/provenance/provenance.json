@@ -1,0 +1,112 @@
+[
+  {
+    "relative_path": "figures\\fig_10_cross_feeder_transition.pdf",
+    "sha256": "62181a9db596a03cdfb49d1f2c326178475ec5b0c9b5b2f03d6a100e226d8257",
+    "size_bytes": 22012
+  },
+  {
+    "relative_path": "figures\\fig_10_cross_feeder_transition.png",
+    "sha256": "07b7f6024ec8aa1d78c011cf111c0664ad8d971e117971f42702669e9c9f4ebe",
+    "size_bytes": 157918
+  },
+  {
+    "relative_path": "figures\\fig_11_threshold_sensitivity.pdf",
+    "sha256": "8559b6c8464e9f8a0d7824dcb87454d0c98afe2f47a62f30c67e41f848639120",
+    "size_bytes": 19493
+  },
+  {
+    "relative_path": "figures\\fig_11_threshold_sensitivity.png",
+    "sha256": "689c0504cec7e7feaf88ff67a77669b7ddc4e03a75f0cb9eda9d6661ef15e6e3",
+    "size_bytes": 164976
+  },
+  {
+    "relative_path": "figures\\fig_12_h3_adversarial_comparison.pdf",
+    "sha256": "576c1edf890a302a1d1b77ac65242f1eb69135ad6e6fc1db53ceffdedee4eb75",
+    "size_bytes": 21063
+  },
+  {
+    "relative_path": "figures\\fig_12_h3_adversarial_comparison.png",
+    "sha256": "1e976c0f37024c333ea3a10f9266bc0ba1642c2b130daddb5a4e29025c441115",
+    "size_bytes": 109431
+  },
+  {
+    "relative_path": "historical_integrity\\frozen_phase_registry.json",
+    "sha256": "619a6d6ec66db2318409d1849c3e1cc06c73241a2486bab0b53e3392f5b86299",
+    "size_bytes": 301
+  },
+  {
+    "relative_path": "historical_integrity\\historical_hashes.json",
+    "sha256": "8320e23b54d24c82b0f370a7bb87a372951e63729eeecebf0c3b911e975d79f2",
+    "size_bytes": 4309
+  },
+  {
+    "relative_path": "results\\cross_feeder_results.csv",
+    "sha256": "374c4238281f07e8425a0678742064a53013bfaeee5e0d4b5adf89b5a28ac74e",
+    "size_bytes": 11770
+  },
+  {
+    "relative_path": "results\\cross_feeder_summary.csv",
+    "sha256": "a0addd9d5906f7722467ea0e4da06ce2d6724d84514769b232d04a755272c1e5",
+    "size_bytes": 3197
+  },
+  {
+    "relative_path": "results\\failure_regime_matrix.csv",
+    "sha256": "f7cadd1d64013a056e86c0664f4ffb41b75e4a5eb1ab4ae9a7a0220d4651f6f1",
+    "size_bytes": 1142
+  },
+  {
+    "relative_path": "results\\h3_adversarial_analysis.csv",
+    "sha256": "cbeb096fa052fafb8eaba9ce0f63292949b7ad72914c18f5138b57406897b9f2",
+    "size_bytes": 738
+  },
+  {
+    "relative_path": "results\\seed_results_10seeds.csv",
+    "sha256": "eeef35ed00d4bf8cc3ae0b303477d92b03d48eaae46d4867945bb7a1745c9f8c",
+    "size_bytes": 5367
+  },
+  {
+    "relative_path": "results\\seed_slopes_10seeds.csv",
+    "sha256": "bfaa6f41fad99ec8124923bb96754f5ddb5d2e2ed87011dd956ef6be42405dd7",
+    "size_bytes": 873
+  },
+  {
+    "relative_path": "results\\threshold_sensitivity.csv",
+    "sha256": "ac7d6b926b1a9a5d838b2b41f1614324781d5857375a00406bbf4e38d70f225a",
+    "size_bytes": 3559
+  },
+  {
+    "relative_path": "results\\transition_cliff_cross_feeder.csv",
+    "sha256": "6a3f493a16340ea12f9baae677cdd295e518c580109d4446d0a1883d1e86900b",
+    "size_bytes": 208
+  },
+  {
+    "relative_path": "tables\\table_08_cross_feeder.csv",
+    "sha256": "e200303c6c7e552c9b8560b2d4dc545fd49904914733e76830b73e28e4a4ec66",
+    "size_bytes": 3201
+  },
+  {
+    "relative_path": "tables\\table_09_seed_results.csv",
+    "sha256": "3e4cf3e8241d6cda96edf6d881a40169bc4eee2cc7979750b1d6e87b1a73007e",
+    "size_bytes": 839
+  },
+  {
+    "relative_path": "tables\\table_10_threshold_sensitivity.csv",
+    "sha256": "4bef4c0defa10e795d15f32d0e28d5bf83b3a59965b64d1593cb86d27ff688c1",
+    "size_bytes": 3432
+  },
+  {
+    "relative_path": "tables\\table_11_cliff_estimates.csv",
+    "sha256": "6a3f493a16340ea12f9baae677cdd295e518c580109d4446d0a1883d1e86900b",
+    "size_bytes": 208
+  },
+  {
+    "relative_path": "tables\\table_12_h3_adversarial.csv",
+    "sha256": "cbeb096fa052fafb8eaba9ce0f63292949b7ad72914c18f5138b57406897b9f2",
+    "size_bytes": 738
+  },
+  {
+    "relative_path": "tables\\table_13_failure_regimes.csv",
+    "sha256": "f7cadd1d64013a056e86c0664f4ffb41b75e4a5eb1ab4ae9a7a0220d4651f6f1",
+    "size_bytes": 1142
+  }
+]

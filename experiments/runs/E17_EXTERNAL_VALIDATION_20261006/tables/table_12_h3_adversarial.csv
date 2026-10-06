@@ -1,0 +1,9 @@
+formulation_id,description,mean_delta_beta,h3_decision,p_value
+M1_Original_LogLinear,F1 log loss vs MAPE log growth,-1.2236,NOT_SUPPORTED,1.0
+M2_Bounded_Relative,1 - PR_AUC/PR_AUC_0 vs 1 - RMSE_0/RMSE,-0.1001,NOT_SUPPORTED,1.0
+M3_Absolute_Drop,Absolute F1 loss vs Absolute MAPE rise,-0.8842,NOT_SUPPORTED,1.0
+M4_Relative_Drop,Relative F1 drop vs Relative MAPE rise,-1.145,NOT_SUPPORTED,1.0
+M5_Rank_Correlation,"Spearman rho(AoI, AD) vs rho(AoI, LE)",-0.215,NOT_SUPPORTED,0.985
+M6_Area_Under_Loss_Curve,Cumulative loss trapezoid AD vs LE,-0.342,NOT_SUPPORTED,1.0
+M7_PR_AUC_vs_MAPE,PR-AUC degradation slope vs MAPE slope,-0.954,NOT_SUPPORTED,1.0
+M8_ROC_AUC_vs_RMSE,ROC-AUC degradation slope vs RMSE slope,-0.8781,NOT_SUPPORTED,1.0
