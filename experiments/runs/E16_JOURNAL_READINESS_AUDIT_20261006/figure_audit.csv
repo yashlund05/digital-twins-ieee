@@ -1,0 +1,9 @@
+figure_id,title,source,recommendation,notes
+Fig 01,System Architecture,fig_01_source.csv,KEEP,High-level CPS workflow
+Fig 02,Baseline Reconciliation Concordance,fig_02_source.csv,KEEP,Verifies E4 vs E11 reproduction
+Fig 03,AD F1 Degradation Surface,fig_03_source.csv,KEEP,Core staleness x drop surface
+Fig 04,Load Forecasting Error Scaling,fig_04_source.csv,KEEP,Monotonic MAPE scaling
+Fig 05,Representation Inversion Boundary,fig_05_source.csv,KEEP,High-impact novel finding
+Fig 06,Multi-Seed Uncertainty Trajectories,fig_06_source.csv,REVISE,Add per-seed individual trajectories
+Fig 07,AoI Residual Transient Dynamics,fig_07_source.csv,KEEP,Novel intra-epoch analysis
+Fig 08,Forest Plot of Delta-beta (H3),fig_08_source.csv,KEEP,Clear visual rejection of H3

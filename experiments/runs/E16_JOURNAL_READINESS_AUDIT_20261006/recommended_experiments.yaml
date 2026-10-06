@@ -1,0 +1,18 @@
+# Recommended Experiments YAML
+experiments:
+  - id: EXP-16-01
+    name: AoI-Adaptive Thresholding & Seed Generalization
+    priority: P0
+    objective: Eliminate FPR=1.0 artifact across seeds 123..101112
+  - id: EXP-16-02
+    name: High-Resolution Transition Sweep
+    priority: P1
+    objective: Discretize dt in {1, 2, 3, 4, 5}s to pinpoint operational cliff AoI*
+  - id: EXP-16-03
+    name: Telemetry Sensor Noise Robustness
+    priority: P1
+    objective: Benchmark performance under 40dB Gaussian sensor noise
+  - id: EXP-16-04
+    name: Additional ML Baselines (OC-SVM and GRU)
+    priority: P1
+    objective: Add classical shallow detector and modern recurrent forecaster

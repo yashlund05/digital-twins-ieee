@@ -1,0 +1,45 @@
+{
+  "journal": "IEEE Transactions on Smart Grid",
+  "rubric_version": "1.0.0",
+  "total_score": 68,
+  "max_score": 100,
+  "readiness_level": "LEVEL 1",
+  "submission_status": "MAJOR_REVISION_REQUIRED",
+  "breakdown": {
+    "A_novelty": {
+      "score": 14.5,
+      "max": 20,
+      "rating": "Acceptable (Level 2)"
+    },
+    "B_technical_soundness": {
+      "score": 13.0,
+      "max": 20,
+      "rating": "Weak (Level 1)"
+    },
+    "C_experimental_strength": {
+      "score": 13.5,
+      "max": 20,
+      "rating": "Weak (Level 1)"
+    },
+    "D_statistical_rigor": {
+      "score": 10.5,
+      "max": 15,
+      "rating": "Acceptable (Level 2)"
+    },
+    "E_reproducibility": {
+      "score": 9.2,
+      "max": 10,
+      "rating": "Exceptional (Level 4)"
+    },
+    "F_manuscript_quality": {
+      "score": 4.0,
+      "max": 10,
+      "rating": "Fail/Blocker (Level 0 - BibTeX placeholders)"
+    },
+    "G_practical_significance": {
+      "score": 3.3,
+      "max": 5,
+      "rating": "Acceptable (Level 2)"
+    }
+  }
+}

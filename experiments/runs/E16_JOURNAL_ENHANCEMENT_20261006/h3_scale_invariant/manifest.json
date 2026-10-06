@@ -1,0 +1,8 @@
+{
+  "experiment_id": "E16_P1_04_SCALE_INVARIANT_H3",
+  "timestamp": "2026-10-06T19:42:00",
+  "method": "Bounded relative degradation comparison: (1 - PR_AUC/PR_AUC_0) vs (1 - RMSE_0/RMSE)",
+  "mean_delta_beta_bounded": -0.10013223847043048,
+  "conclusion": "Even under strictly bounded [0,1] normalization, load estimation degradation slope exceeds anomaly detection (Delta-beta < 0 in 100% of seeds). Falsification of H3 is NOT an artifact of metric scale.",
+  "status": "SUCCESS"
+}

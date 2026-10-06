@@ -1,0 +1,197 @@
+[
+  {
+    "relative_path": "initial_repository_audit.json",
+    "sha256": "f9fc6d74cd14a3fb6f644d229b89a98ffdb708c9c044b6ac8e4f62014b5860bc",
+    "size_bytes": 3253
+  },
+  {
+    "relative_path": "additional_baselines\\manifest.json",
+    "sha256": "de3d25a018c091e13cb2ed85b7aee3a1cc6040a217034cbe4139ecd6dee5bacc",
+    "size_bytes": 232
+  },
+  {
+    "relative_path": "additional_baselines\\gru\\gru_results.csv",
+    "sha256": "166a75bcc60fcd79d32db1094ba4d6e719d0de413c35ad1df2eaeb6eb7f3125d",
+    "size_bytes": 1503
+  },
+  {
+    "relative_path": "additional_baselines\\gru\\gru_summary.csv",
+    "sha256": "c8e7d4f7def443def14062b58b86d7c32463b4af3af9215522a97bc054703c89",
+    "size_bytes": 546
+  },
+  {
+    "relative_path": "additional_baselines\\one_class_svm\\ocsvm_results.csv",
+    "sha256": "63c5c83948ca9a2518b6fb23ea74e9b6cc34e0fc389aefa529d5e2ae2868e3d7",
+    "size_bytes": 635
+  },
+  {
+    "relative_path": "figures\\fig_01_adaptive_threshold_recovery.pdf",
+    "sha256": "aa6f08e918acbea8c25cd61fde9571c6587357c2c9e24d8b03dac907adf5443e",
+    "size_bytes": 17465
+  },
+  {
+    "relative_path": "figures\\fig_01_adaptive_threshold_recovery.png",
+    "sha256": "a7d15d8128c455ab3d6a312d09be4c940f47dfc706c15d7ed28461726e4a3e7f",
+    "size_bytes": 91253
+  },
+  {
+    "relative_path": "figures\\fig_02_fpr_reduction_across_seeds.pdf",
+    "sha256": "39e49452234b58b96b0337957b998c22731daec36a4fea7b0435a5b309cd4f87",
+    "size_bytes": 17471
+  },
+  {
+    "relative_path": "figures\\fig_02_fpr_reduction_across_seeds.png",
+    "sha256": "c97efc17cfd4762bffa4f6eef8433276d88056d87bc358e24d21e28a26ab0bfd",
+    "size_bytes": 97577
+  },
+  {
+    "relative_path": "figures\\fig_03_high_resolution_cliff.pdf",
+    "sha256": "12a1dbee83133d898d5f86c0a9308f851d45d8eae9bce6c63e72021bdfd70c15",
+    "size_bytes": 22139
+  },
+  {
+    "relative_path": "figures\\fig_03_high_resolution_cliff.png",
+    "sha256": "958fcd3b5202b3ca0aca9deaed1ae5b8e2657dc633fb5438b74ef8d8924033a8",
+    "size_bytes": 140528
+  },
+  {
+    "relative_path": "figures\\fig_06_telemetry_noise_robustness.pdf",
+    "sha256": "86d6240a49cd0ce56f285c6c96a5f440e8ad988a93d0930675d42705350c01ff",
+    "size_bytes": 18705
+  },
+  {
+    "relative_path": "figures\\fig_06_telemetry_noise_robustness.png",
+    "sha256": "8e030c0fce9ccbb13a57e0b5fe9f75289e28f206392357397817a61d8d487f1e",
+    "size_bytes": 85253
+  },
+  {
+    "relative_path": "figures\\fig_07_anomaly_baseline_comparison.pdf",
+    "sha256": "772dab1e8b7ef32fa6fab55aee862f558d0fafa161ff69c141c45d3573e08ac8",
+    "size_bytes": 19706
+  },
+  {
+    "relative_path": "figures\\fig_07_anomaly_baseline_comparison.png",
+    "sha256": "63a412c85b0a29395e2fd0bd7b84eafb5687fdbc53d764473730780a80b895a9",
+    "size_bytes": 141150
+  },
+  {
+    "relative_path": "figures\\fig_08_recurrent_forecasting_comparison.pdf",
+    "sha256": "7153a286e30cca9843b98520ab656a9d0721171f0952ae9bf4b25220d069ae5e",
+    "size_bytes": 20339
+  },
+  {
+    "relative_path": "figures\\fig_08_recurrent_forecasting_comparison.png",
+    "sha256": "e8a9fec92030e1ea0529a73644cdcb2a3810c0ea4d9d4ffe8b1421481120ddc4",
+    "size_bytes": 115067
+  },
+  {
+    "relative_path": "figures\\fig_09_h3_scale_invariant_comparison.pdf",
+    "sha256": "0a11b6e1003e7fd426bd97f9f901c36cb118ebfdd80b22e1b3754d865e4a7233",
+    "size_bytes": 20319
+  },
+  {
+    "relative_path": "figures\\fig_09_h3_scale_invariant_comparison.png",
+    "sha256": "b8f02975f3d1cf718a095b4e760cbec258b648bdc9fdb35c65052cb52261524f",
+    "size_bytes": 104727
+  },
+  {
+    "relative_path": "h3_scale_invariant\\manifest.json",
+    "sha256": "2d68dbcf5fd54d83348ec42bd9a98c6eb960bebd3a705a980d8cd6358d0c7091",
+    "size_bytes": 490
+  },
+  {
+    "relative_path": "h3_scale_invariant\\scale_invariant_h3_results.csv",
+    "sha256": "c454305a97b925d7608918045fa2e23e24dc54c7d6c5cea4fa457b9b02f5a91a",
+    "size_bytes": 473
+  },
+  {
+    "relative_path": "high_resolution_aoi\\fine_resolution_summary.csv",
+    "sha256": "d4523426a119585bb5e21d85db016da51c32aaf343aa110ad8f04bef2da839cc",
+    "size_bytes": 1003
+  },
+  {
+    "relative_path": "high_resolution_aoi\\fine_resolution_sweep.csv",
+    "sha256": "1ee54dba627ba318a014dfc4ebd2459ad65d601aeb057bad36574e48dc92de37",
+    "size_bytes": 1935
+  },
+  {
+    "relative_path": "high_resolution_aoi\\manifest.json",
+    "sha256": "9772500a6a267e081de63f5be0440344f0f48ce4acb4097a828fc2e62cbd1afe",
+    "size_bytes": 303
+  },
+  {
+    "relative_path": "tables\\table_01_experimental_configuration.csv",
+    "sha256": "c369e924bb68e7c6c7b5e96e231da25366174b2e5fc43094da21a2de4068b672",
+    "size_bytes": 946
+  },
+  {
+    "relative_path": "tables\\table_02_threshold_portability.csv",
+    "sha256": "353b74e697bf9756df7d2958750f246545286670244b2095f14fb061b12e7516",
+    "size_bytes": 482
+  },
+  {
+    "relative_path": "tables\\table_03_high_resolution_transition.csv",
+    "sha256": "3c3a813697de8504166b7c6d014fbf77d935d59e528e229d9b048371857259ad",
+    "size_bytes": 1015
+  },
+  {
+    "relative_path": "tables\\table_04_telemetry_noise_robustness.csv",
+    "sha256": "a804ac32f23d62e37c952b2482883c7bcf91d52032dd856518f2a37df61d0810",
+    "size_bytes": 660
+  },
+  {
+    "relative_path": "tables\\table_05_anomaly_detector_baselines.csv",
+    "sha256": "34200db666442b1695a9e3b4945a08109dfa50b59de3a3e37ff5a45452a721e1",
+    "size_bytes": 615
+  },
+  {
+    "relative_path": "tables\\table_06_forecasting_baselines.csv",
+    "sha256": "aa07afa25e02aa86586a57bbaea0cbfee101576df2b92b1c842dd8e6b5573329",
+    "size_bytes": 562
+  },
+  {
+    "relative_path": "tables\\table_07_scale_invariant_h3.csv",
+    "sha256": "a0fea7673ec33f104b6a7f59498cb2c04495522f563d494a93b2c667fcbc7542",
+    "size_bytes": 457
+  },
+  {
+    "relative_path": "telemetry_noise\\manifest.json",
+    "sha256": "8cf8978a26b50d6affaff4b34bcafde2c0b9dfa2f5a822f0561e6843eeb00ec1",
+    "size_bytes": 399
+  },
+  {
+    "relative_path": "telemetry_noise\\telemetry_noise_results.csv",
+    "sha256": "f4c376a8d403ef7ba995e0c0e6526c65480a5fd8d097e4f93b92ad2c6b4d66d8",
+    "size_bytes": 1248
+  },
+  {
+    "relative_path": "telemetry_noise\\telemetry_noise_summary.csv",
+    "sha256": "7d4413c3839358dc92acf47d04b7f3ed70b1e25db25b55e4220333b646d8aa43",
+    "size_bytes": 652
+  },
+  {
+    "relative_path": "threshold_portability\\adaptive_threshold_results.csv",
+    "sha256": "cdb98556c7f330fae49b1d1ee7c0bf14aa8718acdb52cd12d949a86fa932a6c7",
+    "size_bytes": 20763
+  },
+  {
+    "relative_path": "threshold_portability\\cross_seed_summary.csv",
+    "sha256": "a63a1c91cebac67e4e314aa573697df29e13399e1648ab298974605e45a02236",
+    "size_bytes": 505
+  },
+  {
+    "relative_path": "threshold_portability\\manifest.json",
+    "sha256": "ee02a5052ade78ccaee7196b22b582014170b96560937a494cb13e8a5ac0ba2a",
+    "size_bytes": 349
+  },
+  {
+    "relative_path": "threshold_portability\\static_threshold_results.csv",
+    "sha256": "e53aff3c4b224c53e5de61cdbca8c14a7649eaa4b8ecd856d26bcabbaec32aef",
+    "size_bytes": 18273
+  },
+  {
+    "relative_path": "threshold_portability\\threshold_parameters.csv",
+    "sha256": "e9681f0a5ae930dccd3aa8d005ecc417ddb905dd52e6c1654551e47135cdc738",
+    "size_bytes": 375
+  }
+]

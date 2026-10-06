@@ -1,0 +1,8 @@
+topic,missing_reference_type,why_needed,candidate_reference,verification_status,priority
+Digital Twin Frameworks,Authoritative survey review,Resolve ref_dt_survey placeholder,"Sifat et al., IEEE Access 2023 / Thwe et al., IEEE TSG 2025",VERIFIED,P0
+Smart Grid Anomaly Detection,Distribution grid unsupervised AD,Resolve ref_ad_survey placeholder,"Gholami et al., IEEE TSG 2022 / Liu et al., IEEE TSG 2023",VERIFIED,P0
+Age of Information Theory,Foundational AoI CPS monograph,Resolve ref_aoi_theory placeholder,"Yates et al., IEEE JSAC 2021 / Sun et al., Morgan Claypool 2019",VERIFIED,P0
+LSTM Autoencoder for AD,Temporal sequence autoencoder,Resolve ref_lstm_ae placeholder,"Malhotra et al., ESANN 2016 / Asghar et al., IEEE TII 2023",VERIFIED,P0
+Deep Learning STLF,Canonical smart meter STLF paper,Resolve ref_lstm_forecast placeholder,"Kong et al., IEEE TSG 2019 / He et al., IEEE TSG 2023",VERIFIED,P0
+Smart Grid Telemetry AoI,Freshness-aware scheduling in grids,Position staleness as physical variable,"Guo et al., IEEE TSG 2026 / Shu et al., Applied Energy 2022",VERIFIED,P1
+Physics-Informed Residual AD,Model discrepancy monitoring,Demonstrate physics-informed precedent,"Xiong et al., IEEE TIE 2023 / Moutis & Alizadeh-Mousavi, IEEE TSG 2021",VERIFIED,P1

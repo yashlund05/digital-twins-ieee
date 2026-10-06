@@ -1,0 +1,9 @@
+# Generalization Audit
+
+Current Scope: IEEE 33-bus radial feeder + Pecan Street residential load
+Supported Generalization: Radial distribution feeders with high residential load under discrete telemetry polling.
+Unsupported Generalization (Overclaims to be avoided):
+- Mesh/interconnected distribution networks
+- Feeders with heavy industrial / commercial composition
+- High-penetration DER / active distribution grids
+- Highly congested wireless / cellular communication layers

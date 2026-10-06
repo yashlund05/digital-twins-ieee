@@ -1,0 +1,18 @@
+phase,purpose,experiment,dataset,status,frozen,public
+Phase 0,"Governance, architecture design, ADRs",N/A,N/A,PASS,True,False
+Phase 1,Environment validation & Python/OpenDSS bindings,N/A,N/A,PASS,True,False
+Phase 2,"Data pipeline, Pecan Street mapping, anomaly injection",N/A,Pecan Street 32-bus,PASS,True,False
+Phase 3,OpenDSS physical feeder validation,E1,IEEE 33-bus nominal,PASS,True,False
+Phase 4,"Synchronization engine, AoI tracking, hold policies",N/A,N/A,PASS,True,False
+Phase 5,Short-term load forecasting baselines,E2,Pecan Street mapped,PASS,True,False
+Phase 6,Unsupervised anomaly detection baselines,E3,Pecan Street mapped,PASS,True,False
+Phase 7,Physics-residual engine & 2x2 baseline,E4,Pecan Street + IEEE 33-bus,PASS,True,True
+Phase 8,24-condition staleness & packet loss sweep,E5,Pecan Street + IEEE 33-bus,PASS,True,True
+Phase 9,Degradation modeling & H3 formal hypothesis testing,E6,Pecan Street + IEEE 33-bus,PASS,True,True
+Phase 10,5-seed uncertainty quantification & sensitivity,E10,Pecan Street + IEEE 33-bus,PASS,True,True
+Phase 11,"Reproducibility, 8 ablations, transient dynamics",E11,Pecan Street + IEEE 33-bus,PASS,True,True
+Phase 12,"IEEE paper-ready vector figures, tables, LaTeX",E12,Pecan Street + IEEE 33-bus,PASS,True,True
+Phase 13,IEEE TSG manuscript package assembly,E13,Pecan Street + IEEE 33-bus,PASS,True,True
+Phase 14,Final independent audit & release gate verification,E14,Pecan Street + IEEE 33-bus,PASS,True,True
+Phase 15,Pre-submission journal readiness peer review audit,E15,All frozen artifacts,AUDITED,True,False
+Phase 16,Read-only journal-level comprehensive scientific audit,E16,Entire repository,COMPLETE,Current,True

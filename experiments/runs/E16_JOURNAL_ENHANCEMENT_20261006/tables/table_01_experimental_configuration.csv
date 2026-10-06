@@ -1,0 +1,11 @@
+Parameter / Dimension,Evaluated Specification
+Distribution Feeder,"IEEE 33-Bus Radial Benchmark (12.66 kV, 32 branches, 3.715 MW nominal)"
+Smart Meter Workload,"Pecan Street Dataport (Austin, TX residential telemetry mapped to 1s DT steps)"
+Simulation Solver,OpenDSS AC Power Flow Engine coupled with Python Grid Environment
+Synchronization Sweep,"dt in {0, 1, 5, 15, 60, 300}s; High-Res Transition dt in {1, 2, 3, 4, 5}s"
+Packet Drop Model,"i.i.d. Bernoulli P_drop in {0.00, 0.05, 0.10, 0.20}"
+Telemetry Sensor Noise,"Additive Gaussian Noise: Clean, 40 dB SNR (1%), 30 dB SNR (3.2%)"
+Anomaly Detectors,"Isolation Forest, One-Class SVM (RBF), LSTM Autoencoder"
+Forecasting Baselines,"Persistence, XGBoost Regressor, LSTM Forecaster, GRU Forecaster"
+Threshold Strategy,Static 95th percentile vs AoI-Adaptive tau(t) = tau_0 + gamma * sqrt(AoI)
+Stochastic Replications,"5 Independent Seeds (42, 123, 456, 789, 101112) -> 120+ executions"

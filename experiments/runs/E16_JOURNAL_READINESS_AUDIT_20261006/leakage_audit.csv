@@ -1,0 +1,6 @@
+pipeline_stage,check,status,notes
+Data Split,Temporal order preservation,LEAK_FREE,Strict 70/15/15 chronological split without shuffling
+Normalization,Train-only fit,LEAK_FREE,Residual normalizer fit exclusively on training split; parameters serialized
+Feature Extraction,Lag window direction,LEAK_FREE,Only backward-looking lags used (lag_1..lag_lookback)
+Threshold Calibration,Validation vs Test use,LEAK_FREE,Threshold calibrated on validation split; applied to test
+Test Set Evaluation,Hyperparameter tuning on test,LEAK_FREE,Zero tuning on test set; models evaluated once

@@ -1,0 +1,8 @@
+claim_id,text,evidence,classification
+CLM-01,"Under ideal sync, Res LSTM-AE achieves F1=0.978",E4/metrics.json (0.977956),SUPPORTED
+CLM-02,Raw LSTM-AE achieves F1=0.539,E4/metrics.json (0.538606),SUPPORTED
+CLM-03,H3 is not supported across 5 seeds (Delta-beta = -1.224),E10/multiseed_h3_summary.csv,SUPPORTED
+CLM-04,Micro divergence begins at AoI ~ 0.0s,E11/table_04_change_point_analysis.csv,SUPPORTED
+CLM-05,Macro operational cliff occurs at AoI ~ 5.0s,E11/summary.md and table_03,SUPPORTED
+CLM-06,Residual advantage inverts to raw advantage at dt >= 5s,E11/table_02_ablation_results.csv,SUPPORTED
+CLM-07,README claim: DT300 MAPE is 12.31%,README line 78 vs E5 DT300 MAPE 62.29%,UNSUPPORTED_OR_STALE

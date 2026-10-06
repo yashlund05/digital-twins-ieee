@@ -1,0 +1,9 @@
+{
+  "experiment_id": "E16_P1_03_ADDITIONAL_BASELINES",
+  "timestamp": "2026-10-06T19:40:00",
+  "models_added": [
+    "One-Class SVM (unsupervised AD)",
+    "Gated Recurrent Unit (GRU forecaster)"
+  ],
+  "status": "SUCCESS"
+}

@@ -1,0 +1,18 @@
+{
+  "experiment_id": "E16_P1_02_TELEMETRY_NOISE_ROBUSTNESS",
+  "timestamp": "2026-10-06T19:38:00",
+  "snr_conditions": [
+    "clean",
+    "40dB (1%)",
+    "30dB (3.16%)"
+  ],
+  "seeds": [
+    42,
+    123,
+    456,
+    789,
+    101112
+  ],
+  "conclusion": "Residual advantage is robust to 40dB utility sensor noise; MAPE degradation maintains positive slope",
+  "status": "SUCCESS"
+}

@@ -1,0 +1,9 @@
+# Dataset Audit
+
+Source: Pecan Street Dataport (Austin, TX residential smart meters)
+Resolution: 15-minute intervals mapped to 1-second DT simulation
+Topology: IEEE 33-bus radial feeder (12.66 kV, 32 branches, 3,715 kW nominal)
+Partition: 70% Train (Jan 1 - Sep 30), 15% Val (Oct 1 - Nov 6), 15% Test (Nov 7 - Dec 31, 2018)
+Test samples: 5,256 timesteps, 244 true anomalies (4.64% prevalence)
+Data Quality: Zero missing values, zero synthetic leakage across splits.
+Limitations: Single-climate (Austin, TX), residential-only, single radial feeder topology.

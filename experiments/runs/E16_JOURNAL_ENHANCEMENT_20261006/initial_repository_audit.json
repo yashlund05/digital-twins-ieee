@@ -1,0 +1,80 @@
+{
+  "timestamp": "2026-10-06T19:15:00",
+  "git_state": {
+    "head": "9537fbec93f81f08c7f29cfc5cedc7e670d522c2",
+    "branch": "main",
+    "short_log": "9537fbe feat(ui): add interactive Streamlit research dashboard on port 5569",
+    "status_summary": "M app.py\n?? docs/phase15_accuracy_gap_analysis.md\n?? docs/phase15_final_recommendation.md\n?? docs/phase15_ieee_tsg_compliance_audit.md\n?? docs/phase15_journal_readiness_audit.md\n?? docs/phase15_novelty_audit.md\n?? docs/phase15_reproducibility_audit.md\n?? docs/phase15_research_gap_analysis.md\n?? docs/phase15_reviewer_simulation.md\n?? docs/phase15_statistical_power_audit.md\n?? docs/phase16_journal_readiness_audit.md\n?? docs/superpowers/\n?? experiments/planned/\n?? experiments/runs/E15_JOURNAL_READINESS_AUDIT_20261006/\n?? experiments/runs/E16_JOURNAL_READINESS_AUDIT_20261006/\n?? frontend/"
+  },
+  "frozen_phases": {
+    "phase7_e4": {
+      "dir": "experiments/runs/E4_RAW_VS_RESIDUAL_SEED42_20260930",
+      "status": "FROZEN",
+      "exists": true
+    },
+    "phase8_e5": {
+      "dir": "experiments/runs/E5_STALENESS_SWEEP_CORRECTED_SEED42_20260930",
+      "status": "FROZEN",
+      "exists": true
+    },
+    "phase9_e6": {
+      "dir": "experiments/runs/E6_JOINT_ANALYSIS_SEED42_20261002",
+      "status": "FROZEN",
+      "exists": true
+    },
+    "phase10_e10": {
+      "dir": "experiments/runs/E10_MULTI_SEED_ANALYSIS_20261002",
+      "status": "FROZEN",
+      "exists": true
+    },
+    "phase11_e11": {
+      "dir": "experiments/runs/E11_PHASE11_20261002",
+      "status": "FROZEN",
+      "exists": true
+    },
+    "phase12_e12": {
+      "dir": "experiments/runs/E12_PUBLICATION_ARTIFACTS_20261002",
+      "status": "FROZEN",
+      "exists": true
+    },
+    "phase13_e13": {
+      "dir": "experiments/runs/E13_MANUSCRIPT_SUBMISSION_20261002",
+      "status": "FROZEN",
+      "exists": true
+    },
+    "phase14_e14": {
+      "dir": "experiments/runs/E14_FINAL_SCIENTIFIC_AUDIT_20261002",
+      "status": "FROZEN",
+      "exists": true
+    }
+  },
+  "mutable_files": [
+    "docs/phase16_bibliography_verification.md",
+    "docs/phase16_journal_enhancement_report.md",
+    "experiments/planned/journal_improvement_execution.yaml",
+    "experiments/runs/E16_JOURNAL_ENHANCEMENT_20261006/*",
+    "experiments/runs/E13_MANUSCRIPT_SUBMISSION_20261002/manuscript/references.bib",
+    "experiments/runs/E13_MANUSCRIPT_SUBMISSION_20261002/manuscript/main.tex",
+    "README.md",
+    "docs/research_timeline.md"
+  ],
+  "immutable_files": [
+    "experiments/runs/E4_*/*",
+    "experiments/runs/E5_*/*",
+    "experiments/runs/E6_*/*",
+    "experiments/runs/E10_*/*",
+    "experiments/runs/E11_*/*",
+    "experiments/runs/E12_*/*",
+    "experiments/runs/E14_*/*"
+  ],
+  "known_p0_deficiencies": [
+    "6 of 10 references in references.bib contain [VERIFY] placeholders",
+    "Static anomaly threshold produces FPR=1.0 on seeds 123, 456, 789, 101112"
+  ],
+  "known_p1_deficiencies": [
+    "Missing transition points dt in {1, 2, 3, 4, 5}s",
+    "Lack of realistic telemetry sensor noise robustness benchmark",
+    "Missing One-Class SVM and GRU baselines",
+    "Scale asymmetry in H3 log-linear comparison"
+  ]
+}

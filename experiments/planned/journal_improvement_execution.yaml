@@ -1,0 +1,110 @@
+# Scientific Improvement Registry: Phase 16 Enhancement Plan
+
+improvements:
+  - id: IMP-P0-01
+    priority: P0
+    problem: "Bibliographic integrity failure: 6 of 10 references in references.bib contain [VERIFY] tags."
+    reviewer_risk: "Immediate administrative desk-reject / return without review by Associate Editor."
+    historical_artifacts_affected: "None (E13 manuscript references updated; historical frozen CSVs untouched)."
+    new_artifacts: "docs/phase16_bibliography_verification.md, experiments/runs/E13_MANUSCRIPT_SUBMISSION_20261002/manuscript/references.bib"
+    experiment: "Complete bibliographic verification against IEEE Xplore, Google Scholar, and DOI registries."
+    hypothesis: "N/A (Citations must be 100% verified peer-reviewed publications)."
+    method: "Replace placeholders with canonical IEEE TSG/PES, ICDM, and ACM citations."
+    dataset: "N/A"
+    seeds: []
+    metrics: ["Number of unverified references == 0", "BibTeX syntax validity == PASS"]
+    statistical_test: "N/A"
+    acceptance_criteria: "Zero [VERIFY] tags remaining; all in-text citations compile cleanly."
+    status: "READY_FOR_EXECUTION"
+    evidence: "Verified DOI records for Sifat 2023, Gholami 2022, Yates 2021, Malhotra 2016, Kong 2019."
+    limitations: "None."
+
+  - id: IMP-P0-02
+    priority: P0
+    problem: "Anomaly detection threshold portability breakdown: static threshold derived on Seed 42 yields FPR=1.0 on Seeds 123, 456, 789, 101112."
+    reviewer_risk: "Severe methodological critique: anomaly detection fails to generalize across feeder initializations."
+    historical_artifacts_affected: "None (historical results documented as static baseline)."
+    new_artifacts: "experiments/runs/E16_JOURNAL_ENHANCEMENT_20261006/threshold_portability/*"
+    experiment: "Benchmark AoI-adaptive threshold tau(AoI) and per-seed validation calibration."
+    hypothesis: "Dynamic AoI-adaptive thresholding preserves F1 > 0.60 at dt=5s and reduces cross-seed FPR to < 0.05."
+    method: "tau(AoI) = tau_0 + gamma * sqrt(AoI) calibrated strictly on validation partition."
+    dataset: "Pecan Street mapped to IEEE 33-bus (test partition, 5256 timesteps, 244 anomalies)."
+    seeds: [42, 123, 456, 789, 101112]
+    metrics: ["F1", "Precision", "Recall", "FPR", "PR-AUC", "Cross-seed F1 variance"]
+    statistical_test: "Paired Wilcoxon signed-rank test across seeds, ANOVA variance decomposition."
+    acceptance_criteria: "Cross-seed mean F1 improves from 0.0887 to > 0.60 under adaptive thresholding on non-42 seeds."
+    status: "READY_FOR_EXECUTION"
+    evidence: "Theoretical AoI-residual variance scaling law sigma^2 ~ AoI."
+    limitations: "Requires tracking realized AoI at inference time."
+
+  - id: IMP-P1-01
+    priority: P1
+    problem: "Transition resolution gap between dt=1s and dt=5s leaves the operational change point unverified."
+    reviewer_risk: "Reviewer 3 critique: claiming a precise cliff at ~5.0s without data at 2s, 3s, 4s is ungrounded."
+    historical_artifacts_affected: "None."
+    new_artifacts: "experiments/runs/E16_JOURNAL_ENHANCEMENT_20261006/high_resolution_aoi/*"
+    experiment: "Fine-grid staleness sweep dt in {1, 2, 3, 4, 5} seconds across all 5 seeds."
+    hypothesis: "The operational performance cliff occurs between dt=2.5s and dt=3.5s under hold-last-state extrapolation."
+    method: "Factorial OpenDSS co-simulation and sequential model evaluation across {1, 2, 3, 4, 5}s."
+    dataset: "Pecan Street mapped to IEEE 33-bus."
+    seeds: [42, 123, 456, 789, 101112]
+    metrics: ["LSTM-AE F1", "LSTM MAPE", "Mean Residual Norm", "Segmented regression slope"]
+    statistical_test: "Two-phase segmented change-point regression with bootstrap CIs."
+    acceptance_criteria: "Narrow 95% CI on change point (width < 1.5s)."
+    status: "READY_FOR_EXECUTION"
+    evidence: "E11 transient bin analysis showing 16x residual surge in 1-5s bin."
+    limitations: "Evaluated under hold-last-state policy."
+
+  - id: IMP-P1-02
+    priority: P1
+    problem: "Simulation cleanliness critique: clean OpenDSS simulation lacks realistic telemetry sensor noise."
+    reviewer_risk: "Reviewer 1 critique: digital twin performance may collapse under real-world 1% CT/PT noise."
+    historical_artifacts_affected: "None."
+    new_artifacts: "experiments/runs/E16_JOURNAL_ENHANCEMENT_20261006/telemetry_noise/*"
+    experiment: "Telemetry noise robustness benchmark under Gaussian sensor noise (SNR = 40 dB and 30 dB)."
+    hypothesis: "Residual representation advantage is robust to 40 dB sensor noise, shifting cliff by < 1.0s."
+    method: "Additive Gaussian measurement noise at physical telemetry boundary prior to residual calculation."
+    dataset: "Pecan Street mapped to IEEE 33-bus."
+    seeds: [42, 123, 456, 789, 101112]
+    metrics: ["F1", "MAPE", "PR-AUC", "Residual SNR", "Delta-beta"]
+    statistical_test: "Repeated measures ANOVA comparing noiseless vs noisy slopes."
+    acceptance_criteria: "Delta-beta remains negative (H3 non-support robust to noise)."
+    status: "READY_FOR_EXECUTION"
+    evidence: "Standard utility CT/PT accuracy class 0.5 to 1.0 corresponds to ~40 dB SNR."
+    limitations: "Assumes zero-mean uncorrelated Gaussian noise."
+
+  - id: IMP-P1-03
+    priority: P1
+    problem: "Missing classical and recurrent baselines (One-Class SVM and GRU)."
+    reviewer_risk: "Reviewer 2 critique: findings may be architectural artifacts of Isolation Forest and LSTM."
+    historical_artifacts_affected: "None."
+    new_artifacts: "experiments/runs/E16_JOURNAL_ENHANCEMENT_20261006/additional_baselines/*"
+    experiment: "Benchmark One-Class SVM (RBF kernel) for AD and Gated Recurrent Unit (GRU) for load forecasting."
+    hypothesis: "OC-SVM confirms representation inversion; GRU confirms steeper load forecasting degradation."
+    method: "Unsupervised OC-SVM fit on training residuals; GRU fit on identical temporal features."
+    dataset: "Pecan Street mapped to IEEE 33-bus."
+    seeds: [42, 123, 456, 789, 101112]
+    metrics: ["OC-SVM F1, Precision, Recall, PR-AUC", "GRU MAPE, RMSE, MAE"]
+    statistical_test: "Paired degradation rate regression against primary models."
+    acceptance_criteria: "Both models successfully fit and converge; degradation trends match primary models."
+    status: "READY_FOR_EXECUTION"
+    evidence: "Classical literature establishes OC-SVM and GRU as standard benchmark controls."
+    limitations: "OC-SVM inference scaling on large tabular datasets."
+
+  - id: IMP-P1-04
+    priority: P1
+    problem: "Metric scale asymmetry in H3: comparing bounded F1 [0,1] vs unbounded MAPE."
+    reviewer_risk: "Reviewer 2 / Reviewer 3 critique: H3 falsification may be a mathematical artifact of metric scale."
+    historical_artifacts_affected: "None (original H3 regression preserved)."
+    new_artifacts: "experiments/runs/E16_JOURNAL_ENHANCEMENT_20261006/h3_scale_invariant/*"
+    experiment: "Scale-invariant secondary analysis comparing Normalized PR-AUC vs Normalized RMSE."
+    hypothesis: "Load estimation degradation remains steeper than anomaly detection under scale-bounded metrics."
+    method: "Normalize both tasks to bounded relative loss in [0, 1] and recompute bootstrap slope Delta-beta."
+    dataset: "Pecan Street mapped to IEEE 33-bus."
+    seeds: [42, 123, 456, 789, 101112]
+    metrics: ["Bounded Delta-beta", "95% Bootstrap CI", "Wilcoxon W and p-value"]
+    statistical_test: "Bootstrap hypothesis test on scale-invariant slope contrast."
+    acceptance_criteria: "Definitive conclusion whether H3 rejection is scale-invariant."
+    status: "READY_FOR_EXECUTION"
+    evidence: "PR-AUC and Normalized RMSE both reflect bounded operational performance."
+    limitations: "Metric choice inherently defines the degradation definition."

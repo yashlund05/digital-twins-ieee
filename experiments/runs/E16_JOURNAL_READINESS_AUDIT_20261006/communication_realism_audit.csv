@@ -1,0 +1,11 @@
+# Communication Realism Audit
+
+Evaluated Model:
+- Staleness intervals: dt in {0, 1, 5, 15, 60, 300}s
+- Packet drop: i.i.d. Bernoulli with P_drop in {0.0, 0.05, 0.10, 0.20}
+- Policy: Zero-Order Hold (hold_last_state)
+Missing Realism:
+- Burst packet loss (Gilbert-Elliott Markov chain)
+- Communication jitter and variable latency
+- Queueing delays and packet reordering
+Classification: Controlled canonical stress-test rather than full network emulator.

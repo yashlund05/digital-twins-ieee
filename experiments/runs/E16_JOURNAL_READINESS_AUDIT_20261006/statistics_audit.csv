@@ -1,0 +1,6 @@
+method,purpose,assumptions,status,limitation
+Log-linear regression,Degradation slope estimation,"Linearity of log-log, homoscedasticity",ACCEPTABLE,Metric scale distortion between bounded F1 and unbounded MAPE
+Bootstrap CIs (1000 resamples),Parameter uncertainty,i.i.d. condition observations,ACCEPTABLE,Intra-seed correlation ignored; cluster bootstrap preferred
+Wilcoxon signed-rank test,Paired non-parametric test,Continuous symmetric paired differences,ACCEPTABLE,Condition pairs within seeds share stochastic training weights
+Benjamini-Hochberg FDR,Multiple comparison control,Positive regression dependency,STRONG,None; properly applied across 9 model pairs
+ANOVA Variance Decomposition,Condition vs Seed variance,Normality of residuals,WEAK,Only 4 degrees of freedom in seed denominator; unstable ICC estimates

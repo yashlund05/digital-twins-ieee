@@ -1,0 +1,8 @@
+# Anomaly Threshold Audit
+
+Methodology: 95th percentile of reconstruction error on nominal validation split.
+Threshold value (seed 42): tau_0 = 3.8168e-4
+Observed Defect:
+- Calibration on Seed 42 fails on Seeds 123, 456, 789, 101112 (FPR = 1.0, F1 = 0.0887).
+- Root cause: Stochastic feeder initialization creates slightly different nominal reconstruction error scales across seeds; static threshold does not generalize without seed-specific calibration.
+Remedy: Implement AoI-adaptive thresholding or per-seed validation calibration.

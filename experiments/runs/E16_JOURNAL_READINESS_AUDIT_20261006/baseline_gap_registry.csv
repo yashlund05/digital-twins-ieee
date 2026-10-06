@@ -1,0 +1,5 @@
+baseline_name,task,reason,expected_information_gain,implementation_cost,reviewer_value,priority
+One-Class SVM (OC-SVM),Anomaly Detection,Classical shallow baseline requested by ML reviewers,Confirms whether tree partitioning vs kernel boundary affects residual inversion,"Low (< 1 hr, scikit-learn)",High,P1
+Gated Recurrent Unit (GRU),Load Estimation,Direct architectural control against LSTM,Separates cell gate complexity from general recurrent staleness sensitivity,"Low (< 2 hrs, PyTorch)",High,P1
+Statistical Residual Sigma Detector,Anomaly Detection,Simple 3-sigma physics threshold without ML,Demonstrates whether ML adds value over classical bad-data detection under staleness,Very Low (< 30 min),Medium-High,P2
+ARIMA / SARIMA,Load Estimation,Classical linear statistical benchmark,Demonstrates linear lag decay under staleness,Medium (slow fitting on 32 nodes),Low-Medium,P3

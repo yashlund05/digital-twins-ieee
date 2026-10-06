@@ -1,0 +1,147 @@
+[
+  {
+    "file": "baseline_gap_registry.csv",
+    "sha256": "0171e3d06cbb1ea33e4af4c3b0ceeb2fdfaf542db03a317c36d85f35c30bf56e",
+    "size_bytes": 889
+  },
+  {
+    "file": "c13_c14_independent_audit.md",
+    "sha256": "734967c794eeb2fd853a14f28c864d400a5ea6aab707a35d4ea8ea06d1860939",
+    "size_bytes": 3735
+  },
+  {
+    "file": "claim_audit.csv",
+    "sha256": "ff440377f65b22ce397f6ba7083565920ad89000bdf342eadc3e06c8f6c71b0f",
+    "size_bytes": 710
+  },
+  {
+    "file": "communication_realism_audit.csv",
+    "sha256": "f2e621f9ec4e8992ed4817dac2fe76aa0be10836520c97bc25d8a03fbd9bd975",
+    "size_bytes": 463
+  },
+  {
+    "file": "contribution_audit.csv",
+    "sha256": "4f062f83b438badaa95d61e68080ace0c4a9077aa8877b22083150dc25a1d8fa",
+    "size_bytes": 493
+  },
+  {
+    "file": "dataset_audit.csv",
+    "sha256": "bbe4d700de864cf3bb029e706930ced3221c29590b6108e3d4ab01e98c63a6ec",
+    "size_bytes": 566
+  },
+  {
+    "file": "figure_audit.csv",
+    "sha256": "f15737a48dc3e4a7b2c425bb23a008942a181d7502f7402a40c0cacef53e50b8",
+    "size_bytes": 769
+  },
+  {
+    "file": "final_roadmap.md",
+    "sha256": "f6f0adc53b2dc00b71dd3c6f1c105fd1c72c8db70239cf0974acd44ffa95ea1b",
+    "size_bytes": 838
+  },
+  {
+    "file": "generalization_audit.csv",
+    "sha256": "3112cca5516709b073f8a30b4ccc3411f8e8cfd57615333d166d346b7f9da005",
+    "size_bytes": 488
+  },
+  {
+    "file": "historical_numeric_drift.csv",
+    "sha256": "6140a5b7ebfd35bbcec08c87a31c17dae40eca8bad77baaf80ec26b3dedac6a9",
+    "size_bytes": 254206
+  },
+  {
+    "file": "ieee_constraints.md",
+    "sha256": "9020ced77d5dcf92265801653fd12097ac17a1356e6548b7be935bb1f3b1226a",
+    "size_bytes": 823
+  },
+  {
+    "file": "journal_readiness_score.json",
+    "sha256": "42e04ab28aa8f42f186367cc623351b0839850011db478eca381ee3fd9f11d8b",
+    "size_bytes": 1067
+  },
+  {
+    "file": "leakage_audit.csv",
+    "sha256": "13634f5b8607d2e1d276af6599a1b812bb23a3ae81a91cdf08c593256a8a5902",
+    "size_bytes": 583
+  },
+  {
+    "file": "literature_gap_registry.csv",
+    "sha256": "ab0263b830e5076bd904c154de9bb6564c46e7971a695761ae457e1bff522849",
+    "size_bytes": 1270
+  },
+  {
+    "file": "manifest.json",
+    "sha256": "d681d7df5d3290f3972e7d1bb59184a286f79bd3663071e7dbfe0060ac6bcae9",
+    "size_bytes": 524
+  },
+  {
+    "file": "manuscript_audit.csv",
+    "sha256": "0f1abd69d486ba50a39740ae0c89794424a097d6f8365c26440d39901c97eaed",
+    "size_bytes": 413
+  },
+  {
+    "file": "numerical_reconciliation.csv",
+    "sha256": "f0a6cfc7fc61b2454ea12e3e40935991170f3058325a8a90855b71db31350d28",
+    "size_bytes": 1391
+  },
+  {
+    "file": "p0_blockers.md",
+    "sha256": "e846ccf5b1a6add95e9d0fb6dd65b7ccf11e1e9055905523ea2a80a4bca22d6a",
+    "size_bytes": 911
+  },
+  {
+    "file": "p1_improvements.md",
+    "sha256": "380275a3c7882507edf35e9165b6a53936113cda45213af8d6a3d0323f36bb41",
+    "size_bytes": 793
+  },
+  {
+    "file": "p2_improvements.md",
+    "sha256": "7fc975fd4928ffc6d0586837d1fcc80194c10e49f4ba5b555b1ce1db3e9a2d43",
+    "size_bytes": 293
+  },
+  {
+    "file": "phase_inventory.csv",
+    "sha256": "33314a422fef703e476206167eae08a338158f49d87147283a1150aedfb351d2",
+    "size_bytes": 1688
+  },
+  {
+    "file": "recommended_experiments.yaml",
+    "sha256": "c4a74a3e929fdab6a4db45041055143708152e9ef53d14fd9739514d82460572",
+    "size_bytes": 697
+  },
+  {
+    "file": "reviewer_1_power_systems.md",
+    "sha256": "e4b8cf8113f0fa9da74628d7cbe664e35797957f8b229f31d27140e67e14b242",
+    "size_bytes": 854
+  },
+  {
+    "file": "reviewer_2_machine_learning.md",
+    "sha256": "2f3e689af43fb4e97aefff5567fa295c9d5475a663df3aa17115ddeb69ee1ee3",
+    "size_bytes": 887
+  },
+  {
+    "file": "reviewer_3_statistics.md",
+    "sha256": "e8ca704374d5a7f82a36cb3da9392b151c85bdf13fad35c67095a453e571d66c",
+    "size_bytes": 804
+  },
+  {
+    "file": "reviewer_4_associate_editor.md",
+    "sha256": "8cd1f2ec28244f2106dc7c7c46a8bd5dd914d78907aadc24dd1a14e0a8238759",
+    "size_bytes": 937
+  },
+  {
+    "file": "statistics_audit.csv",
+    "sha256": "926af365ef506dc922299fb722d06053133170fdc0da6927cc80f362ced6c8e3",
+    "size_bytes": 824
+  },
+  {
+    "file": "table_audit.csv",
+    "sha256": "3e830fca4a764477d27bf3f597e695ac7edca87657ea680651fe3518c04fc803",
+    "size_bytes": 524
+  },
+  {
+    "file": "threshold_audit.csv",
+    "sha256": "bb86066418a4b4f2dd62ffa7546f80efff07b4721069aadba9ebea774f12cf69",
+    "size_bytes": 543
+  }
+]

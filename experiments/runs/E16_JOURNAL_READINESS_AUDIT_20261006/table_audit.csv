@@ -1,0 +1,7 @@
+table_id,caption,rows,recommendation,notes
+Table 01,Experimental Configuration,14,KEEP,Complete parameter definition
+Table 02,Baseline Reconciliation,4,KEEP,Numerical equivalence verification
+Table 03,E5 Factorial Condition Summary,24,REVISE,Consider moving to Supplementary to save space
+Table 04,Multi-Seed Results Across 5 Seeds,6,KEEP,Core multi-seed degradation contrast
+Table 05,Controlled Ablations Summary,8,KEEP,Concise A1-A8 summary
+Table 06,Pairwise Hypothesis Tests (H3),9,KEEP,All 9 model pairs with FDR

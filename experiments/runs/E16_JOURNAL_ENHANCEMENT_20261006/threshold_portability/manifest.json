@@ -1,0 +1,16 @@
+{
+  "experiment_id": "E16_P0_02_THRESHOLD_PORTABILITY",
+  "timestamp": "2026-10-06T19:35:00",
+  "seeds": [
+    42,
+    123,
+    456,
+    789,
+    101112
+  ],
+  "total_conditions": 24,
+  "total_evaluations": 120,
+  "static_overall_mean_f1": 0.12417019685297695,
+  "adaptive_overall_mean_f1": 0.1514089693614774,
+  "status": "SUCCESS"
+}
