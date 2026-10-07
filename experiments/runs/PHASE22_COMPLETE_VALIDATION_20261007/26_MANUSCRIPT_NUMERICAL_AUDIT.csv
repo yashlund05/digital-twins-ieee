@@ -1,0 +1,16 @@
+section,claim,manuscript_value,canonical_value,difference,tolerance,status,source_artifact
+Abstract,Ideal Sync Residual LSTM-AE F1,0.978,0.9779559,4.4e-5,0.001,PASS,E4_RAW_VS_RESIDUAL_SEED42_20260930/metrics.json
+Abstract,Ideal Sync Raw LSTM-AE F1,0.539,0.5386064,3.9e-4,0.001,PASS,E4_RAW_VS_RESIDUAL_SEED42_20260930/metrics.json
+Abstract,Hypothesis H3 Slope Difference,-1.224,-1.223646,3.5e-4,0.001,PASS,E10_MULTI_SEED_ANALYSIS_20261002/multiseed_h3_summary.csv
+Abstract,H3 95% Confidence Interval,"[-1.346, -1.113]","[-1.34626, -1.11341]",1.0e-4,0.001,PASS,E10_MULTI_SEED_ANALYSIS_20261002/multiseed_h3_summary.csv
+Abstract,H3 p-value,1.000,1.000000,0.0,0.001,PASS,E10_MULTI_SEED_ANALYSIS_20261002/multiseed_h3_summary.csv
+Abstract,Operational Transition Envelope,"[2.4, 4.1]","[2.4, 4.1]",0.0,0.01,PASS,table_s2_cross_feeder_summary.csv
+Abstract,Residual Arithmetic Online Latency,0.41 us,0.00041 ms,0.0,0.01,PASS,table_s5_computational_complexity.csv
+Results,33-Bus Inversion Center,3.2 s,3.2 s,0.0,0.1,PASS,E16_JOURNAL_ENHANCEMENT_20261006/aoi_derivative.json
+Results,13-Bus Inversion Center,4.1 s,4.1 s,0.0,0.1,PASS,table_s2_cross_feeder_summary.csv
+Results,123-Bus Inversion Center,2.4 s,2.4 s,0.0,0.1,PASS,table_s2_cross_feeder_summary.csv
+Results,Adaptive Threshold Latency,1.28 us,0.00128 ms,0.0,0.01,PASS,table_s5_computational_complexity.csv
+Results,One-Class SVM Fresh F1,0.670,0.6703,3.0e-4,0.001,PASS,E16_JOURNAL_ENHANCEMENT_20261006/metrics.json
+Results,One-Class SVM Stale F1,0.046,0.0455,5.0e-4,0.001,PASS,E16_JOURNAL_ENHANCEMENT_20261006/metrics.json
+Results,Portability Corrected Non-42 FPR,4.4%,4.38-4.43%,0.02%,0.1%,PASS,E16_JOURNAL_ENHANCEMENT_20261006/threshold_portability.csv
+Results,Noise Robustness 40dB MAPE Drift,0.35%,0.35%,0.0,0.05%,PASS,E16_JOURNAL_ENHANCEMENT_20261006/noise_robustness.csv
