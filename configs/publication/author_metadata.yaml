@@ -1,0 +1,21 @@
+# configs/publication/author_metadata.yaml
+# Controlled Publication Metadata Configuration
+# DO NOT INVENT DATA. All placeholders must be replaced manually by research team before final submission.
+
+authors:
+  - name: "AUTHOR_NAME_REQUIRED"
+    affiliation: "AFFILIATION_REQUIRED"
+    ieee_grade: "IEEE_MEMBER_GRADE_REQUIRED"
+    email: "CORRESPONDING_EMAIL_REQUIRED"
+    orcid: "ORCID_REQUIRED_OPTIONAL"
+    corresponding: true
+
+funding:
+  grant_sponsor: "FUNDING_INFORMATION_REQUIRED"
+  grant_number: "GRANT_NUMBER_REQUIRED"
+  disclaimer: "The authors declare no competing financial interests or personal relationships that could influence the work reported in this paper."
+
+zenodo:
+  doi: "ZENODO_DOI_REQUIRED"
+  repository_url: "https://github.com/yashlund05/digital-twins-ieee"
+  release_tag: "v1.0.0-tsg-submission"

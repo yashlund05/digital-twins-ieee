@@ -1,0 +1,139 @@
+{
+  "release_id": "E20_FINAL_SUBMISSION_RELEASE_20261007",
+  "project_title": "Quantifying the Effect of Digital Twin Synchronization Staleness on Joint Short-Term Load Estimation and Unsupervised Anomaly Detection in a Distribution-Feeder Digital Twin",
+  "target_venue": "IEEE Transactions on Smart Grid",
+  "git_head": "7778d92",
+  "release_verdict": "SUBMISSION_READY_WITH_MANUAL_CHECKS",
+  "release_date": "2026-10-07",
+  "historical_phases_intact": 12,
+  "claims_audited": 24,
+  "claims_passed": 23,
+  "claims_warned": 1,
+  "claims_unresolved": 0,
+  "files": {
+    "BIBLIOGRAPHY_AUDIT.md": {
+      "sha256": "f3f6a0db0ada2521eeb1c24fe6ce21006b220dd671efd3f138ad023633c0c604",
+      "bytes": 1192
+    },
+    "CLAIM_CONSISTENCY_MATRIX.md": {
+      "sha256": "cba3dede8bd9670f00b21b66172db8627c3c088c5909d79fbec24f83f8afcfd6",
+      "bytes": 6363
+    },
+    "DATA_LEAKAGE_AUDIT.md": {
+      "sha256": "5aad60903dd44de8f263c615f47e370ae37c34ffcdbbc435e6f5ab543d9ae800",
+      "bytes": 1017
+    },
+    "DRAFT_IEEE_COVER_LETTER.md": {
+      "sha256": "26e47198129181906d0cd5b8d08e4b70480adf482898f525514326fc44223d33",
+      "bytes": 2349
+    },
+    "FINAL_RELEASE_REPORT.md": {
+      "sha256": "1bf1e2da19175deb4abcbc61412a50f28d5413a94acbdf871feaf0acffc8fe2e",
+      "bytes": 908
+    },
+    "FINAL_SUBMISSION_CHECKLIST.md": {
+      "sha256": "f56ddf1dbc627e950417ee4ed501642217a44795ebc44bc66b8ce7e74aec0622",
+      "bytes": 1045
+    },
+    "GENERALIZATION_AUDIT.md": {
+      "sha256": "404e6a7f2210d64c68c86e3d18dcd0f48f0d61a4653ee897cc0e54c412fafbca",
+      "bytes": 1404
+    },
+    "HISTORICAL_INTEGRITY_MANIFEST.json": {
+      "sha256": "aaddaff321b26aa7c427f00cbe4dd08c383878f891f65733c563a6a4a1e6b9ed",
+      "bytes": 5865
+    },
+    "HUMAN_ACTIONS_REQUIRED.md": {
+      "sha256": "2508cb57083d827eb07a8adca4dbdc53ed2bd72d709e9120f9cb28612de897ca",
+      "bytes": 1312
+    },
+    "LATENCY_AUDIT.md": {
+      "sha256": "c69275d54020eb6482215302edd606c7acccccb3d792b80ae9dc0e41e8c1a719",
+      "bytes": 1199
+    },
+    "LATEX_BUILD_AUDIT.md": {
+      "sha256": "daf2f46596bb3a982b86768d9ced933bd71d0a9fd497a4b78f6504647f841bc6",
+      "bytes": 784
+    },
+    "manuscript/ieee_tsg_compliance_matrix.csv": {
+      "sha256": "26de2bf91581a969993b66ca2c8651d087d47c8e2d272f88f1b17505347ed0e0",
+      "bytes": 2580
+    },
+    "manuscript/main.tex": {
+      "sha256": "d474986de79dfa3ef6b5f9d9b9ef932bd2f8d3974d9114e488a88e135d81971b",
+      "bytes": 12603
+    },
+    "manuscript/manuscript_audit.json": {
+      "sha256": "ac15f00a83db6762f5cf35c1ae0e0d0752fbdd38d87380c4b515bbd1572e3ff4",
+      "bytes": 3410
+    },
+    "manuscript/notation_audit.md": {
+      "sha256": "ae6c99ff50d65bd1830d7e705baadaa15fc7b3d4278ce66b877582b14165d696",
+      "bytes": 2347
+    },
+    "manuscript/reference_audit.csv": {
+      "sha256": "56c9a249233ee8a2efe82ab9835d44a3be33330ac817466caaf8d4233d00eced",
+      "bytes": 2969
+    },
+    "manuscript/references.bib": {
+      "sha256": "675d89c1851ded3dc4cd3e6c7389e3529ce5436c856786590a01cadc65a6d9f3",
+      "bytes": 3489
+    },
+    "NUMERICAL_CONSISTENCY_AUDIT.md": {
+      "sha256": "be51a0ecf4886da91d4dc6ddf21ad95e04b2f6e30fc824b61541b0632b5f52d4",
+      "bytes": 1984
+    },
+    "PDF_VISUAL_AUDIT.md": {
+      "sha256": "40e735e35a87e4b6f2c07c2cbc3c4b1cbacdd4757c54983421f0383c6276eb18",
+      "bytes": 640
+    },
+    "README.md": {
+      "sha256": "3d22419750e9191c287ea354f50838f6f7bb10d0a9d49719346b6509ce3ab6ed",
+      "bytes": 1582
+    },
+    "reproducibility/environment/environment_lock.txt": {
+      "sha256": "53bc05efa3dde5d8b7a2dfc7d5c21c9da6b4afffe3b31d6c42a5c4cbe9af12f5",
+      "bytes": 444
+    },
+    "REPRODUCIBILITY_AUDIT.md": {
+      "sha256": "05684b5fcaf92585ff38a7d804f8cd526c2ca27bcc502a7dda6bfdcf74cf26fd",
+      "bytes": 537
+    },
+    "REVIEWER_ATTACK_MATRIX.md": {
+      "sha256": "27e694ceec1d1dd4b37bebcadb0bbefa3c062f0ae2277b3fcdac0648ddc2d79a",
+      "bytes": 8646
+    },
+    "SECURITY_PRIVACY_AUDIT.md": {
+      "sha256": "59abb8a21ff764688066faecb13e719f1c2ea1bf22c1d55c50603fd338d0a9f6",
+      "bytes": 991
+    },
+    "STATISTICAL_AUDIT.md": {
+      "sha256": "0629e066cfdae38b3b28b75bbf7b8f67023f7907f3162a5b806aab7876ca5302",
+      "bytes": 1948
+    },
+    "supplementary/robustness_tables/table_s2_cross_feeder_summary.csv": {
+      "sha256": "a0addd9d5906f7722467ea0e4da06ce2d6724d84514769b232d04a755272c1e5",
+      "bytes": 3197
+    },
+    "supplementary/robustness_tables/table_s3_lofo_transfer_results.csv": {
+      "sha256": "7744f5d7e692390843f5ec63f39dc0b7eb6a816d92ff9f7c0e260c34fe468142",
+      "bytes": 550
+    },
+    "supplementary/robustness_tables/table_s4_threshold_sensitivity.csv": {
+      "sha256": "ac7d6b926b1a9a5d838b2b41f1614324781d5857375a00406bbf4e38d70f225a",
+      "bytes": 3559
+    },
+    "supplementary/robustness_tables/table_s5_computational_complexity.csv": {
+      "sha256": "a196e85f44c8e603a94cc3cb9c8b6bef6363be19ccd996d6efc6b4002d624ac4",
+      "bytes": 633
+    },
+    "supplementary/robustness_tables/table_s6_adversarial_h3_8formulations.csv": {
+      "sha256": "cbeb096fa052fafb8eaba9ce0f63292949b7ad72914c18f5138b57406897b9f2",
+      "bytes": 738
+    },
+    "ZENODO_RELEASE_INSTRUCTIONS.md": {
+      "sha256": "601aa2c9ef494a4c3a2ce9eeb2ec1439cfa2995e0722ddbd48f3c967ab37fc9c",
+      "bytes": 680
+    }
+  }
+}

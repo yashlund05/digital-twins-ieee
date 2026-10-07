@@ -1,0 +1,167 @@
+\documentclass[journal]{IEEEtran}
+
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{hyperref}
+\usepackage{cite}
+\usepackage{siunitx}
+\usepackage{subcaption}
+
+% Custom commands for consistency
+\newcommand{\dtsync}{\Delta t}
+\newcommand{\pdrop}{P_{\mathrm{drop}}}
+\newcommand{\aoi}{\mathrm{AoI}}
+\newcommand{\dbeta}{\Delta\beta}
+
+\begin{document}
+
+\title{Quantifying the Effect of Digital Twin Synchronization Staleness on Joint Short-Term Load Estimation and Unsupervised Anomaly Detection in a Distribution-Feeder Digital Twin}
+
+% Author block (Blind review / author placement prior to submission)
+% \author{Author~One,~\IEEEmembership{Student Member,~IEEE,}
+%   Author~Two,~\IEEEmembership{Member,~IEEE}}
+
+\maketitle
+
+\begin{abstract}
+Digital Twin (DT) synchronization staleness---the delay between a physical distribution feeder's operational state and its virtual replica---affects downstream machine-learning tasks in ways that remain under-quantified. We present a controlled experimental framework that systematically evaluates how increasing Age-of-Information (AoI), parameterized by synchronization interval $\dtsync \in \{0, 1, 5, 15, 60, 300\}$~seconds and packet-drop probability $\pdrop \in [0.0, 0.20]$, degrades joint short-term load estimation and unsupervised anomaly detection across IEEE benchmark distribution feeders driven by real residential consumption telemetry from Pecan Street Dataport.
+
+Under ideal synchronization ($\dtsync = 0$~s, $\pdrop = 0$), the physics-residual representation paired with an LSTM autoencoder achieves an anomaly detection F1 score of 0.978, compared to 0.539 for raw telemetry. As staleness increases, both anomaly detection and load estimation degrade, but the pre-specified hypothesis (H3) that anomaly detection exhibits a steeper normalized log-linear degradation slope than load estimation is \emph{not supported} ($\dbeta = -1.224$, 95\% CI~$[-1.346, -1.113]$, $p = 1.000$). This finding is robust across ten independent random seeds and eight distinct mathematical error formulations, indicating that autoregressive load estimation degrades more steeply due to compounding recursive errors. Across tested radial networks (IEEE 13, 33, and 123-bus), we observe a topology-dependent operational transition envelope approximately spanning $2.4$--$4.1$~s, scaling with feeder electrical impedance depth, beyond which physics residuals undergo representation inversion. Online residual evaluation exhibits sub-microsecond latency ($0.41\,\mu$s), confirming edge feasibility.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Digital twin, synchronization staleness, age of information, anomaly detection, load estimation, distribution feeder, IEEE 33-bus, edge intelligence
+\end{IEEEkeywords}
+
+
+\section{Introduction}
+\label{sec:introduction}
+
+\IEEEPARstart{D}{igital} twins of electrical distribution feeders promise real-time situational awareness by maintaining a continuously synchronized virtual replica of the physical network. However, practical distribution automation communication channels are constrained by bandwidth limits, packet dropouts, and intermittent polling, which inevitably introduce \emph{staleness} between the physical state and its digital replica.
+
+The downstream impact of this synchronization staleness on machine learning analytics---specifically short-term load estimation and unsupervised anomaly detection---has historically lacked rigorous, controlled empirical quantification. While digital twin architectures for power grids~\cite{ref_dt_survey} and anomaly detection methods~\cite{ref_ad_survey} have been widely studied, the interaction between telemetry freshness and algorithmic degradation remains insufficiently characterized.
+
+This study makes the following primary contributions:
+\begin{enumerate}
+    \item A controlled co-simulation framework coupling OpenDSS distribution models with a synchronization engine to quantify staleness degradation.
+    \item A factorial multi-seed evaluation ($6 \times 4 = 24$ conditions, 10 independent seeds) testing the relative degradation hypothesis (H3) between anomaly detection and load estimation.
+    \item Evidence of topology-dependent representation inversion across IEEE 13, 33, and 123-bus radial networks, where physics residuals invert their performance advantage past an operational transition envelope ($2.4$--$4.1$~s).
+    \item Adversarial robustness verification confirming H3 falsification across eight distinct mathematical error formulations.
+    \item Hardware latency microbenchmarking establishing sub-microsecond computation time for online physics-residual extraction.
+\end{enumerate}
+
+
+\section{Related Work}
+\label{sec:related}
+
+\subsection{Digital Twins in Power Systems}
+Digital twin platforms have gained prominence for distribution network monitoring, predictive control, and asset health management~\cite{ref_dt_survey}. Co-simulation platforms utilizing OpenDSS~\cite{ref_opendss} provide high-fidelity state tracking, yet the implications of delayed state updates on edge-deployed predictive algorithms are rarely quantified under rigorous statistical protocols.
+
+\subsection{Age of Information in Cyber-Physical Grids}
+The Age-of-Information (AoI) metric characterizes telemetry freshness in status update systems~\cite{ref_aoi_theory}. In distribution grid digital twins, AoI maps directly to operational state discrepancy: as update intervals or packet losses grow, the digital replica's state drifts from the true physical feeder conditions.
+
+\subsection{Unsupervised Anomaly Detection}
+Distribution feeder anomaly detection commonly employs tree ensembles such as Isolation Forests~\cite{ref_isolation_forest} or recurrent neural architectures such as LSTM autoencoders~\cite{ref_lstm_ae}. Prior evaluations typically assume instantaneous measurement updates, overlooking staleness-induced false alarms.
+
+\subsection{Short-Term Load Estimation}
+Short-term load forecasting uses persistence models, gradient-boosted decision trees~\cite{ref_xgboost}, and recurrent deep architectures~\cite{ref_lstm_forecast}. While these models handle nominal noise well, their autoregressive degradation under stale historical inputs requires systematic benchmarking.
+
+
+\section{Experimental Methodology}
+\label{sec:methodology}
+
+\subsection{Testbed Architecture}
+The experimental framework couples:
+(i)~radial distribution feeders (IEEE 13-bus, IEEE 33-bus, and IEEE 123-bus) modeled in OpenDSS,
+(ii)~real residential smart meter load telemetry from Pecan Street Dataport~\cite{ref_pecan_street},
+(iii)~a discrete-event synchronization engine simulating telemetry intervals $\dtsync$ and packet-loss probability $\pdrop$,
+(iv)~load estimation models (Persistence, XGBoost, LSTM), and
+(v)~anomaly detectors (Isolation Forest, One-Class SVM, LSTM autoencoders) evaluated on both raw telemetry and physics-residual states.
+
+\subsection{Physics Residual State}
+Let $y_t \in \mathbb{R}^D$ represent true physical measurements at time $t$, and let $y_t^{\mathrm{DT}}$ denote the state available to the digital twin. The physics-residual vector is:
+\begin{equation}
+    r_t = y_t - y_t^{\mathrm{DT}}
+    \label{eq:residual}
+\end{equation}
+Under ideal synchronization ($\aoi = 0$), $r_t \approx 0$ under nominal operations. When state updates are delayed by AoI, $y_t^{\mathrm{DT}}$ holds an obsolete snapshot, causing $r_t$ to drift as load demand fluctuates.
+
+\subsection{Synchronization & AoI Model}
+The realized Age of Information is governed by update timestamps $U(t)$:
+\begin{equation}
+    \aoi(t) = t - U(t)
+    \label{eq:aoi}
+\end{equation}
+Updates arrive at nominal intervals $\dtsync$, subject to Bernoulli packet drops with probability $\pdrop$.
+
+\subsection{Hypothesis Formulation (H3)}
+We test whether anomaly detection degrades more rapidly than load estimation:
+\begin{align}
+    H_0 &: \dbeta = \beta_{\mathrm{AD}} - \beta_{\mathrm{LE}} \leq 0 \\
+    H_3 &: \dbeta > 0
+\end{align}
+where $\beta_{\mathrm{AD}}$ and $\beta_{\mathrm{LE}}$ represent normalized log-linear degradation slopes.
+
+
+\section{Results & Empirical Findings}
+\label{sec:results}
+
+\subsection{Baseline Ideal Synchronization}
+Under ideal synchronization ($\dtsync = 0$~s, $\pdrop = 0.0$), the physics-residual representation paired with an LSTM autoencoder attains an anomaly detection F1 score of 0.978, compared to 0.539 for raw telemetry and 0.118 for Isolation Forest. For load estimation, LSTM achieves 8.95\% MAPE, outperforming XGBoost (9.06\%) and Persistence (14.73\%).
+
+\subsection{Factorial Staleness Evaluation}
+Across the $6 \times 4 = 24$ factorial synchronization grid, increasing staleness drives monotonic performance loss. Synchronization interval $\dtsync$ accounts for over 85\% of total performance variance, while packet-loss probability $\pdrop$ amplifies tail latency.
+
+\subsection{Hypothesis H3 Testing Across Seeds & Formulations}
+Hypothesis H3 is decisively \emph{not supported}:
+\begin{equation}
+    \dbeta = -1.224, \quad 95\%~\text{CI} = [-1.346, -1.113], \quad p = 1.000
+    \label{eq:h3_stat}
+\end{equation}
+This negative degradation rate difference ($\dbeta < 0$) is observed across all ten independent random seeds ($100\%$ sign consistency) and persists across eight distinct mathematical error formulations, including bounded symmetric MAPE (sMAPE: $\dbeta = -0.984$), MASE ($\dbeta = -1.142$), and cosine distance degradation ($\dbeta = -0.871$).
+
+\subsection{Multi-Feeder Generalization & Inversion Envelope}
+Leave-One-Feeder-Out (LOFO) evaluation across IEEE 13, 33, and 123-bus feeders confirms that representation inversion occurs on 100\% of tested networks. However, the operational transition cliff is topology-dependent, scaling with feeder electrical impedance depth:
+\begin{itemize}
+    \item IEEE 13-bus (compact lateral): $\aoi^* \approx 4.1$~s
+    \item IEEE 33-bus (medium radial): $\aoi^* \approx 3.2$~s
+    \item IEEE 123-bus (deep radial): $\aoi^* \approx 2.4$~s
+\end{itemize}
+Together, the tested feeders delineate an operational transition envelope of approximately $2.4$--$4.1$~s.
+
+\subsection{Computational Edge Latency}
+Hardware execution microbenchmarks confirm that physics-residual vector subtraction requires $0.00041$~ms ($0.41\,\mu$s) and AoI-adaptive threshold lookup requires $0.00128$~ms ($1.28\,\mu$s). Total online inference remains under $1.19$~ms, fully compliant with real-time edge processing constraints.
+
+
+\section{Discussion & Threats to Validity}
+\label{sec:discussion}
+
+\subsection{Interpretation of H3 Non-Support}
+The non-support of H3 reflects the fundamental error propagation of autoregressive load forecasting under stale inputs. In recursive multi-step forecasting, un-synchronized lag observations compound error quadratically, whereas unsupervised anomaly detectors evaluate reconstruction errors without multi-step accumulation.
+
+\subsection{Limitations}
+\begin{itemize}
+    \item \textbf{Topology Scope:} Experiments were conducted on three benchmark radial feeders; meshed sub-transmission networks may exhibit distinct impedance characteristics.
+    \item \textbf{Load Telemetry:} Profiles derive from residential smart meter data; industrial inductive loads with rapid motor transients were not simulated.
+    \item \textbf{Communication Channel:} Packet drops were modeled via independent Bernoulli trials; bursty correlated channel fade may alter transient excursions.
+\end{itemize}
+
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+This paper quantified the effect of digital twin synchronization staleness on joint load estimation and unsupervised anomaly detection across distribution feeders. Our empirical results demonstrate that: (i)~physics-based residuals afford substantial accuracy advantages under fresh telemetry, (ii)~stale synchronization induces a topology-dependent representation inversion within an operational transition envelope of $2.4$--$4.1$~s, (iii)~load estimation degrades more steeply than anomaly detection across all tested seeds and metric formulations ($\dbeta = -1.224$, rejecting H3), and (iv)~physics-residual processing adds negligible computational overhead ($<2\,\mu$s), rendering it viable for edge distribution automation.
+
+
+\section*{Acknowledgment}
+The authors acknowledge the Electric Power Research Institute (EPRI) for open-source distribution simulation tools and Pecan Street Dataport for high-resolution residential telemetry data.
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}
