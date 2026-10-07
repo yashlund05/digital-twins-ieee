@@ -1,0 +1,13 @@
+requirement,expected,repository_state,evidence,status,manual_check_required
+Manuscript Structure,"Title, Abstract, Index Terms, Intro, Related Work, Methodology, Results, Discussion, Conclusion, References",Complete standard IEEE Transactions hierarchy present,main.tex sections,PASS,NO
+Page Layout & Documentclass,\documentclass[journal]{IEEEtran},Standard two-column journal IEEEtran template,main.tex line 1,PASS,NO
+Author List & Affiliations,"Full author names, IEEE membership grade, affiliations, emails",Placeholder commented for blind review / human author assignment,main.tex author block,MANUAL_CHECK,YES (Author names and affiliations to be inserted prior to portal upload)
+Abstract Length & Constraints,"150-250 words, single paragraph, self-contained, no ungrounded superlatives","Calibrated 214 words, structured with problem, scope, numbers, and limitations",main.tex abstract,PASS,NO
+Index Terms / Keywords,4-7 IEEE standard index terms,"Digital twin, synchronization staleness, age of information, anomaly detection, load estimation, distribution feeder, IEEE 33-bus",main.tex IEEEkeywords,PASS,NO
+Figure Resolution & Formats,"Vector PDF / 300+ DPI PNG, readable axes, color-accessible",All publication figures generated in both .pdf and 300-DPI .png,figures/*.pdf and figures/*.png,PASS,NO
+Table Typography,"Booktabs formatting, no vertical rules, clear units and uncertainties",Clean LaTeX booktabs tables with exact decimals and CI bounds,tables/*.tex,PASS,NO
+Equation Numbering & Style,"Numbered consecutively, standard italic math font, upright units",Standard numbered display equations with amsmath and siunitx,main.tex equations,PASS,NO
+Bibliography Format,"IEEEtran style, complete bibliographic metadata, DOIs included","IEEEtran BibTeX style, verified DOIs, zero placeholders",references.bib,PASS,NO
+Supplementary Material,"Clearly referenced in text, self-contained supplementary PDF/tarball","Complete supplementary/ package with README, tables S1-S6, and reproduction lock",supplementary/ directory,PASS,NO
+Conflict of Interest & Funding,Conflict-of-interest statement and funding acknowledgement,Unfunded research statement included; human authors must confirm sponsor grants,Acknowledgment section,MANUAL_CHECK,YES (Insert specific grant numbers if applicable)
+Data & Code Availability,Public reproducible artifact statement with repository URL and DOI,Open-source reproduction instructions provided; final public Zenodo/GitHub link required,Reproducibility statement,MANUAL_CHECK,YES (Insert persistent DOI link upon Zenodo archive)

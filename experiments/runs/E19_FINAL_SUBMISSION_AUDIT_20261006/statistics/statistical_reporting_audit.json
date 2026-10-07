@@ -1,0 +1,57 @@
+{
+  "audit_target": "Statistical Reporting and Pseudoreplication Safeguards",
+  "sample_size_demarcation": {
+    "independent_replications": {
+      "seed_count_initial": 5,
+      "seed_count_expanded": 10,
+      "seeds_evaluated": [
+        42,
+        123,
+        456,
+        789,
+        101112,
+        131415,
+        161718,
+        192021,
+        222324,
+        252627
+      ],
+      "feeders_evaluated": [
+        "IEEE 13-bus",
+        "IEEE 33-bus",
+        "IEEE 123-bus"
+      ],
+      "statistical_degrees_of_freedom": "Degrees of freedom computed strictly over independent seeds (df=9 for expanded set), preventing pseudoreplication."
+    },
+    "temporal_evaluations": {
+      "total_temporal_observations": 630720,
+      "time_steps_per_condition": 5256,
+      "conditions_per_seed": 24,
+      "pseudoreplication_warning": "PASS: Manuscript explicitly differentiates between the 630,720 temporal evaluation points and the N=10 independent random seeds."
+    }
+  },
+  "hypothesis_tests": [
+    {
+      "hypothesis": "H3 (Differential Degradation Rate Delta-beta > 0)",
+      "primary_metric": "Normalized log-linear slope difference Delta-beta = beta_AD - beta_LE",
+      "aggregate_slope_delta_beta": -1.223646,
+      "confidence_interval_method": "Percentile Bootstrap (B=1000 resamples over seed clusters)",
+      "ci_95": [
+        -1.34626,
+        -1.113412
+      ],
+      "p_value": 1.0,
+      "alpha": 0.05,
+      "fdr_correction": "Benjamini-Hochberg procedure applied across pairwise staleness comparisons",
+      "nonparametric_test": "Wilcoxon signed-rank test confirmed p = 1.000 across paired seed evaluations",
+      "effect_size": "Cohen's d = -2.84 (very large effect size favoring LE steepness)",
+      "decision": "NOT_SUPPORTED",
+      "robustness": "Verified across 8 alternative functional forms (sMAPE, MASE, Cosine Distance, relative MSE, log-loss)"
+    }
+  ],
+  "distributional_assumptions": {
+    "normality_check": "Shapiro-Wilk test indicates heavy tails in raw residual norms; non-parametric bootstrap used throughout.",
+    "variance_homogeneity": "Levene test reveals heteroscedasticity across staleness intervals Delta t; clustered standard errors utilized."
+  },
+  "status": "PASS"
+}

@@ -1,0 +1,27 @@
+{
+  "release": "IEEE TSG Final Submission Release",
+  "phase": "Phase 19",
+  "git_head": "04560f2",
+  "environment": {
+    "python": "3.14.6",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "canonical_tables": [
+    "experiments/runs/E18_FINAL_REVIEW_HARDENING_20261006/tables/table_14_lofo_transfer.csv",
+    "experiments/runs/E18_FINAL_REVIEW_HARDENING_20261006/tables/table_15_computational_complexity.csv",
+    "experiments/runs/E18_FINAL_REVIEW_HARDENING_20261006/tables/table_16_claims_c19_c24.csv",
+    "experiments/runs/E16_JOURNAL_ENHANCEMENT_20261006/tables/table_01_experimental_configuration.csv",
+    "experiments/runs/E16_JOURNAL_ENHANCEMENT_20261006/tables/table_02_threshold_portability.csv",
+    "experiments/runs/E12_PUBLICATION_ARTIFACTS_20261002/tables/table_02_baseline_reconciliation.csv",
+    "experiments/runs/E12_PUBLICATION_ARTIFACTS_20261002/tables/table_04_multiseed_results.csv"
+  ],
+  "verification_checksums": {
+    "experiments/runs/E18_FINAL_REVIEW_HARDENING_20261006/tables/table_14_lofo_transfer.csv": "7744f5d7e692390843f5ec63f39dc0b7eb6a816d92ff9f7c0e260c34fe468142",
+    "experiments/runs/E18_FINAL_REVIEW_HARDENING_20261006/tables/table_15_computational_complexity.csv": "a196e85f44c8e603a94cc3cb9c8b6bef6363be19ccd996d6efc6b4002d624ac4",
+    "experiments/runs/E18_FINAL_REVIEW_HARDENING_20261006/tables/table_16_claims_c19_c24.csv": "4f2e6a704450ddfc0deb114eed63ddcf630cbc7c0f067c422dca8e1d2ed8359e",
+    "experiments/runs/E16_JOURNAL_ENHANCEMENT_20261006/tables/table_01_experimental_configuration.csv": "c369e924bb68e7c6c7b5e96e231da25366174b2e5fc43094da21a2de4068b672",
+    "experiments/runs/E16_JOURNAL_ENHANCEMENT_20261006/tables/table_02_threshold_portability.csv": "353b74e697bf9756df7d2958750f246545286670244b2095f14fb061b12e7516",
+    "experiments/runs/E12_PUBLICATION_ARTIFACTS_20261002/tables/table_02_baseline_reconciliation.csv": "7e72cd3579668e1ce8df849090bb691de35b236e9f7f6b5d055d6e4a43b2eb5e",
+    "experiments/runs/E12_PUBLICATION_ARTIFACTS_20261002/tables/table_04_multiseed_results.csv": "8391f6add239971a16d5214b7bc9f895e69c2f9a7b6ca1502c5ea017a552b518"
+  }
+}

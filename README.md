@@ -6,7 +6,7 @@
 
 [![CI Pipeline](https://github.com/yashlund05/digital-twins-ieee/actions/workflows/ci.yml/badge.svg)](https://github.com/yashlund05/digital-twins-ieee/actions/workflows/ci.yml)
 [![Publication Target](https://img.shields.io/badge/Target%20Venue-IEEE%20Trans.%20Smart%20Grid-00629B.svg?style=flat&logo=ieee&logoColor=white)](https://ieee-pes.org/publications/transactions-on-smart-grid/)
-[![Status](https://img.shields.io/badge/Release%20Status-Certified%20(Phase%2014)-brightgreen.svg)]()
+[![Status](https://img.shields.io/badge/Release%20Status-Certified%20(Phase%2019%20Submission%20Package)-brightgreen.svg)]()
 [![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11-3776AB.svg?logo=python&logoColor=white)](https://www.python.org/)
 [![Power Systems](https://img.shields.io/badge/Physics%20Engine-OpenDSS%20%2F%20IEEE%2033--Bus-FF6F00.svg)](https://www.epri.com/pages/sa/opendss)
 [![ML Framework](https://img.shields.io/badge/ML%20Engine-PyTorch%20%7C%20XGBoost%20%7C%20Scikit--Learn-EE4C2C.svg?logo=pytorch&logoColor=white)](https://pytorch.org/)

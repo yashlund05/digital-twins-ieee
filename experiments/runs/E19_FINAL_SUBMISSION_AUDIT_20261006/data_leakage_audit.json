@@ -1,0 +1,39 @@
+{
+  "audit_target": "Data Partitioning and Leakage Safeguards",
+  "partition_protocol": {
+    "split_type": "Strict Chronological Partition (No random temporal shuffling)",
+    "train_fraction": 0.7,
+    "val_fraction": 0.15,
+    "test_fraction": 0.15,
+    "temporal_ordering": "Train (Months 1-8.4) -> Val (Months 8.4-10.2) -> Test (Months 10.2-12)"
+  },
+  "leakage_checks": [
+    {
+      "check": "Normalization Scaling",
+      "verification": "StandardScaler and MinMax estimators fitted strictly on training partition; validation and test sets transformed out-of-sample.",
+      "status": "PASS"
+    },
+    {
+      "check": "Threshold Calibration",
+      "verification": "Baseline static threshold tau_0 calibrated strictly on clean validation partition (99th percentile); test set unobserved during calibration.",
+      "status": "PASS"
+    },
+    {
+      "check": "AoI-Adaptive Parameter Gamma",
+      "verification": "Scale parameter gamma fitted on validation grid; zero feedback from test set F1 scores.",
+      "status": "PASS"
+    },
+    {
+      "check": "Cross-Feeder Transfer (LOFO)",
+      "verification": "When evaluating target feeder in Leave-One-Feeder-Out, models and hyperparameters trained solely on remaining donors. Zero target feeder leakage.",
+      "status": "PASS"
+    },
+    {
+      "check": "Autoregressive Lag Consistency",
+      "verification": "No future observation leakage during recursive lag formation; lag features lag(t) strictly precede prediction target t+h.",
+      "status": "PASS"
+    }
+  ],
+  "overall_status": "PASS",
+  "audit_conclusion": "Zero temporal leakage, zero out-of-sample contamination, zero test-set hyperparameter tuning."
+}

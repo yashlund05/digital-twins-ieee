@@ -1,0 +1,101 @@
+{
+  "root": "C:\\Users\\ARYAN - AYUSH\\OneDrive\\Desktop\\digital twin",
+  "directories": {
+    "src": {
+      "file_count": 211,
+      "sample_files": [
+        "src\\__init__.py",
+        "src\\__main__.py",
+        "src\\anomaly_detection\\detector.py",
+        "src\\anomaly_detection\\dual_mode.py",
+        "src\\anomaly_detection\\experiment_e3.py",
+        "src\\anomaly_detection\\isolation_forest.py",
+        "src\\anomaly_detection\\lstm_autoencoder.py",
+        "src\\anomaly_detection\\thresholds.py",
+        "src\\anomaly_detection\\trainer.py",
+        "src\\anomaly_detection\\__init__.py"
+      ]
+    },
+    "tests": {
+      "file_count": 155,
+      "sample_files": [
+        "tests\\conftest.py",
+        "tests\\__init__.py",
+        "tests\\integration\\test_anomaly_pipeline.py",
+        "tests\\integration\\test_dt_pipeline.py",
+        "tests\\integration\\test_dt_sync_integration.py",
+        "tests\\integration\\test_forecasting_pipeline.py",
+        "tests\\integration\\test_mitigation_benchmark.py",
+        "tests\\integration\\test_phase10_multiseed.py",
+        "tests\\integration\\test_phase11_ablation.py",
+        "tests\\integration\\test_phase11_reproducibility.py"
+      ]
+    },
+    "configs": {
+      "file_count": 14,
+      "sample_files": [
+        "configs\\anomaly_detection.yaml",
+        "configs\\base.yaml",
+        "configs\\data.yaml",
+        "configs\\digital_twin.yaml",
+        "configs\\forecasting.yaml",
+        "configs\\synchronization.yaml",
+        "configs\\experiments\\e10_multiseed.yaml",
+        "configs\\experiments\\e11_ablations.yaml",
+        "configs\\experiments\\e11_phase11.yaml",
+        "configs\\experiments\\e5_staleness_sweep.yaml"
+      ]
+    },
+    "docs": {
+      "file_count": 55,
+      "sample_files": [
+        "docs\\github_reconciliation_report.md",
+        "docs\\phase10_multiseed_analysis.md",
+        "docs\\phase10_scientific_interpretation.md",
+        "docs\\phase10_validation_report.md",
+        "docs\\phase11_preimplementation_audit.md",
+        "docs\\phase11_scientific_interpretation.md",
+        "docs\\phase11_validation_report.md",
+        "docs\\phase12_validation_report.md",
+        "docs\\phase13_manuscript_audit.md",
+        "docs\\phase13_scientific_interpretation.md"
+      ]
+    },
+    "experiments": {
+      "file_count": 432,
+      "sample_files": [
+        "experiments\\configs\\.gitkeep",
+        "experiments\\manifests\\.gitkeep",
+        "experiments\\planned\\journal_improvement_execution.yaml",
+        "experiments\\planned\\journal_improvement_registry.yaml",
+        "experiments\\results\\.gitkeep",
+        "experiments\\runs\\.gitkeep",
+        "experiments\\runs\\E10_MULTI_SEED_ANALYSIS_20261002\\aggregated_metrics.csv",
+        "experiments\\runs\\E10_MULTI_SEED_ANALYSIS_20261002\\baseline_reconciliation.json",
+        "experiments\\runs\\E10_MULTI_SEED_ANALYSIS_20261002\\condition_statistics.csv",
+        "experiments\\runs\\E10_MULTI_SEED_ANALYSIS_20261002\\interaction_effects.csv"
+      ]
+    },
+    "supplementary": {
+      "file_count": 10,
+      "sample_files": [
+        "supplementary\\README.md",
+        "supplementary\\reproducibility\\environment_lock.txt",
+        "supplementary\\robustness_figures\\fig_s1_cross_feeder_transition.pdf",
+        "supplementary\\robustness_figures\\fig_s2_threshold_sensitivity.pdf",
+        "supplementary\\robustness_figures\\fig_s3_adversarial_h3_comparison.pdf",
+        "supplementary\\robustness_tables\\table_s2_cross_feeder_summary.csv",
+        "supplementary\\robustness_tables\\table_s3_lofo_transfer_results.csv",
+        "supplementary\\robustness_tables\\table_s4_threshold_sensitivity.csv",
+        "supplementary\\robustness_tables\\table_s5_computational_complexity.csv",
+        "supplementary\\robustness_tables\\table_s6_adversarial_h3_8formulations.csv"
+      ]
+    }
+  },
+  "summary": {
+    "total_tracked_dirs_files": 877,
+    "branch": "main",
+    "head": "04560f22281f0de0c2aa598edff80fa14b113f85",
+    "ahead_behind": "0\t3"
+  }
+}

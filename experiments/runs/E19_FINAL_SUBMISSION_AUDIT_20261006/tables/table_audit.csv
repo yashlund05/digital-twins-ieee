@@ -1,0 +1,10 @@
+table_id,table_name,source_artifact,rows,content_summary,verification_status
+Table 1,table_01_experimental_configuration,experiments/runs/E16_JOURNAL_ENHANCEMENT_20261006/tables/table_01_experimental_configuration.csv,9,"Full parameter grid (6 intervals x 4 drop rates, 10 seeds, 3 feeders, 15-min Pecan Street data)",PASS
+Table 2,table_02_baseline_reconciliation,experiments/runs/E12_PUBLICATION_ARTIFACTS_20261002/tables/table_02_baseline_reconciliation.csv,4,"Reconciliation between E4 and E5 baselines: Residual LSTM-AE F1=0.9780, Raw LSTM-AE F1=0.5386",PASS
+Table 3,table_03_e5_condition_summary,experiments/runs/E12_PUBLICATION_ARTIFACTS_20261002/tables/table_03_e5_condition_summary.csv,24,Summary of 24 factorial staleness conditions for Seed 42 showing monotonic degradation,PASS
+Table 4,table_04_multiseed_results,experiments/runs/E12_PUBLICATION_ARTIFACTS_20261002/tables/table_04_multiseed_results.csv,5,"Multi-seed degradation slopes across initial 5 seeds (all Delta-beta < 0, all p=1.000)",PASS
+Table 5,table_05_ablation_summary,experiments/runs/E12_PUBLICATION_ARTIFACTS_20261002/tables/table_05_ablation_summary.csv,8,Controlled ablation matrix A1-A8 verifying component contributions across 88 runs,PASS
+Table 6,table_06_h3_statistics,experiments/runs/E12_PUBLICATION_ARTIFACTS_20261002/tables/table_06_h3_statistics.csv,6,"Pairwise Wilcoxon tests, bootstrap CIs [-1.3463, -1.1134], and FDR-corrected p-values for H3",PASS
+Table 14,table_14_lofo_transfer,experiments/runs/E18_FINAL_REVIEW_HARDENING_20261006/tables/table_14_lofo_transfer.csv,3,"Cross-feeder Leave-One-Feeder-Out transfer metrics across IEEE 13, 33, and 123 bus networks",PASS
+Table 15,table_15_computational_complexity,experiments/runs/E18_FINAL_REVIEW_HARDENING_20261006/tables/table_15_computational_complexity.csv,4,"Hardware execution latency microbenchmarks: residual arithmetic 0.41 us, threshold 1.28 us, inference 1.18 ms",PASS
+Table 16,table_16_claims_c19_c24,experiments/runs/E18_FINAL_REVIEW_HARDENING_20261006/tables/table_16_claims_c19_c24.csv,6,Formal claims ledger for newly registered claims C19 through C24,PASS

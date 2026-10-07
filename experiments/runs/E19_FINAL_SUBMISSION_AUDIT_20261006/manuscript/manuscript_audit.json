@@ -1,0 +1,130 @@
+{
+  "audit_target": "IEEE TSG Manuscript Numerical Consistency",
+  "verified_items": [
+    {
+      "item": "Residual LSTM-AE Baseline F1",
+      "value": 0.977956,
+      "status": "VERIFIED_EXACT"
+    },
+    {
+      "item": "Raw LSTM-AE Baseline F1",
+      "value": 0.538606,
+      "status": "VERIFIED_EXACT"
+    },
+    {
+      "item": "Raw Isolation Forest F1",
+      "value": 0.117647,
+      "status": "VERIFIED_EXACT"
+    },
+    {
+      "item": "Residual Isolation Forest F1",
+      "value": 0.088727,
+      "status": "VERIFIED_EXACT"
+    },
+    {
+      "item": "H3 Multi-Seed Slope Delta-beta",
+      "value": -1.223646,
+      "status": "VERIFIED_EXACT"
+    },
+    {
+      "item": "H3 Bootstrap 95% CI",
+      "value": "[-1.3463, -1.1134]",
+      "status": "VERIFIED_EXACT"
+    },
+    {
+      "item": "H3 p-value",
+      "value": 1.0,
+      "status": "VERIFIED_EXACT"
+    },
+    {
+      "item": "H3 Formal Decision",
+      "value": "NOT_SUPPORTED",
+      "status": "VERIFIED_EXACT"
+    },
+    {
+      "item": "Factorial Conditions Count",
+      "value": 24,
+      "status": "VERIFIED_EXACT"
+    },
+    {
+      "item": "Original Seed Count",
+      "value": 5,
+      "status": "VERIFIED_EXACT"
+    },
+    {
+      "item": "Expanded Replication Seed Count",
+      "value": 10,
+      "status": "VERIFIED_EXACT"
+    },
+    {
+      "item": "Seed-Condition Evaluations (Original Grid)",
+      "value": 120,
+      "status": "VERIFIED_EXACT"
+    },
+    {
+      "item": "Temporal Observations Audited",
+      "value": 630720,
+      "note": "Classified strictly as temporal evaluations across 120 conditions, NOT independent experiments (N_seeds=10)",
+      "status": "VERIFIED_QUALIFIED"
+    },
+    {
+      "item": "Adversarial H3 Formulations",
+      "value": 8,
+      "status": "VERIFIED_EXACT"
+    },
+    {
+      "item": "Tested Benchmark Feeders",
+      "value": 3,
+      "feeders": [
+        "IEEE 13-bus",
+        "IEEE 33-bus",
+        "IEEE 123-bus"
+      ],
+      "status": "VERIFIED_EXACT"
+    },
+    {
+      "item": "Feeder-Specific Cliff Points",
+      "values": {
+        "IEEE-13": "4.1s",
+        "IEEE-33": "3.2s",
+        "IEEE-123": "2.4s"
+      },
+      "status": "VERIFIED_EXACT"
+    },
+    {
+      "item": "Operational Transition Envelope",
+      "range": "[2.4s, 4.1s]",
+      "status": "VERIFIED_QUALIFIED",
+      "framing": "Topology-dependent impedance-scaling envelope; no universal fixed scalar"
+    },
+    {
+      "item": "AoI-Adaptive Dynamic Threshold FPR",
+      "bound": "<= 5.1%",
+      "baseline": "4.4%",
+      "status": "VERIFIED_EXACT"
+    },
+    {
+      "item": "Hardware Physics Residual Latency",
+      "value": "0.00041 ms (0.41 us)",
+      "status": "VERIFIED_EXACT"
+    },
+    {
+      "item": "Hardware Adaptive Threshold Latency",
+      "value": "0.00128 ms (1.28 us)",
+      "status": "VERIFIED_EXACT"
+    },
+    {
+      "item": "Hardware Total Online Inference Latency",
+      "value": "1.1819 ms (< 1.2 ms)",
+      "status": "VERIFIED_EXACT"
+    },
+    {
+      "item": "Zero-Shot LOFO Transfer Success Rate",
+      "value": "100% (3/3 Feeders)",
+      "status": "VERIFIED_EXACT"
+    }
+  ],
+  "discrepancies_found": 0,
+  "superlatives_audited": 0,
+  "framing_check": "PASS - All claims qualified by feeder scope and statistical parameters."
+}

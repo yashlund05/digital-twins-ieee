@@ -1,0 +1,95 @@
+{
+  "audit_target": "Frozen Historical Phases E4-E18",
+  "all_phases_intact": true,
+  "total_audited": 11,
+  "records": [
+    {
+      "phase": "E4",
+      "artifact": "experiments/runs/E4_RAW_VS_RESIDUAL_SEED42_20260930/metrics.json",
+      "expected_hash": "63e5b871d18830531d15e18e5a096587a32059790c17835cb538b32bc5659d5b",
+      "current_hash": "63e5b871d18830531d15e18e5a096587a32059790c17835cb538b32bc5659d5b",
+      "match": true,
+      "status": "VERIFIED_IMMUTABLE"
+    },
+    {
+      "phase": "E5",
+      "artifact": "experiments/runs/E5_STALENESS_SWEEP_CORRECTED_SEED42_20260930/metrics.json",
+      "expected_hash": "1b596aa8b94682cd573435dae24b065db060a3c277349f4ea3edc50a59fc005f",
+      "current_hash": "1b596aa8b94682cd573435dae24b065db060a3c277349f4ea3edc50a59fc005f",
+      "match": true,
+      "status": "VERIFIED_IMMUTABLE"
+    },
+    {
+      "phase": "E6",
+      "artifact": "experiments/runs/E6_JOINT_ANALYSIS_SEED42_20261002/H3_summary.csv",
+      "expected_hash": "cb2678cb939a65642f8c273b6a867ed890411b358a3a7e2a7df4cd47ed38bcb3",
+      "current_hash": "cb2678cb939a65642f8c273b6a867ed890411b358a3a7e2a7df4cd47ed38bcb3",
+      "match": true,
+      "status": "VERIFIED_IMMUTABLE"
+    },
+    {
+      "phase": "E10",
+      "artifact": "experiments/runs/E10_MULTI_SEED_ANALYSIS_20261002/multiseed_h3_summary.csv",
+      "expected_hash": "23f9c80648f0207217a315dd940af12e3b3317f1cbf01d2147ec70f1bb0e3b97",
+      "current_hash": "23f9c80648f0207217a315dd940af12e3b3317f1cbf01d2147ec70f1bb0e3b97",
+      "match": true,
+      "status": "VERIFIED_IMMUTABLE"
+    },
+    {
+      "phase": "E11",
+      "artifact": "experiments/runs/E11_PHASE11_20261002/table_01_reproducibility.csv",
+      "expected_hash": "1a97f2c0116271f52de4352fc4e8e3cf29c696266e5caa30b904373ccf3f7332",
+      "current_hash": "1a97f2c0116271f52de4352fc4e8e3cf29c696266e5caa30b904373ccf3f7332",
+      "match": true,
+      "status": "VERIFIED_IMMUTABLE"
+    },
+    {
+      "phase": "E12",
+      "artifact": "experiments/runs/E12_PUBLICATION_ARTIFACTS_20261002/manifest.json",
+      "expected_hash": "6e6ddf180c04dc7ab9c0dd7b924537fa7d4aa103cbc0628a70bc39812520d248",
+      "current_hash": "6e6ddf180c04dc7ab9c0dd7b924537fa7d4aa103cbc0628a70bc39812520d248",
+      "match": true,
+      "status": "VERIFIED_IMMUTABLE"
+    },
+    {
+      "phase": "E13",
+      "artifact": "experiments/runs/E13_MANUSCRIPT_SUBMISSION_20261002/manifest.json",
+      "expected_hash": "f71b01725e4af34c3ea80b85be52c2c4946cc10272944834eab3ec4a48413f56",
+      "current_hash": "f71b01725e4af34c3ea80b85be52c2c4946cc10272944834eab3ec4a48413f56",
+      "match": true,
+      "status": "VERIFIED_IMMUTABLE"
+    },
+    {
+      "phase": "E14",
+      "artifact": "experiments/runs/E14_FINAL_SCIENTIFIC_AUDIT_20261002/claim_registry_final.json",
+      "expected_hash": "3da570eea6a79c9dff48507c181ab1c1278b26e88ee30d2a6850ea8d5a89f954",
+      "current_hash": "3da570eea6a79c9dff48507c181ab1c1278b26e88ee30d2a6850ea8d5a89f954",
+      "match": true,
+      "status": "VERIFIED_IMMUTABLE"
+    },
+    {
+      "phase": "E16",
+      "artifact": "experiments/runs/E16_JOURNAL_ENHANCEMENT_20261006/provenance/provenance.json",
+      "expected_hash": "b30ec2aaa47661cd713e2f44cf23284ede0dd6bdca7af735c8cc1765856974f9",
+      "current_hash": "b30ec2aaa47661cd713e2f44cf23284ede0dd6bdca7af735c8cc1765856974f9",
+      "match": true,
+      "status": "VERIFIED_IMMUTABLE"
+    },
+    {
+      "phase": "E17",
+      "artifact": "experiments/runs/E17_EXTERNAL_VALIDATION_20261006/provenance/provenance.json",
+      "expected_hash": "a27f008765b45e3d533a7b0106b8c35b32f0e091b8d0c2c34dc9e58a923e0496",
+      "current_hash": "a27f008765b45e3d533a7b0106b8c35b32f0e091b8d0c2c34dc9e58a923e0496",
+      "match": true,
+      "status": "VERIFIED_IMMUTABLE"
+    },
+    {
+      "phase": "E18",
+      "artifact": "experiments/runs/E18_FINAL_REVIEW_HARDENING_20261006/manifest.json",
+      "expected_hash": "5bfba648274e697b1486ee0511169adb077982c2e32aa9cd19064546b9bc7af7",
+      "current_hash": "5bfba648274e697b1486ee0511169adb077982c2e32aa9cd19064546b9bc7af7",
+      "match": true,
+      "status": "VERIFIED_IMMUTABLE"
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+claim_id,exact_text,numerical_value,unit,source_artifact,source_phase,evidence_type,tolerance,verified_value,status,manuscript_location
+C14,Macro empirical transition cliff AoI* in-bin discrete drop on IEEE 33-bus benchmark,5.0,Seconds,experiments/runs/E11_PHASE11_20261002/summary.md,Phase 11 (E11),Empirical In-Bin Drop,0.1,"5.0 (Coarse bin); Refined to 3.2s in E16, and [2.4s, 4.1s] cross-feeder in E17/E18",WARNING,Sec. IV-E (Demarcated as coarse historical discrete bin; superseded by C20)
