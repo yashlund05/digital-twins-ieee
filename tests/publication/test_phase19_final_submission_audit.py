@@ -3,7 +3,6 @@
 import csv
 import json
 from pathlib import Path
-import pytest
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 E19_DIR = ROOT / "experiments" / "runs" / "E19_FINAL_SUBMISSION_AUDIT_20261006"
@@ -41,7 +40,17 @@ def test_manuscript_superlatives_zero():
     main_tex = E19_DIR / "manuscript" / "main.tex"
     assert main_tex.exists(), "main.tex missing"
     content = main_tex.read_text(encoding="utf-8").lower()
-    forbidden = ["proves", "guaranteed", "universally", "always", "never", "eliminates", "perfect", "definitive", "state-of-the-art"]
+    forbidden = [
+        "proves",
+        "guaranteed",
+        "universally",
+        "always",
+        "never",
+        "eliminates",
+        "perfect",
+        "definitive",
+        "state-of-the-art",
+    ]
     for w in forbidden:
         assert w not in content, f"Forbidden word found: {w}"
 

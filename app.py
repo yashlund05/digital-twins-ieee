@@ -13,6 +13,7 @@ Styled with Ayush Frontend Glassmorphic UI/UX:
 
 import json
 from pathlib import Path
+
 import numpy as np
 import pandas as pd
 import plotly.express as px
@@ -267,6 +268,7 @@ with st.sidebar:
         unsafe_allow_html=True,
     )
 
+
 # -----------------------------------------------------------------------------
 # PLOTLY MODERN CYBER-PHYSICAL TEMPLATE
 # -----------------------------------------------------------------------------
@@ -300,8 +302,14 @@ def apply_cyber_theme(fig: go.Figure) -> go.Figure:
 # VIEW 1: EXECUTIVE COMMAND CENTER
 # -----------------------------------------------------------------------------
 if selected_view == "🏛️ Executive Command Center":
-    st.markdown('<div class="live-indicator"><span class="pulse-dot"></span> IEEE TSG CERTIFIED RESEARCH SYSTEM (PHASE 14)</div>', unsafe_allow_html=True)
-    st.markdown('<div class="hero-title">Quantifying Digital Twin Synchronization Staleness</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="live-indicator"><span class="pulse-dot"></span> IEEE TSG CERTIFIED RESEARCH SYSTEM (PHASE 14)</div>',
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        '<div class="hero-title">Quantifying Digital Twin Synchronization Staleness</div>',
+        unsafe_allow_html=True,
+    )
     st.markdown(
         '<div class="hero-subtitle">Controlled experimental framework quantifying joint load estimation and unsupervised anomaly detection degradation under Age-of-Information (AoI) staleness in an IEEE 33-bus Digital Twin.</div>',
         unsafe_allow_html=True,
@@ -375,7 +383,7 @@ if selected_view == "🏛️ Executive Command Center":
                 <h3 style="color: #38BDF8; margin-top: 0; font-weight: 700; font-size: 1.25rem;">🔬 Executive Research Insights</h3>
                 <p style="color: #CBD5E1; font-size: 0.95rem; line-height: 1.6;">
                     Digital Twins for electric power distribution rely on cyber-physical telemetry to compute state residuals
-                    \( r_t = \|y_t - y_{\text{DT},t}\| \). When synchronization delay occurs, the virtual twin operates on stale telemetry,
+                    \\( r_t = \\|y_t - y_{\text{DT},t}\\| \\). When synchronization delay occurs, the virtual twin operates on stale telemetry,
                     inducing severe state drift.
                 </p>
                 <div style="border-left: 3px solid #38BDF8; padding-left: 14px; margin: 15px 0;">
@@ -414,7 +422,11 @@ if selected_view == "🏛️ Executive Command Center":
                 """,
                 unsafe_allow_html=True,
             )
-            st.image(str(fig1_path), caption="Figure 1: Co-Simulation & AoI Synchronization Pipeline", use_container_width=True)
+            st.image(
+                str(fig1_path),
+                caption="Figure 1: Co-Simulation & AoI Synchronization Pipeline",
+                use_container_width=True,
+            )
             st.markdown("</div>", unsafe_allow_html=True)
 
 
@@ -422,8 +434,14 @@ if selected_view == "🏛️ Executive Command Center":
 # VIEW 2: 3D CYBER-PHYSICAL FEEDER TOPOLOGY
 # -----------------------------------------------------------------------------
 elif selected_view == "🌐 3D Cyber-Physical Feeder":
-    st.markdown('<div class="hero-title">IEEE 33-Bus Feeder Cyber-Physical Inspector</div>', unsafe_allow_html=True)
-    st.markdown('<div class="hero-subtitle">Interactive 3D topological visualization of radial feeder branches, lateral sub-feeders, bus voltage drops, and active power distribution.</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="hero-title">IEEE 33-Bus Feeder Cyber-Physical Inspector</div>',
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        '<div class="hero-subtitle">Interactive 3D topological visualization of radial feeder branches, lateral sub-feeders, bus voltage drops, and active power distribution.</div>',
+        unsafe_allow_html=True,
+    )
 
     # Synthetic topological coordinate generation for standard Baran & Wu 33-bus layout
     # Main trunk: Bus 1 -> 18
@@ -447,11 +465,38 @@ elif selected_view == "🌐 3D Cyber-Physical Feeder":
 
     # Standard branches (from, to)
     branches = [
-        (1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (6, 7), (7, 8), (8, 9), (9, 10),
-        (10, 11), (11, 12), (12, 13), (13, 14), (14, 15), (15, 16), (16, 17), (17, 18),
-        (2, 19), (19, 20), (20, 21), (21, 22),
-        (3, 23), (23, 24), (24, 25),
-        (6, 26), (26, 27), (27, 28), (28, 29), (29, 30), (30, 31), (31, 32), (32, 33)
+        (1, 2),
+        (2, 3),
+        (3, 4),
+        (4, 5),
+        (5, 6),
+        (6, 7),
+        (7, 8),
+        (8, 9),
+        (9, 10),
+        (10, 11),
+        (11, 12),
+        (12, 13),
+        (13, 14),
+        (14, 15),
+        (15, 16),
+        (16, 17),
+        (17, 18),
+        (2, 19),
+        (19, 20),
+        (20, 21),
+        (21, 22),
+        (3, 23),
+        (23, 24),
+        (24, 25),
+        (6, 26),
+        (26, 27),
+        (27, 28),
+        (28, 29),
+        (29, 30),
+        (30, 31),
+        (31, 32),
+        (32, 33),
     ]
 
     edge_x, edge_y, edge_z = [], [], []
@@ -471,7 +516,9 @@ elif selected_view == "🌐 3D Cyber-Physical Feeder":
     # Lines (Branches)
     fig_3d.add_trace(
         go.Scatter3d(
-            x=edge_x, y=edge_y, z=edge_z,
+            x=edge_x,
+            y=edge_y,
+            z=edge_z,
             mode="lines",
             line=dict(color="#38BDF8", width=5),
             hoverinfo="none",
@@ -482,7 +529,9 @@ elif selected_view == "🌐 3D Cyber-Physical Feeder":
     # Nodes (Buses)
     fig_3d.add_trace(
         go.Scatter3d(
-            x=node_x, y=node_y, z=node_z,
+            x=node_x,
+            y=node_y,
+            z=node_z,
             mode="markers+text",
             marker=dict(
                 size=8,
@@ -505,7 +554,9 @@ elif selected_view == "🌐 3D Cyber-Physical Feeder":
     # Highlight Substation (Bus 1) & Minimum Voltage (Bus 18)
     fig_3d.add_trace(
         go.Scatter3d(
-            x=[coords[1][0]], y=[coords[1][1]], z=[coords[1][2]],
+            x=[coords[1][0]],
+            y=[coords[1][1]],
+            z=[coords[1][2]],
             mode="markers",
             marker=dict(size=14, color="#10B981", symbol="diamond"),
             name="Substation Head (Bus 1: 1.0 pu)",
@@ -514,7 +565,9 @@ elif selected_view == "🌐 3D Cyber-Physical Feeder":
     )
     fig_3d.add_trace(
         go.Scatter3d(
-            x=[coords[18][0]], y=[coords[18][1]], z=[coords[18][2]],
+            x=[coords[18][0]],
+            y=[coords[18][1]],
+            z=[coords[18][2]],
             mode="markers",
             marker=dict(size=14, color="#F43F5E", symbol="circle"),
             name="Critical Min Voltage (Bus 18: 0.9131 pu)",
@@ -524,9 +577,24 @@ elif selected_view == "🌐 3D Cyber-Physical Feeder":
 
     fig_3d.update_layout(
         scene=dict(
-            xaxis=dict(title="X Coordinate (m)", backgroundcolor="rgba(0,0,0,0)", gridcolor="rgba(255,255,255,0.06)", color="#94A3B8"),
-            yaxis=dict(title="Y Lateral (m)", backgroundcolor="rgba(0,0,0,0)", gridcolor="rgba(255,255,255,0.06)", color="#94A3B8"),
-            zaxis=dict(title="Voltage Magnitude (p.u.)", backgroundcolor="rgba(0,0,0,0)", gridcolor="rgba(255,255,255,0.06)", color="#94A3B8"),
+            xaxis=dict(
+                title="X Coordinate (m)",
+                backgroundcolor="rgba(0,0,0,0)",
+                gridcolor="rgba(255,255,255,0.06)",
+                color="#94A3B8",
+            ),
+            yaxis=dict(
+                title="Y Lateral (m)",
+                backgroundcolor="rgba(0,0,0,0)",
+                gridcolor="rgba(255,255,255,0.06)",
+                color="#94A3B8",
+            ),
+            zaxis=dict(
+                title="Voltage Magnitude (p.u.)",
+                backgroundcolor="rgba(0,0,0,0)",
+                gridcolor="rgba(255,255,255,0.06)",
+                color="#94A3B8",
+            ),
             camera=dict(eye=dict(x=1.6, y=-1.6, z=1.2)),
         ),
         height=620,
@@ -587,35 +655,69 @@ elif selected_view == "🌐 3D Cyber-Physical Feeder":
 # VIEW 3: STALENESS & AOI EXPLORER
 # -----------------------------------------------------------------------------
 elif selected_view == "🎛️ Staleness & AoI Explorer":
-    st.markdown('<div class="hero-title">Factorial Staleness & AoI Dynamics</div>', unsafe_allow_html=True)
-    st.markdown('<div class="hero-subtitle">Interactive 2D & 3D sensitivity exploration across the 24 factorial synchronization delay and packet-loss conditions.</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="hero-title">Factorial Staleness & AoI Dynamics</div>', unsafe_allow_html=True
+    )
+    st.markdown(
+        '<div class="hero-subtitle">Interactive 2D & 3D sensitivity exploration across the 24 factorial synchronization delay and packet-loss conditions.</div>',
+        unsafe_allow_html=True,
+    )
 
     if not comp_df.empty:
         col_ctl1, col_ctl2 = st.columns(2)
         with col_ctl1:
-            sel_dt = st.select_slider("Select Synchronization Interval Δt (seconds):", options=[0, 1, 5, 15, 60, 300], value=5)
+            sel_dt = st.select_slider(
+                "Select Synchronization Interval Δt (seconds):",
+                options=[0, 1, 5, 15, 60, 300],
+                value=5,
+            )
         with col_ctl2:
-            sel_drop = st.select_slider("Select Packet Drop Rate P_drop:", options=[0.0, 0.05, 0.10, 0.20], value=0.05)
+            sel_drop = st.select_slider(
+                "Select Packet Drop Rate P_drop:", options=[0.0, 0.05, 0.10, 0.20], value=0.05
+            )
 
         cond_row = comp_df[
-            (comp_df["staleness_seconds"] == sel_dt) & (np.isclose(comp_df["packet_drop_rate"], sel_drop))
+            (comp_df["staleness_seconds"] == sel_dt)
+            & (np.isclose(comp_df["packet_drop_rate"], sel_drop))
         ]
 
         # Top interactive cards
         c_i1, c_i2, c_i3, c_i4 = st.columns(4)
         mean_aoi = cond_row["realized_mean_aoi"].values
-        f1_res = cond_row[(cond_row["model"] == "lstm_autoencoder") & (cond_row["representation"] == "residual") & (cond_row["metric"] == "f1")]["value"].values
-        f1_raw = cond_row[(cond_row["model"] == "lstm_autoencoder") & (cond_row["representation"] == "raw") & (cond_row["metric"] == "f1")]["value"].values
-        mape_v = cond_row[(cond_row["model"] == "lstm") & (cond_row["metric"] == "mape")]["value"].values
+        f1_res = cond_row[
+            (cond_row["model"] == "lstm_autoencoder")
+            & (cond_row["representation"] == "residual")
+            & (cond_row["metric"] == "f1")
+        ]["value"].values
+        f1_raw = cond_row[
+            (cond_row["model"] == "lstm_autoencoder")
+            & (cond_row["representation"] == "raw")
+            & (cond_row["metric"] == "f1")
+        ]["value"].values
+        mape_v = cond_row[(cond_row["model"] == "lstm") & (cond_row["metric"] == "mape")][
+            "value"
+        ].values
 
         with c_i1:
-            st.markdown(f'<div class="liquid-glass-card"><span class="metric-chip chip-blue">Realized AoI</span><div class="kpi-value">{mean_aoi[0]:.2f}s</div><div class="kpi-desc">Average Age of Information.</div></div>', unsafe_allow_html=True)
+            st.markdown(
+                f'<div class="liquid-glass-card"><span class="metric-chip chip-blue">Realized AoI</span><div class="kpi-value">{mean_aoi[0]:.2f}s</div><div class="kpi-desc">Average Age of Information.</div></div>',
+                unsafe_allow_html=True,
+            )
         with c_i2:
-            st.markdown(f'<div class="liquid-glass-card"><span class="metric-chip chip-green">Residual F1</span><div class="kpi-value">{f1_res[0]:.4f}</div><div class="kpi-desc">LSTM-AE on physics residual.</div></div>', unsafe_allow_html=True)
+            st.markdown(
+                f'<div class="liquid-glass-card"><span class="metric-chip chip-green">Residual F1</span><div class="kpi-value">{f1_res[0]:.4f}</div><div class="kpi-desc">LSTM-AE on physics residual.</div></div>',
+                unsafe_allow_html=True,
+            )
         with c_i3:
-            st.markdown(f'<div class="liquid-glass-card"><span class="metric-chip chip-amber">Raw F1</span><div class="kpi-value">{f1_raw[0]:.4f}</div><div class="kpi-desc">LSTM-AE on raw telemetry.</div></div>', unsafe_allow_html=True)
+            st.markdown(
+                f'<div class="liquid-glass-card"><span class="metric-chip chip-amber">Raw F1</span><div class="kpi-value">{f1_raw[0]:.4f}</div><div class="kpi-desc">LSTM-AE on raw telemetry.</div></div>',
+                unsafe_allow_html=True,
+            )
         with c_i4:
-            st.markdown(f'<div class="liquid-glass-card"><span class="metric-chip chip-purple">Forecast MAPE</span><div class="kpi-value">{mape_v[0]:.2f}%</div><div class="kpi-desc">LSTM load forecast error.</div></div>', unsafe_allow_html=True)
+            st.markdown(
+                f'<div class="liquid-glass-card"><span class="metric-chip chip-purple">Forecast MAPE</span><div class="kpi-value">{mape_v[0]:.2f}%</div><div class="kpi-desc">LSTM load forecast error.</div></div>',
+                unsafe_allow_html=True,
+            )
 
         st.markdown("<div style='height: 15px;'></div>", unsafe_allow_html=True)
 
@@ -626,7 +728,9 @@ elif selected_view == "🎛️ Staleness & AoI Explorer":
             & (comp_df["representation"] == "residual")
             & (comp_df["metric"] == "f1")
         ]
-        piv_f1 = sub_lstm_res.pivot(index="packet_drop_rate", columns="staleness_seconds", values="value")
+        piv_f1 = sub_lstm_res.pivot(
+            index="packet_drop_rate", columns="staleness_seconds", values="value"
+        )
 
         fig_surf = go.Figure(
             data=[
@@ -642,9 +746,24 @@ elif selected_view == "🎛️ Staleness & AoI Explorer":
         fig_surf.update_layout(
             title="3D Anomaly Detection F1 Degradation Surface vs (Δt, P_drop)",
             scene=dict(
-                xaxis=dict(title="Delay Δt (s)", backgroundcolor="rgba(0,0,0,0)", gridcolor="rgba(255,255,255,0.06)", color="#94A3B8"),
-                yaxis=dict(title="Packet Drop P_drop", backgroundcolor="rgba(0,0,0,0)", gridcolor="rgba(255,255,255,0.06)", color="#94A3B8"),
-                zaxis=dict(title="F1 Score", backgroundcolor="rgba(0,0,0,0)", gridcolor="rgba(255,255,255,0.06)", color="#94A3B8"),
+                xaxis=dict(
+                    title="Delay Δt (s)",
+                    backgroundcolor="rgba(0,0,0,0)",
+                    gridcolor="rgba(255,255,255,0.06)",
+                    color="#94A3B8",
+                ),
+                yaxis=dict(
+                    title="Packet Drop P_drop",
+                    backgroundcolor="rgba(0,0,0,0)",
+                    gridcolor="rgba(255,255,255,0.06)",
+                    color="#94A3B8",
+                ),
+                zaxis=dict(
+                    title="F1 Score",
+                    backgroundcolor="rgba(0,0,0,0)",
+                    gridcolor="rgba(255,255,255,0.06)",
+                    color="#94A3B8",
+                ),
                 camera=dict(eye=dict(x=-1.5, y=-1.5, z=1.2)),
             ),
             height=540,
@@ -655,25 +774,38 @@ elif selected_view == "🎛️ Staleness & AoI Explorer":
         # 2D Comparison Curves
         col_c1, col_c2 = st.columns(2)
         with col_c1:
-            slice_anom = comp_df[(comp_df["task"] == "anomaly_detection") & (np.isclose(comp_df["packet_drop_rate"], sel_drop))]
+            slice_anom = comp_df[
+                (comp_df["task"] == "anomaly_detection")
+                & (np.isclose(comp_df["packet_drop_rate"], sel_drop))
+            ]
             fig_2d_a = px.line(
                 slice_anom,
-                x="staleness_seconds", y="value",
-                color="model", line_dash="representation", markers=True,
-                title=f"Anomaly F1 vs Synchronization Interval (P_drop = {sel_drop*100:.0f}%)",
+                x="staleness_seconds",
+                y="value",
+                color="model",
+                line_dash="representation",
+                markers=True,
+                title=f"Anomaly F1 vs Synchronization Interval (P_drop = {sel_drop * 100:.0f}%)",
                 labels={"staleness_seconds": "Interval Δt (s)", "value": "F1 Score"},
             )
-            fig_2d_a.add_vline(x=5.0, line_dash="dash", line_color="#F43F5E", annotation_text="Cliff: AoI* = 5.0s")
+            fig_2d_a.add_vline(
+                x=5.0, line_dash="dash", line_color="#F43F5E", annotation_text="Cliff: AoI* = 5.0s"
+            )
             apply_cyber_theme(fig_2d_a)
             st.plotly_chart(fig_2d_a, use_container_width=True)
 
         with col_c2:
-            slice_fore = comp_df[(comp_df["task"] == "load_estimation") & (np.isclose(comp_df["packet_drop_rate"], sel_drop))]
+            slice_fore = comp_df[
+                (comp_df["task"] == "load_estimation")
+                & (np.isclose(comp_df["packet_drop_rate"], sel_drop))
+            ]
             fig_2d_f = px.line(
                 slice_fore,
-                x="staleness_seconds", y="value",
-                color="model", markers=True,
-                title=f"Forecast MAPE vs Synchronization Interval (P_drop = {sel_drop*100:.0f}%)",
+                x="staleness_seconds",
+                y="value",
+                color="model",
+                markers=True,
+                title=f"Forecast MAPE vs Synchronization Interval (P_drop = {sel_drop * 100:.0f}%)",
                 labels={"staleness_seconds": "Interval Δt (s)", "value": "MAPE (%)"},
             )
             apply_cyber_theme(fig_2d_f)
@@ -684,7 +816,10 @@ elif selected_view == "🎛️ Staleness & AoI Explorer":
 # VIEW 4: DUAL-MODE MITIGATION ENGINE (LIVE DEMO)
 # -----------------------------------------------------------------------------
 elif selected_view == "🛡️ Dual-Mode Mitigation Live":
-    st.markdown('<div class="hero-title">Staleness Mitigation & Recovery Engine</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="hero-title">Staleness Mitigation & Recovery Engine</div>',
+        unsafe_allow_html=True,
+    )
     st.markdown(
         """
         <div class="hero-subtitle">
@@ -698,19 +833,35 @@ elif selected_view == "🛡️ Dual-Mode Mitigation Live":
     if not preds_df.empty:
         col_p1, col_p2 = st.columns(2)
         with col_p1:
-            aoi_star = st.slider("Dual-Mode Inversion Threshold (AoI* in seconds):", min_value=1.0, max_value=20.0, value=5.0, step=0.5)
+            aoi_star = st.slider(
+                "Dual-Mode Inversion Threshold (AoI* in seconds):",
+                min_value=1.0,
+                max_value=20.0,
+                value=5.0,
+                step=0.5,
+            )
         with col_p2:
-            gamma_val = st.slider("AoI-Adaptive Threshold Scaling (γ):", min_value=0.01, max_value=0.25, value=0.08, step=0.01)
+            gamma_val = st.slider(
+                "AoI-Adaptive Threshold Scaling (γ):",
+                min_value=0.01,
+                max_value=0.25,
+                value=0.08,
+                step=0.01,
+            )
 
         from src.anomaly_detection.dual_mode import DualModeInversionCompensator
         from src.anomaly_detection.thresholds import AoIAdaptiveThreshold
         from src.evaluation.anomaly_metrics import compute_anomaly_metrics
 
         comp = DualModeInversionCompensator(aoi_inversion_threshold=aoi_star)
-        adapt_th = AoIAdaptiveThreshold(base_percentile=95.0, gamma=gamma_val, scaling_function="sqrt")
+        adapt_th = AoIAdaptiveThreshold(
+            base_percentile=95.0, gamma=gamma_val, scaling_function="sqrt"
+        )
 
         conds = list(preds_df["condition_id"].unique())
-        chosen_cond = st.selectbox("Select Synchronization Condition to Test:", conds, index=len(conds) - 1)
+        chosen_cond = st.selectbox(
+            "Select Synchronization Condition to Test:", conds, index=len(conds) - 1
+        )
 
         cdf = preds_df[preds_df["condition_id"] == chosen_cond].copy()
 
@@ -744,7 +895,7 @@ elif selected_view == "🛡️ Dual-Mode Mitigation Live":
                 f"""
                 <div class="liquid-glass-card">
                     <span class="metric-chip chip-rose">Uncompensated</span>
-                    <div class="kpi-value">{eval_dm['uncompensated_residual']['f1']:.4f}</div>
+                    <div class="kpi-value">{eval_dm["uncompensated_residual"]["f1"]:.4f}</div>
                     <div class="kpi-desc">F1 collapses under staleness.</div>
                 </div>
                 """,
@@ -755,7 +906,7 @@ elif selected_view == "🛡️ Dual-Mode Mitigation Live":
                 f"""
                 <div class="liquid-glass-card">
                     <span class="metric-chip chip-amber">AoI-Adaptive</span>
-                    <div class="kpi-value">{m_adapt['f1']:.4f}</div>
+                    <div class="kpi-value">{m_adapt["f1"]:.4f}</div>
                     <div class="kpi-desc">Adaptive dynamic thresholding.</div>
                 </div>
                 """,
@@ -766,7 +917,7 @@ elif selected_view == "🛡️ Dual-Mode Mitigation Live":
                 f"""
                 <div class="liquid-glass-card">
                     <span class="metric-chip chip-green">Dual-Mode Hybrid</span>
-                    <div class="kpi-value">{eval_dm['dual_mode_hybrid']['f1']:.4f}</div>
+                    <div class="kpi-value">{eval_dm["dual_mode_hybrid"]["f1"]:.4f}</div>
                     <div class="kpi-desc">Online representation switching.</div>
                 </div>
                 """,
@@ -777,8 +928,8 @@ elif selected_view == "🛡️ Dual-Mode Mitigation Live":
                 f"""
                 <div class="liquid-glass-card">
                     <span class="metric-chip chip-blue">Recovery Gain</span>
-                    <div class="kpi-value">{eval_dm['delta_f1_vs_residual']:+.4f}</div>
-                    <div class="kpi-desc">{eval_dm['percent_switched_to_raw']:.1f}% telemetry routed to raw space.</div>
+                    <div class="kpi-value">{eval_dm["delta_f1_vs_residual"]:+.4f}</div>
+                    <div class="kpi-desc">{eval_dm["percent_switched_to_raw"]:.1f}% telemetry routed to raw space.</div>
                 </div>
                 """,
                 unsafe_allow_html=True,
@@ -789,7 +940,12 @@ elif selected_view == "🛡️ Dual-Mode Mitigation Live":
         # Comparative Bar Chart
         bar_df = pd.DataFrame(
             {
-                "Strategy": ["Uncompensated Residual", "AoI-Adaptive Threshold", "Uncompensated Raw Baseline", "Dual-Mode Inversion Compensator"],
+                "Strategy": [
+                    "Uncompensated Residual",
+                    "AoI-Adaptive Threshold",
+                    "Uncompensated Raw Baseline",
+                    "Dual-Mode Inversion Compensator",
+                ],
                 "F1 Score": [
                     eval_dm["uncompensated_residual"]["f1"],
                     m_adapt["f1"],
@@ -813,7 +969,8 @@ elif selected_view == "🛡️ Dual-Mode Mitigation Live":
 
         fig_b = px.bar(
             bar_df,
-            x="Strategy", y="F1 Score",
+            x="Strategy",
+            y="F1 Score",
             color="Strategy",
             color_discrete_sequence=["#F43F5E", "#F59E0B", "#38BDF8", "#10B981"],
             title=f"Mitigation Performance Comparison on Condition: {chosen_cond}",
@@ -831,21 +988,59 @@ elif selected_view == "🛡️ Dual-Mode Mitigation Live":
 # VIEW 5: IEEE PUBLICATION GALLERY
 # -----------------------------------------------------------------------------
 elif selected_view == "📊 IEEE Figure & Table Gallery":
-    st.markdown('<div class="hero-title">IEEE Publication Artifacts & Evidence</div>', unsafe_allow_html=True)
-    st.markdown('<div class="hero-subtitle">All 8 vector publication figures and 6 LaTeX/CSV summary tables compiled for IEEE Transactions on Smart Grid.</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="hero-title">IEEE Publication Artifacts & Evidence</div>',
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        '<div class="hero-subtitle">All 8 vector publication figures and 6 LaTeX/CSV summary tables compiled for IEEE Transactions on Smart Grid.</div>',
+        unsafe_allow_html=True,
+    )
 
     tabs = st.tabs(["🖼️ Vector Figures (Fig 1–8)", "📋 Summary Tables (Tab 1–6)"])
 
     with tabs[0]:
         fig_names = [
-            ("Fig 1: System Architecture", "fig_01_system_architecture.png", "Physical grid vs. Digital Twin cyber-physical synchronization co-simulation pipeline."),
-            ("Fig 2: Baseline Reconciliation", "fig_02_baseline_reconciliation.png", "Residual space (F1=0.978) vs Raw space (F1=0.539) under ideal synchronization."),
-            ("Fig 3: Anomaly Degradation Surface", "fig_03_anomaly_staleness.png", "Bivariate degradation surface across staleness delay and packet drop rate."),
-            ("Fig 4: Forecast Error Inflation", "fig_04_load_estimation_staleness.png", "Short-term load forecasting MAPE inflation for Persistence, XGBoost, and LSTM."),
-            ("Fig 5: Representation Inversion", "fig_05_residual_vs_raw_transition.png", "Empirical boundary showing raw features outperforming physics residuals at AoI >= 5s."),
-            ("Fig 6: Multi-Seed Uncertainty", "fig_06_multiseed_uncertainty.png", "Variance bounds and distribution across 5 independent seeds (42, 123, 456, 789, 101112)."),
-            ("Fig 7: AoI Transient Dynamics", "fig_07_aoi_residual_transient.png", "High-resolution intra-epoch AoI dynamics revealing the 5.0s operational performance cliff."),
-            ("Fig 8: Formal Hypothesis H3 Effect", "fig_08_h3_multiseed_effect.png", "Normalized log-linear slopes proving load estimation is more sensitive (H3 rejected)."),
+            (
+                "Fig 1: System Architecture",
+                "fig_01_system_architecture.png",
+                "Physical grid vs. Digital Twin cyber-physical synchronization co-simulation pipeline.",
+            ),
+            (
+                "Fig 2: Baseline Reconciliation",
+                "fig_02_baseline_reconciliation.png",
+                "Residual space (F1=0.978) vs Raw space (F1=0.539) under ideal synchronization.",
+            ),
+            (
+                "Fig 3: Anomaly Degradation Surface",
+                "fig_03_anomaly_staleness.png",
+                "Bivariate degradation surface across staleness delay and packet drop rate.",
+            ),
+            (
+                "Fig 4: Forecast Error Inflation",
+                "fig_04_load_estimation_staleness.png",
+                "Short-term load forecasting MAPE inflation for Persistence, XGBoost, and LSTM.",
+            ),
+            (
+                "Fig 5: Representation Inversion",
+                "fig_05_residual_vs_raw_transition.png",
+                "Empirical boundary showing raw features outperforming physics residuals at AoI >= 5s.",
+            ),
+            (
+                "Fig 6: Multi-Seed Uncertainty",
+                "fig_06_multiseed_uncertainty.png",
+                "Variance bounds and distribution across 5 independent seeds (42, 123, 456, 789, 101112).",
+            ),
+            (
+                "Fig 7: AoI Transient Dynamics",
+                "fig_07_aoi_residual_transient.png",
+                "High-resolution intra-epoch AoI dynamics revealing the 5.0s operational performance cliff.",
+            ),
+            (
+                "Fig 8: Formal Hypothesis H3 Effect",
+                "fig_08_h3_multiseed_effect.png",
+                "Normalized log-linear slopes proving load estimation is more sensitive (H3 rejected).",
+            ),
         ]
         for title, fname, desc in fig_names:
             fpath = FIGS_DIR / fname
@@ -865,7 +1060,10 @@ elif selected_view == "📊 IEEE Figure & Table Gallery":
         tbl_names = [
             ("Table 1: Experimental Configuration", "table_01_experimental_configuration.csv"),
             ("Table 2: Baseline Reconciliation (E4 vs E5)", "table_02_baseline_reconciliation.csv"),
-            ("Table 3: 24-Condition Factorial Staleness Sweep", "table_03_e5_condition_summary.csv"),
+            (
+                "Table 3: 24-Condition Factorial Staleness Sweep",
+                "table_03_e5_condition_summary.csv",
+            ),
             ("Table 4: Multi-Seed Uncertainty Results", "table_04_multiseed_results.csv"),
             ("Table 5: Controlled Ablation Matrix (A1–A8)", "table_05_ablation_summary.csv"),
             ("Table 6: Formal Hypothesis H3 Statistics", "table_06_h3_statistics.csv"),
@@ -883,24 +1081,42 @@ elif selected_view == "📊 IEEE Figure & Table Gallery":
 # VIEW 6: SCIENTIFIC INTEGRITY & AUDIT
 # -----------------------------------------------------------------------------
 elif selected_view == "🔒 Scientific Integrity & Audit":
-    st.markdown('<div class="hero-title">Scientific Integrity & Verification Audit</div>', unsafe_allow_html=True)
-    st.markdown('<div class="hero-subtitle">Phase 14 release safety gates, cryptographic hash manifests, and canonical claim verification registry.</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="hero-title">Scientific Integrity & Verification Audit</div>',
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        '<div class="hero-subtitle">Phase 14 release safety gates, cryptographic hash manifests, and canonical claim verification registry.</div>',
+        unsafe_allow_html=True,
+    )
 
     audit_path = RUNS_DIR / "E14_FINAL_SCIENTIFIC_AUDIT_20261002" / "integrity_report.json"
     if audit_path.is_file():
-        with open(audit_path, "r") as f:
+        with open(audit_path) as f:
             audit_json = json.load(f)
 
         gate = audit_json.get("safety_gate", {})
         c_a1, c_a2, c_a3, c_a4 = st.columns(4)
         with c_a1:
-            st.markdown(f'<div class="liquid-glass-card"><span class="metric-chip chip-green">Gate Status</span><div class="kpi-value">{audit_json.get("status", "CERTIFIED")}</div><div class="kpi-desc">Independent release gate.</div></div>', unsafe_allow_html=True)
+            st.markdown(
+                f'<div class="liquid-glass-card"><span class="metric-chip chip-green">Gate Status</span><div class="kpi-value">{audit_json.get("status", "CERTIFIED")}</div><div class="kpi-desc">Independent release gate.</div></div>',
+                unsafe_allow_html=True,
+            )
         with c_a2:
-            st.markdown(f'<div class="liquid-glass-card"><span class="metric-chip chip-blue">Critical Errors</span><div class="kpi-value">{gate.get("critical_discrepancies", 0)}</div><div class="kpi-desc">Zero critical discrepancies.</div></div>', unsafe_allow_html=True)
+            st.markdown(
+                f'<div class="liquid-glass-card"><span class="metric-chip chip-blue">Critical Errors</span><div class="kpi-value">{gate.get("critical_discrepancies", 0)}</div><div class="kpi-desc">Zero critical discrepancies.</div></div>',
+                unsafe_allow_html=True,
+            )
         with c_a3:
-            st.markdown(f'<div class="liquid-glass-card"><span class="metric-chip chip-purple">Artifacts Verified</span><div class="kpi-value">{audit_json.get("total_files_generated", 71)}</div><div class="kpi-desc">Cryptographically hashed.</div></div>', unsafe_allow_html=True)
+            st.markdown(
+                f'<div class="liquid-glass-card"><span class="metric-chip chip-purple">Artifacts Verified</span><div class="kpi-value">{audit_json.get("total_files_generated", 71)}</div><div class="kpi-desc">Cryptographically hashed.</div></div>',
+                unsafe_allow_html=True,
+            )
         with c_a4:
-            st.markdown('<div class="liquid-glass-card"><span class="metric-chip chip-amber">CI Quality Gate</span><div class="kpi-value">256 / 256</div><div class="kpi-desc">100% tests passing on CI.</div></div>', unsafe_allow_html=True)
+            st.markdown(
+                '<div class="liquid-glass-card"><span class="metric-chip chip-amber">CI Quality Gate</span><div class="kpi-value">256 / 256</div><div class="kpi-desc">100% tests passing on CI.</div></div>',
+                unsafe_allow_html=True,
+            )
 
     st.markdown("<div style='height: 15px;'></div>", unsafe_allow_html=True)
     st.markdown("#### 📜 Canonical Audited Scientific Claims Registry (100% Verified)")
@@ -910,14 +1126,71 @@ elif selected_view == "🔒 Scientific Integrity & Audit":
         ("C02", "Raw LSTM-AE Ideal F1", "0.538606", "E4 metrics.json", "VERIFIED"),
         ("C03", "Raw Isolation Forest F1", "0.117647", "E4 metrics.json", "VERIFIED"),
         ("C04", "Residual Isolation Forest F1", "0.088727", "E4 metrics.json", "VERIFIED"),
-        ("C05", "Multi-Seed H3 Degradation Rate Δβ", "-1.2236", "E10 multiseed_h3_summary.csv", "VERIFIED"),
-        ("C06", "Multi-Seed H3 Bootstrap 95% CI", "[-1.3463, -1.1134]", "E10 multiseed_h3_summary.csv", "VERIFIED"),
-        ("C07", "Multi-Seed H3 Hypothesis Decision", "NOT_SUPPORTED (p=1.000)", "E10 multiseed_h3_summary.csv", "VERIFIED"),
-        ("C08", "Factorial Synchronization Conditions", "24 Conditions", "E5 comparison.csv", "VERIFIED"),
-        ("C09", "Multi-Seed Uncertainty Grid", "120 Runs (5 Seeds)", "E10 seed_results.csv", "VERIFIED"),
-        ("C10", "Controlled Ablation Conditions", "88 Runs (8 Ablations)", "E11 table_02_ablation_results.csv", "VERIFIED"),
-        ("C11", "AoI Mathematical Departure Point", "AoI* = 0.0 s", "E11 table_04_change_point_analysis.csv", "VERIFIED"),
-        ("C12", "AoI Operational Performance Cliff", "AoI* ≈ 5.0 s", "E11 transient_summary.csv", "VERIFIED"),
+        (
+            "C05",
+            "Multi-Seed H3 Degradation Rate Δβ",
+            "-1.2236",
+            "E10 multiseed_h3_summary.csv",
+            "VERIFIED",
+        ),
+        (
+            "C06",
+            "Multi-Seed H3 Bootstrap 95% CI",
+            "[-1.3463, -1.1134]",
+            "E10 multiseed_h3_summary.csv",
+            "VERIFIED",
+        ),
+        (
+            "C07",
+            "Multi-Seed H3 Hypothesis Decision",
+            "NOT_SUPPORTED (p=1.000)",
+            "E10 multiseed_h3_summary.csv",
+            "VERIFIED",
+        ),
+        (
+            "C08",
+            "Factorial Synchronization Conditions",
+            "24 Conditions",
+            "E5 comparison.csv",
+            "VERIFIED",
+        ),
+        (
+            "C09",
+            "Multi-Seed Uncertainty Grid",
+            "120 Runs (5 Seeds)",
+            "E10 seed_results.csv",
+            "VERIFIED",
+        ),
+        (
+            "C10",
+            "Controlled Ablation Conditions",
+            "88 Runs (8 Ablations)",
+            "E11 table_02_ablation_results.csv",
+            "VERIFIED",
+        ),
+        (
+            "C11",
+            "AoI Mathematical Departure Point",
+            "AoI* = 0.0 s",
+            "E11 table_04_change_point_analysis.csv",
+            "VERIFIED",
+        ),
+        (
+            "C12",
+            "AoI Operational Performance Cliff",
+            "AoI* ≈ 5.0 s",
+            "E11 transient_summary.csv",
+            "VERIFIED",
+        ),
     ]
-    df_claims = pd.DataFrame(claims, columns=["Claim ID", "Claim Description", "Authoritative Value", "Canonical Artifact Source", "Audit Status"])
+    df_claims = pd.DataFrame(
+        claims,
+        columns=[
+            "Claim ID",
+            "Claim Description",
+            "Authoritative Value",
+            "Canonical Artifact Source",
+            "Audit Status",
+        ],
+    )
     st.dataframe(df_claims, use_container_width=True)

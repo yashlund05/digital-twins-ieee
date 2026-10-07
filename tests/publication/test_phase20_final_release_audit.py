@@ -11,7 +11,7 @@ def test_e20_historical_immutability():
     """Verify all 12 historical phases E4-E19 are intact."""
     hist_file = E20_DIR / "HISTORICAL_INTEGRITY_MANIFEST.json"
     assert hist_file.exists(), "HISTORICAL_INTEGRITY_MANIFEST.json missing"
-    with open(hist_file, "r", encoding="utf-8") as f:
+    with open(hist_file, encoding="utf-8") as f:
         data = json.load(f)
     assert data["all_phases_intact"] is True
     assert data["total_audited"] == 12
@@ -26,7 +26,7 @@ def test_e20_release_manifest_and_sha256sums():
     sums_file = E20_DIR / "SHA256SUMS.txt"
     assert rel_manifest.exists(), "RELEASE_MANIFEST.json missing"
     assert sums_file.exists(), "SHA256SUMS.txt missing"
-    with open(rel_manifest, "r", encoding="utf-8") as f:
+    with open(rel_manifest, encoding="utf-8") as f:
         data = json.load(f)
     assert data["release_verdict"] == "SUBMISSION_READY_WITH_MANUAL_CHECKS"
     assert data["historical_phases_intact"] == 12
@@ -50,7 +50,17 @@ def test_e20_manuscript_cleanliness():
     assert tex_file.exists(), "main.tex missing in E20"
     assert bib_file.exists(), "references.bib missing in E20"
     tex_txt = tex_file.read_text(encoding="utf-8").lower()
-    forbidden = ["proves", "guaranteed", "universally", "always", "never", "eliminates", "perfect", "definitive", "state-of-the-art"]
+    forbidden = [
+        "proves",
+        "guaranteed",
+        "universally",
+        "always",
+        "never",
+        "eliminates",
+        "perfect",
+        "definitive",
+        "state-of-the-art",
+    ]
     for w in forbidden:
         assert w not in tex_txt, f"Forbidden superlative: {w}"
     bib_txt = bib_file.read_text(encoding="utf-8")

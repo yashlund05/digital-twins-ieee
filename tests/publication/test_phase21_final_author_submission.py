@@ -1,8 +1,9 @@
 """tests/publication/test_phase21_final_author_submission.py — Phase 21 Author Submission Gate Tests."""
 
 import json
-import yaml
 from pathlib import Path
+
+import yaml
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 E21_DIR = ROOT / "experiments" / "runs" / "E21_FINAL_AUTHOR_SUBMISSION_20261007"
@@ -25,7 +26,7 @@ def test_e21_author_metadata_structure():
     """Verify authors order, affiliation, and explicit placeholders in author_metadata.yaml."""
     yaml_path = E21_DIR / "metadata" / "author_metadata.yaml"
     assert yaml_path.exists(), "author_metadata.yaml missing in E21"
-    with open(yaml_path, "r", encoding="utf-8") as f:
+    with open(yaml_path, encoding="utf-8") as f:
         meta = yaml.safe_load(f)
 
     authors = meta.get("authors", [])
@@ -82,12 +83,12 @@ def test_e21_release_manifest_and_historical_integrity():
     assert sha_path.exists()
     assert hist_manifest_path.exists()
 
-    with open(rel_manifest_path, "r", encoding="utf-8") as f:
+    with open(rel_manifest_path, encoding="utf-8") as f:
         rel_data = json.load(f)
     assert rel_data["verdict"] == "SUBMISSION_READY_WITH_MANUAL_CHECKS"
     assert rel_data["target_journal"] == "IEEE Transactions on Smart Grid"
 
-    with open(hist_manifest_path, "r", encoding="utf-8") as f:
+    with open(hist_manifest_path, encoding="utf-8") as f:
         hist_data = json.load(f)
     assert hist_data["all_phases_intact"] is True
     assert hist_data["total_audited"] == 12
