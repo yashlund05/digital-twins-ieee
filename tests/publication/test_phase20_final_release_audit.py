@@ -58,10 +58,14 @@ def test_e20_manuscript_cleanliness():
 
 
 def test_e20_author_metadata_uninvented():
-    """Verify author metadata uses explicit required placeholders without fabrication."""
+    """Verify author metadata contains verified authors and unsupplied placeholders without fabrication."""
     yaml_file = ROOT / "configs" / "publication" / "author_metadata.yaml"
     assert yaml_file.exists(), "author_metadata.yaml missing"
     content = yaml_file.read_text(encoding="utf-8")
-    assert "AUTHOR_NAME_REQUIRED" in content
-    assert "AFFILIATION_REQUIRED" in content
+    assert "Ayush Vishwakarma" in content
+    assert "Vipul Bhamare" in content
+    assert "Yash Lund" in content
+    assert "Vishwakarma University" in content
     assert "ZENODO_DOI_REQUIRED" in content
+    assert "DEPARTMENT_REQUIRED" in content
+    assert "REQUIRED_FROM_AUTHOR" in content

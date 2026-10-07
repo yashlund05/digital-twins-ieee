@@ -1,0 +1,25 @@
+{
+  "package_id": "E21_FINAL_AUTHOR_SUBMISSION_20261007",
+  "created_at": "2026-10-07T09:35:00Z",
+  "target_journal": "IEEE Transactions on Smart Grid",
+  "verdict": "SUBMISSION_READY_WITH_MANUAL_CHECKS",
+  "authors": [
+    {
+      "name": "Ayush Vishwakarma",
+      "affiliation": "Vishwakarma University",
+      "order": 1
+    },
+    {
+      "name": "Vipul Bhamare",
+      "affiliation": "Vishwakarma University",
+      "order": 2
+    },
+    {
+      "name": "Yash Lund",
+      "affiliation": "Vishwakarma University",
+      "order": 3
+    }
+  ],
+  "total_files_hashed": 17,
+  "sha256sums_path": "manifests/SHA256SUMS.txt"
+}
